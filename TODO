@@ -1,0 +1,2 @@
+Use pecl_http to do the http requests instead of depending on pear's HTTP_Request
+
