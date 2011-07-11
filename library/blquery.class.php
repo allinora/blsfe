@@ -37,7 +37,7 @@ class BLQuery {
         require_once("HTTP/Request.php");
         $req =new HTTP_Request($url);
         $req->setMethod(HTTP_REQUEST_METHOD_GET);
-        if (is_array($params["auth_data"])) {
+        if (isset($params["auth_data"]) && is_array($params["auth_data"])) {
             $req->setBasicAuth($params["auth_data"]["login"], $params["auth_data"]["pass"]);
         }
         if (is_array($params["request_data"])) {
@@ -110,7 +110,7 @@ class BLQuery {
             $response=$this->getURL($action_url, $params);
         }
     
-        if ($params["no_unserialize"]) {
+        if (isset($params["no_unserialize"]) && $params["no_unserialize"]) {
             return $response;
         }
     

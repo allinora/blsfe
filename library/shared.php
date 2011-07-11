@@ -118,7 +118,6 @@ function __autoload($className) {
 	} else if (file_exists(ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.php')) {
 		require_once(ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.php');
 	} else {
-		print "Traléala";
 		/* Error Generation Code Here */
 	}
 }
@@ -147,7 +146,6 @@ gzipOutput() || ob_start("ob_gzhandler");
 
 
 $cache =& new Cache();
-$inflect =& new Inflection();
 
 setReporting();
 removeMagicQuotes();

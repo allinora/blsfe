@@ -1,1 +1,1 @@
-<? echo $merchant["company"] ?>
+Merchant is <?php echo $merchant["company"] ?>

@@ -8,9 +8,7 @@ class MerchantController extends BLController {
 
 	
 	function index($q) {
-		print "<pre>" . print_r($q, true) . "</pre>";
-        	$x=$this->model->get(1);
-		$this->set('string',"Hello World");
+        $x=$this->model->get(1);
 		$this->set("merchant", $x);
 	}
 

@@ -18,8 +18,7 @@ class Template {
 
 	/** Display Template **/
     function render($noWrapper = 0) {
-                $html = new HTML;
-                extract($this->variables);
+        extract($this->variables);
 		ob_start();
                 if (file_exists(ROOT . DS . 'application' . DS . 'views' . DS . $this->_controller . DS . $this->_action . '.php')) {
                         include (ROOT . DS . 'application' . DS . 'views' . DS . $this->_controller . DS . $this->_action . '.php');
