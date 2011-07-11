@@ -1,1 +1,6 @@
 This is a MVC frontend to the BLS (Business Logic Server) Backend layer.
+
+Its based on the excellent tutorial from Anant Garg which can be found at
+http://anantgarg.com/2009/03/13/write-your-own-php-mvc-framework-part-1/
+
+

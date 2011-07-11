@@ -8,7 +8,7 @@ class MerchantController extends BLController {
 
 	
 	function index($q) {
-        $x=$this->model->get(1);
+        $x=$this->model->get($q);
 		$this->set("merchant", $x);
 	}
 
