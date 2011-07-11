@@ -66,6 +66,8 @@ class BLQuery {
 
 
     // The underlying functions...
+	// Probably should be in another file that defines the transport logic.
+	
 
 
 
@@ -101,8 +103,6 @@ class BLQuery {
             $req = new HTTP_Request($url);
             $req->setMethod(HTTP_REQUEST_METHOD_POST);
     
-            //print "<pre>" . print_r($params, true) . "</pre>";
-    
             if (!$params["options"]["no-multipart"]) {
                 $req->addHeader("Content-type","multipart/form-data");
             }
@@ -134,13 +134,15 @@ class BLQuery {
     }
 
     private function callBusinessLogicService($service, $request_params=array(), $method="GET", $params=array()){
+	
         global $_SESSION;
-        $request_params["lang"]=$_SESSION["lang"];
+        $request_params["lang"]=$_SESSION["lang"]; // Multilanguage stuff if available
    
-    
         $action_url=BLSERVER_URL . "/" . $service;
         $params["request_data"]=$request_params;
-        $params["headers"]["X-SHARED-KEY"]=BLSERVER_SHARED_KEY;
+		if (defined("BLSERVER_SHARED_KEY")){
+	        $params["headers"]["X-SHARED-KEY"]=BLSERVER_SHARED_KEY;
+		}
     
         if ($method=="POST") {
             $response=$this->postURL($action_url, $params);
@@ -159,7 +161,7 @@ class BLQuery {
         	syslog(LOG_DEBUG, "callBusinessLogicService: ERROR: Could not unserialize response: ".$response);
         	return false;
         }
-        
+
         return $aRet;
     }
 
