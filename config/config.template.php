@@ -10,3 +10,7 @@ define('BLSERVER_SHARED_KEY','rel0aded');
 
 define('CACHE_BACKEND', 'FILE');
 define('CACHE_PATH', ROOT . DS . "tmp" . DS . "cache");
+
+
+define('SESSION_BACKEND', 'FILE');
+define('SESSION_PATH', ROOT . DS . "tmp" . DS . "sessions");

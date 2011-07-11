@@ -12,9 +12,5 @@ class MerchantController extends BLController {
 		$this->set("merchant", $x);
 	}
 
-	function afterAction() {
-
-	}
-
 
 }

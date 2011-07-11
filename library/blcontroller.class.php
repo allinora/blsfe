@@ -29,5 +29,11 @@ class BLController {
 			$this->_template->render($this->doNotRenderHeader);
 		}
 	}
+	
+	function beforeAction(){
+	}
+
+	function afterAction(){
+	}
 		
 }
