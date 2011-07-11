@@ -13,23 +13,32 @@ class BLQuery {
 		$this->cache=$cache;
 	}
 
-    public function call($action, $params=array()){
+    public function call($action, $params=array(), $method="GET", $extraParams=array()){
         return $this->callBusinessLogicService($this->_model . "/$action" , $params );
     }
 
     public function get($i){
-		$key=$this->_model . "/get/$i";
+		// Always uses GET method. Is Cacheable
+		$key=$this->_model . DS . __CLASS__ . DS . __FUNCTION__ . DS .  "$i";
 		$result=$this->cache->read($key);
 		if (!empty($result)){
-	        print "<pre>" . print_r($result, true) . "</pre>";
+			return $result;
 		}
-        //print "<pre>" . print_r($this, true) . "</pre>";
-        return $this->callBusinessLogicService($this->_model . "/get" , array($this->_idField => $i) );
+        $result=$this->callBusinessLogicService($this->_model . "/get" , array($this->_idField => $i) );
+		$this->cache->write($key, $result);
+		return $result;
     }
 
     public function getall($i){
-        //print "<pre>" . print_r($this, true) . "</pre>";
-        return $this->callBusinessLogicService($this->_model . "/getall" , array($this->_searchField => $i) );
+		// Always uses GET method. Is Cacheable
+		$key=$this->_model . DS . __CLASS__ . DS . __FUNCTION__ . DS .  "$i";
+		$result=$this->cache->read($key);
+		if (!empty($result)){
+			return $result;
+		}
+        $result=$this->callBusinessLogicService($this->_model . "/getall" , array($this->_searchField => $i) );
+		$this->cache->write($key, $result);
+		return $result;
     }
 
 
