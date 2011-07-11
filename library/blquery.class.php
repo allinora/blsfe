@@ -8,12 +8,21 @@ class BLQuery {
 	protected $_limit;
 
 
+	function __construct(){
+		global $cache;
+		$this->cache=$cache;
+	}
 
     public function call($action, $params=array()){
         return $this->callBusinessLogicService($this->_model . "/$action" , $params );
     }
 
     public function get($i){
+		$key=$this->_model . "/get/$i";
+		$result=$this->cache->read($key);
+		if (!empty($result)){
+	        print "<pre>" . print_r($result, true) . "</pre>";
+		}
         //print "<pre>" . print_r($this, true) . "</pre>";
         return $this->callBusinessLogicService($this->_model . "/get" , array($this->_idField => $i) );
     }
