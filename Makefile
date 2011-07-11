@@ -1,11 +1,11 @@
 default:
 	echo Read the Makefile
 install:
-	mkdir -p files/smarty/cache  files/smarty/configs  files/smarty/templates  files/smarty/templates_c files/cache
-	chmod 777 files/smarty/cache  files/smarty/configs  files/smarty/templates  files/smarty/templates_c files/cache
+	mkdir -p tmp/cache tmp/logs tmp/sessions
+	chmod 777  tmp/cache tmp/logs tmp/sessions
 
 clean:
-	rm -rf files/smarty/*/*  files/cache/tipiness.com/*
+	rm -rf tmp
 	find . -type f -name ".#*" -exec rm {} \;
 	find . -type f -name "*~" -exec rm {} \;
 	find . -type f -name "Thumbs.db" -exec rm {} \;
