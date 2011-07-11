@@ -5,6 +5,7 @@ class Cache_File extends Cache {
 		print "Loading Cache_File class<br>";
 	}
 	function read($key) {
+		return;
 		if (!defined("CACHE_PATH")){
 			return;
 		}

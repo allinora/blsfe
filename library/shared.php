@@ -92,6 +92,7 @@ function callHook() {
 	}
 	
 	$controllerName = ucfirst($controller).'Controller';
+	print "Creating a new instance of $controllerName  for $controller";
 
 	$dispatch = new $controllerName($controller,$action);
 	
@@ -108,8 +109,8 @@ function callHook() {
 /** Autoload any classes that are required **/
 
 function __autoload($className) {
-	if (file_exists(ROOT . DS . 'library' . DS . strtolower($className) . '.class.php')) {
-		require_once(ROOT . DS . 'library' . DS . strtolower($className) . '.class.php');
+	if (file_exists(BLSFEROOT . DS . 'library' . DS . strtolower($className) . '.class.php')) {
+		require_once(BLSFEROOT . DS . 'library' . DS . strtolower($className) . '.class.php');
 	} else if (file_exists(ROOT . DS . 'application' . DS . 'controllers' . DS . strtolower($className) . '.php')) {
 		require_once(ROOT . DS . 'application' . DS . 'controllers' . DS . strtolower($className) . '.php');
 	} else if (file_exists(ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.php')) {
@@ -140,6 +141,7 @@ function gzipOutput() {
 /** Get Required Files **/
 
  gzipOutput() || ob_start("ob_gzhandler");
+
 
 
 $cache   = Cache::factory();
