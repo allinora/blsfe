@@ -92,8 +92,6 @@ function callHook() {
 	}
 	
 	$controllerName = ucfirst($controller).'Controller';
-	print "Creating a new instance of $controllerName  for $controller";
-
 	$dispatch = new $controllerName($controller,$action);
 	
 	if ((int)method_exists($controllerName, $action)) {

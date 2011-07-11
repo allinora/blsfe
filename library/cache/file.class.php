@@ -2,8 +2,8 @@
 class Cache_File extends Cache {
 
 	function __construct(){
-		print "Loading Cache_File class<br>";
 	}
+	
 	function read($key) {
 		return;
 		if (!defined("CACHE_PATH")){
