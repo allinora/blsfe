@@ -56,13 +56,32 @@ function performAction($controller,$action,$queryString = null,$render = 0) {
 function routeURL($url) {
 	global $routing;
 
+	if (!isset($routing) && !is_array($routing)){
+		return $url;
+	}
 	foreach ( $routing as $pattern => $result ) {
             if ( preg_match( $pattern, $url ) ) {
 				return preg_replace( $pattern, $result, $url );
 			}
 	}
-
 	return ($url);
+}
+
+function i18nURL($url){
+	if (!defined('LANGUAGES')){
+		return;
+	}
+	// Get the language from the url
+	
+	if (preg_match("@^(" . LANGUAGES . ")$@", $url, $x)){
+		$lang=$x[0];
+	} elseif (preg_match("@^(" . LANGUAGES . ")/@", $url, $x)){
+		$lang=$x[0];
+	}
+	
+	if (isset($lang)){
+		$url=preg_replace("@^(" . LANGUAGES . ")/*@", "", $url);
+	}
 }
 
 /** Main Call Function **/
@@ -77,9 +96,11 @@ function callHook() {
 		$controller = $default['controller'];
 		$action = $default['action'];
 	} else {
+		i18nURL(&$url);
 		$url = routeURL($url);
 		$urlArray = array();
 		$urlArray = explode("/",$url);
+		//print "<pre>" . print_r($urlArray, true) . "</pre>";
 		$controller = $urlArray[0];
 		array_shift($urlArray);
 		if (isset($urlArray[0])) {
@@ -92,6 +113,7 @@ function callHook() {
 	}
 	
 	$controllerName = ucfirst($controller).'Controller';
+	//print "Controller: $controllerName";exit;
 	$dispatch = new $controllerName($controller,$action);
 	
 	if ((int)method_exists($controllerName, $action)) {
