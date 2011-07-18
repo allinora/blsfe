@@ -16,8 +16,18 @@ class BLController {
 		
 		$this->doNotRenderHeader = 0;
 		$this->render = 1;
-		$this->_template = new Template($controller,$action);
+		
+		$templateClass= "Template";
+		if (defined('TEMPLATE_CLASS')) {
+			$templateClass = TEMPLATE_CLASS;
+		}
+		
+		$this->_template = new $templateClass($controller,$action);
 
+	}
+	
+	function template () {
+		return $this->_template;
 	}
 
 	function set($name,$value) {
