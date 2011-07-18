@@ -15,6 +15,7 @@ class Template {
 	function set($name,$value) {
 		$this->variables[$name] = $value;
 	}
+	
 	function __call($name, $arguments){
 		if (!defined("ROOT")){
 			return;
