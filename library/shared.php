@@ -129,6 +129,7 @@ function callHook() {
 /** Autoload any classes that are required **/
 
 function __autoload($className) {
+	echo "autoload: $className<br/>";
 	if (file_exists(BLSFEROOT . DS . 'library' . DS . strtolower($className) . '.class.php')) {
 		require_once(BLSFEROOT . DS . 'library' . DS . strtolower($className) . '.class.php');
 	} else if (file_exists(ROOT . DS . 'application' . DS . 'controllers' . DS . strtolower($className) . '.php')) {
@@ -136,9 +137,10 @@ function __autoload($className) {
 	} else if (file_exists(ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.php')) {
 		require_once(ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.php');
 	} else if (file_exists(ROOT . DS . 'library'  . DS . strtolower($className) . '.php')) {
-		require_once(ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.php');
+		require_once(ROOT . DS . 'library' . DS . strtolower($className) . '.php');
 	} else {
 		/* Error Generation Code Here */
+		echo("<p><font color=red>Could not autoload class file for \"$className\".</font></p>\n");
 	}
 }
 
