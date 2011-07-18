@@ -13,9 +13,9 @@ class BLQuery extends BLTransport{
 		$this->cache=$cache;
 	}
 
-    public function call($action, $params=array(), $method="GET", $extraParams=array()){
-        return $this->callBusinessLogicService($this->_model . "/$action" , $params );
-    }
+	public function __call($action, $params){
+        return $this->callBusinessLogicService($this->_model . "/$action" , $params);
+	}
 
     public function get($id){
 		// Always uses GET method. Is Cacheable
