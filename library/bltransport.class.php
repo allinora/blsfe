@@ -5,7 +5,23 @@ class BLTransport{
 	function __construct(){
 	}
 
-    protected function callBusinessLogicService($service, $request_params=array(), $method="GET", $params=array()){
+    //protected function callBusinessLogicService($service, $request_params=array(), $method="GET", $params=array()){
+	protected function callBusinessLogicService($service, $arguments){
+		$request_params=array();
+		$method="GET";
+		$params=array();
+		
+		if (is_array($arguments)){
+			if (isset($arguments[0])){
+				$request_params=$arguments[0];
+			}
+			if (isset($arguments[1])){
+				$method=$arguments[1];
+			}
+			if (isset($arguments[2])){
+				$params=$arguments[2];
+			}
+		}
 	
         global $_SESSION;
         $request_params["lang"]=$_SESSION["lang"]; // Multilanguage stuff if available
@@ -15,6 +31,7 @@ class BLTransport{
 		if (defined("BLSERVER_SHARED_KEY")){
 	        $params["headers"]["X-SHARED-KEY"]=BLSERVER_SHARED_KEY;
 		}
+		//print "<p>Calling $action_url</p><pre>" . print_r($request_params, true) . "</pre>";
     
         if ($method=="POST") {
             $response=$this->postURL($action_url, $params);
