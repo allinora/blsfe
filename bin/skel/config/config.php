@@ -2,6 +2,9 @@
 
 /** Configuration Variables **/
 
+// Set the date.timezone to your timezone
+ini_set("date.timezone", 'Europe/Berlin');
+
 define ('DEVELOPMENT_ENVIRONMENT',true);
 
 define('BASE_URL','/%%appname%%');
