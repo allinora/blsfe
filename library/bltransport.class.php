@@ -24,7 +24,9 @@ class BLTransport{
 		}
 	
         global $_SESSION;
-        $request_params["lang"]=$_SESSION["lang"]; // Multilanguage stuff if available
+	if (isset($_SESSION["lang"])){
+        	$request_params["lang"]=$_SESSION["lang"]; // Multilanguage stuff if available
+	}
    
         $action_url=BLSERVER_URL . "/" . $service;
         $params["request_data"]=$request_params;
