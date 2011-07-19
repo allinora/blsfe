@@ -130,14 +130,14 @@ function callHook() {
 	try {
 		$dispatch = new $controllerName($controller,$action);
 	}
-	catch (ControllerNotFoundException $ex) {
+	catch (AutoloadClassException $ex) {
 		/* Handle invalid request here */
 		try {
 			$dispatch = new ErrorController("error", "e404");
 			$controllerName = "Error";
 			$action = "e404";
 		}
-		catch (ControllerNotFoundException $ex2) {
+		catch (AutoloadClassException $ex2) {
 			echo "<h1>404 Not Found...</h1><hr><br><font color=#aaa>C=$controller, A=$action</font>";
 			exit;
 		}
@@ -168,12 +168,12 @@ function __autoload($className) {
 	} else {
 		/* Error Generation Code Here */
 		//echo("<p><font color=red>Could not autoload class file for \"$className\".</font></p>\n");
-		throw new ControllerNotFoundException($className);
+		throw new AutoloadClassException($className);
 	}
 }
 
 /** CallHook exceptions **/
-class ControllerNotFoundException extends Exception { }
+class AutoloadClassException extends Exception { }
 
 
 /** GZip Output **/
