@@ -198,7 +198,6 @@ function gzipOutput() {
  gzipOutput() || ob_start("ob_gzhandler");
 
 
-
 $cache   = Cache::factory();
 $session = Session::factory();
 session_start();
@@ -206,6 +205,20 @@ session_start();
 setReporting();
 removeMagicQuotes();
 unregisterGlobals();
-callHook();
+
+if (DEVELOPMENT_ENVIRONMENT) {
+	try {
+		callHook();
+	}
+	catch (Exception $ex) {
+		/* displaying error in a readable way.... */
+		echo "<h1>Exception</h1>";
+		echo "<pre>$ex</pre>";
+		exit;
+	}
+}
+else {
+	callHook();
+}
 
 ?>
