@@ -83,6 +83,12 @@ function i18nURL($url){
 		$url=preg_replace("@^(" . LANGUAGES . ")/*@", "", $url);
 	}
 }
+function cleanURL($url){
+	// Do whatever need to clean the url..
+	$url=preg_replace("@^/*@", "", $url);
+	$url=preg_replace("@/*$@", "", $url);
+	
+}
 
 /** Main Call Function **/
 
@@ -96,11 +102,16 @@ function callHook() {
 		$controller = $default['controller'];
 		$action = $default['action'];
 	} else {
+		//print "URL is $url<br>";
+		cleanURL(&$url); // Get rid of the junk..
+		//print "URL is $url<br>";
 		i18nURL(&$url);
 		$url = routeURL($url);
 		$urlArray = array();
+		
 		$urlArray = explode("/",$url);
-		//print "<pre>" . print_r($urlArray, true) . "</pre>";
+		
+		//print "<pre>" . print_r($urlArray, true) . "</pre>";exit;
 		$controller = $urlArray[0];
 		array_shift($urlArray);
 		if (isset($urlArray[0]) && !empty($urlArray[0])) {
