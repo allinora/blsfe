@@ -125,15 +125,31 @@ function callHook() {
 	
 	$controllerName = ucfirst($controller).'Controller';
 	//print "Controller: $controllerName $action";exit;
-	$dispatch = new $controllerName($controller,$action);
 	
-	if ((int)method_exists($controllerName, $action)) {
+	$dispatch = null;
+	try {
+		$dispatch = new $controllerName($controller,$action);
+	}
+	catch (ControllerNotFoundException $ex) {
+		/* Handle invalid request here */
+		try {
+			$dispatch = new ErrorController("error", "e404");
+			$controllerName = "Error";
+			$action = "e404";
+		}
+		catch (ControllerNotFoundException $ex2) {
+			echo "<h1>404 Not Found...</h1><hr><br><font color=#aaa>C=$controller, A=$action</font>";
+			exit;
+		}
+	}
+	
+	//if ((int)method_exists($controllerName, $action)) {
 		call_user_func_array(array($dispatch,"beforeAction"),$queryString);
 		call_user_func_array(array($dispatch,$action),$queryString);
 		call_user_func_array(array($dispatch,"afterAction"),$queryString);
-	} else {
-		/* Error Generation Code Here */
-	}
+	//} else {
+	//	/* Error Generation Code Here */
+	//}
 }
 
 
@@ -151,9 +167,13 @@ function __autoload($className) {
 		require_once(ROOT . DS . 'library' . DS . strtolower($className) . '.php');
 	} else {
 		/* Error Generation Code Here */
-		echo("<p><font color=red>Could not autoload class file for \"$className\".</font></p>\n");
+		//echo("<p><font color=red>Could not autoload class file for \"$className\".</font></p>\n");
+		throw new ControllerNotFoundException($className);
 	}
 }
+
+/** CallHook exceptions **/
+class ControllerNotFoundException extends Exception { }
 
 
 /** GZip Output **/
@@ -187,6 +207,5 @@ setReporting();
 removeMagicQuotes();
 unregisterGlobals();
 callHook();
-
 
 ?>
