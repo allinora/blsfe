@@ -14,6 +14,26 @@ function setReporting() {
 	}
 }
 
+/** Takes care of setting the LANG cst **/
+function setLanguage () {
+	global $url;
+	
+	$languages = explode("|", LANGUAGES);
+	$lang = $languages[0]; //fallback to default if none specified
+	
+	//let's pick the lang token from the url first, if any
+	$slash = strpos($url, "/");
+	$slash = $slash === false ? -1 : $slash;
+	$t1 = $slash < 0 ? $url : substr($url, 0, $slash);
+	if (in_array($t1, $languages)) {
+		$lang = $t1;
+		$url = substr($url, strlen($lang)+1);
+	}
+	
+	define("LANG", $lang);
+	define("DATE_FORMAT", constant("DATE_FORMAT_".strtoupper(LANG)));
+}
+
 /** Check for Magic Quotes and kill them **/
 function stripSlashesDeep($value) {
 	$value = is_array($value) ? array_map('stripSlashesDeep', $value) : stripslashes($value);
@@ -56,7 +76,7 @@ function performAction($controller,$action,$queryString = null,$render = 0) {
 function routeURL($url) {
 	global $routing;
 
-	if (!isset($routing) && !is_array($routing)){
+	if (!isset($routing) || !is_array($routing)){
 		return $url;
 	}
 	foreach ( $routing as $pattern => $result ) {
@@ -97,8 +117,8 @@ function callHook() {
 	global $default;
 
 	$queryString = array();
-
-	if (!isset($url)) {
+	
+	if (!isset($url) || $url == "") {
 		$controller = $default['controller'];
 		$action = $default['action'];
 	} else {
@@ -205,6 +225,7 @@ session_start();
 setReporting();
 removeMagicQuotes();
 unregisterGlobals();
+setLanguage();
 
 if (DEVELOPMENT_ENVIRONMENT) {
 	try {
