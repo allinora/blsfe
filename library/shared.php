@@ -17,7 +17,9 @@ function setReporting() {
 /** Takes care of setting the LANG cst **/
 function setLanguage () {
 	global $url;
-	
+	if (!defined("LANGUAGES")){
+		return;
+	}	
 	$languages = explode("|", LANGUAGES);
 	$lang = $languages[0]; //fallback to default if none specified
 	
