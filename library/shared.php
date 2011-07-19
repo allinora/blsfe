@@ -103,7 +103,7 @@ function callHook() {
 		//print "<pre>" . print_r($urlArray, true) . "</pre>";
 		$controller = $urlArray[0];
 		array_shift($urlArray);
-		if (isset($urlArray[0])) {
+		if (isset($urlArray[0]) && !empty($urlArray[0])) {
 			$action = $urlArray[0];
 			array_shift($urlArray);
 		} else {
@@ -113,7 +113,7 @@ function callHook() {
 	}
 	
 	$controllerName = ucfirst($controller).'Controller';
-	//print "Controller: $controllerName";exit;
+	//print "Controller: $controllerName $action";exit;
 	$dispatch = new $controllerName($controller,$action);
 	
 	if ((int)method_exists($controllerName, $action)) {
