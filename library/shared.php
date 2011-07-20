@@ -6,6 +6,7 @@ function setReporting() {
 	if (DEVELOPMENT_ENVIRONMENT == true) {
 		error_reporting(E_ALL);
 		ini_set('display_errors','On');
+		error_reporting(E_ALL & ~E_DEPRECATED);
 	} else {
 		error_reporting(E_ALL);
 		ini_set('display_errors','Off');
@@ -112,6 +113,49 @@ function cleanURL($url){
 	
 }
 
+/** Calling controller/action method with fallbacks **/
+function _callControllerAction ($controller, $queryString, $controllerName, $action, $dispatch=null) {
+	/* first set dispatch if null */
+	if ($dispatch === null) {
+		try {
+			$dispatch = new $controllerName($controller,$action);
+		}
+		catch (AutoloadClassException $ex) {
+			//echo "controller not found<br>";
+			/* controller not found -> 404 */
+			if ($controllerName != "ErrorController") {
+				return _callControllerAction("error", $queryString, "ErrorController", "e404");
+			}
+			else {
+				echo "<h1>404 Not Found...</h1><hr><br><font color=#aaa>C=$controller, A=$action</font>";
+			}
+			return; //stop algorithm here on error
+		}
+	}
+	
+	/* assuming controller class found from now */
+	
+	if ((int)method_exists($controllerName, $action)) {
+		//echo "ACK: DISPLAY $controllerName/$action with dispatch=".$dispatch->controller()."/".$dispatch->action()." NOW<hr>";
+		try {
+			call_user_func_array(array($dispatch,"beforeAction"),$queryString);
+			call_user_func_array(array($dispatch,$action),$queryString);
+			call_user_func_array(array($dispatch,"afterAction"),$queryString);
+			if ($dispatch->render) {
+				$dispatch->display();
+			}
+		} catch (ActionFailedException $x) {
+			/* this should be fired if the action intentionnaly fails (invalid querystring vars, user not logged in, etc.) */
+			return _callControllerAction("error", $queryString, "ErrorController", "e404");
+		}
+	}
+	else {
+		/* display 404 - action not found... */
+		//echo "controller ok, action not found<br>";
+		return _callControllerAction("error", $queryString, "ErrorController", "e404");
+	}
+}
+
 /** Main Call Function **/
 
 function callHook() {
@@ -148,30 +192,8 @@ function callHook() {
 	$controllerName = ucfirst($controller).'Controller';
 	//print "Controller: $controllerName $action";exit;
 	
-	$dispatch = null;
-	try {
-		$dispatch = new $controllerName($controller,$action);
-	}
-	catch (AutoloadClassException $ex) {
-		/* Handle invalid request here */
-		try {
-			$dispatch = new ErrorController("error", "e404");
-			$controllerName = "Error";
-			$action = "e404";
-		}
-		catch (AutoloadClassException $ex2) {
-			echo "<h1>404 Not Found...</h1><hr><br><font color=#aaa>C=$controller, A=$action</font>";
-			exit;
-		}
-	}
-	
-	//if ((int)method_exists($controllerName, $action)) {
-		call_user_func_array(array($dispatch,"beforeAction"),$queryString);
-		call_user_func_array(array($dispatch,$action),$queryString);
-		call_user_func_array(array($dispatch,"afterAction"),$queryString);
-	//} else {
-	//	/* Error Generation Code Here */
-	//}
+	/* recursively handle cases and fallback nicely */
+	_callControllerAction($controller, $queryString, $controllerName, $action);
 }
 
 
@@ -196,6 +218,7 @@ function __autoload($className) {
 
 /** CallHook exceptions **/
 class AutoloadClassException extends Exception { }
+class ActionFailedException extends Exception { }
 
 
 /** GZip Output **/
