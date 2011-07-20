@@ -51,6 +51,14 @@ class BLController {
 		}
 	}
 	
+	function action() {
+		return $this->_action;
+	}
+	
+	function controller() {
+		return $this->_controller;
+	}
+	
 	function template () {
 		return $this->_template;
 	}
@@ -58,12 +66,17 @@ class BLController {
 	function set($name,$value) {
 		$this->_template->set($name,$value);
 	}
-
+	
+	function display () {
+		$this->_template->render($this->doNotRenderHeader);
+	}
+	
+	/*
 	function __destruct() {
 		if ($this->render) {
 			$this->_template->render($this->doNotRenderHeader);
 		}
-	}
+	}*/
 	
 	function beforeAction(){
 	}
