@@ -1,20 +1,42 @@
 <?php
 class Template {
-	
+	private static $instance;
 	protected $variables = array();
 	protected $_controller;
 	protected $_action;
 	
-	function __construct($controller,$action) {
-		$this->_controller = $controller;
-		$this->_action = $action;
+	
+	// Combine factory + Singleton
+	function factory(){
+		if (!defined("TEMPLATE_BACKEND")){
+			die("TEMPLATE backend is not defined");
+		}
+		
+        if (isset(self::$instance)) {
+			return self::$instance;
+        }
+		$backend=TEMPLATE_BACKEND;
+		$backend_driver_file=dirname(__FILE__) . DS . strtolower(__CLASS__) . DS . strtolower($backend) . '.class.php';
+		if (file_exists($backend_driver_file)){
+			include_once($backend_driver_file);
+			$class_name= __CLASS__ . '_' . ucfirst(strtolower($backend));
+			if (class_exists($class_name)){
+				self::$instance=new $class_name;
+				return self::$instance;
+			} else {
+				die($class_name . " class does not exists");
+			}
+		} else {
+			die("Template driver class file [ $backend_driver_file ] not found");
+		}
 	}
-
-	/** Set Variables **/
-
-	function set($name,$value) {
-		$this->variables[$name] = $value;
+	
+	function set($name, $value) {
+		
 	}
+	function render($noWrapper=0) {
+		
+	}	
 	
 	function __call($name, $arguments){
 		if (!defined("ROOT")){
@@ -29,23 +51,6 @@ class Template {
 		if (function_exists($name)){
 			call_user_func($name, $arguments);
 		}
-		
 	}
-	/** Display Template **/
-    function render($noWrapper = 0) {
-        extract($this->variables);
-		ob_start();
-                if (file_exists(ROOT . DS . 'application' . DS . 'views' . DS . $this->_controller . DS . $this->_action . '.php')) {
-                        include (ROOT . DS . 'application' . DS . 'views' . DS . $this->_controller . DS . $this->_action . '.php');
-				}
-		$content=ob_get_contents();
-		ob_end_clean();
-
-		if ($noWrapper){
-			print $content;
-			return;
-		}
-		include (ROOT . DS . 'application' . DS . 'views' . DS . 'wrapper.php');
-		return;
-    }
 }
+
