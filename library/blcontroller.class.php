@@ -26,6 +26,31 @@ class BLController {
 
 	}
 	
+	/* 
+	Forward from an action to another action in the same or another controller
+	Examples:
+	1. Forward to another action in the same controller
+	   $this->forward("anotheraction");
+	
+	2. Forward to an action in another controller
+	   $this->forward("somecontroller", "action");
+	
+	*/
+	function forward(){
+		$this->render=0;
+	    $numargs = func_num_args();
+		$arguments=func_get_args();
+		//print $numargs;
+		//print "<pre>" . print_r($arguments,true) . "</pre>";
+		if ($numargs){
+			if ($numargs>1){
+				return $this->__construct($arguments[0], $arguments[1]);
+			} else {
+				return $this->__construct($this->_controller, $arguments[0]);
+			}
+		}
+	}
+	
 	function template () {
 		return $this->_template;
 	}
