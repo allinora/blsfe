@@ -21,8 +21,8 @@ class BLController {
 		if (defined('TEMPLATE_CLASS')) {
 			$templateClass = TEMPLATE_CLASS;
 		}
-		
-		$this->_template = new $templateClass($controller,$action);
+		$this->_template =  Template::factory();
+		$this->_template->init($controller,$action);
 
 	}
 	
