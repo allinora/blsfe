@@ -127,7 +127,7 @@ function _callControllerAction ($controller, $queryString, $controllerName, $act
 				return _callControllerAction("error", $queryString, "ErrorController", "e404");
 			}
 			else {
-				echo "<h1>404 Not Found...</h1><hr><br><font color=#aaa>C=$controller, A=$action</font>";
+				echo "<h1>Class $controllerName 404 Not Found...</h1><hr><br><font color=#aaa>C=$controller, A=$action</font>";
 			}
 			return; //stop algorithm here on error
 		}
