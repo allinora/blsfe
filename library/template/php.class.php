@@ -1,11 +1,13 @@
 
 <?php
-class PHP_Template extends Template {
-	function __construct($controller,$action) {
+class Template_Php extends Template {
+	function __construct() {
+	}
+	function init($controller,$action) {
 		$this->_controller = $controller;
 		$this->_action = $action;
 	}
-
+	
 	function set($name,$value) {
 		$this->variables[$name] = $value;
 	}
@@ -19,7 +21,6 @@ class PHP_Template extends Template {
 				}
 		$content=ob_get_contents();
 		ob_end_clean();
-
 		if ($noWrapper){
 			print $content;
 			return;
