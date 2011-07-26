@@ -21,8 +21,6 @@ if (!file_exists($appRoutingFile)){
 } else {
 	require_once($appRoutingFile);
 }
-
-
 // Require the rest of the bootstrap logic
 require_once (__DIR__ . DS .  'shared.php');
 

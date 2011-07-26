@@ -1,5 +1,6 @@
 <?php
 
+include_once(dirname(__FILE__) . "/bltransport.class.php");
 class BLQuery extends BLTransport{
     protected $_result;
 	protected $_orderBy;
