@@ -118,17 +118,12 @@ function _callControllerAction ($controller, $queryString, $controllerName, $act
 	/* first set dispatch if null */
 	if ($dispatch === null) {
 		try {
+			print "Trying to dispath to $controllerName";
 			$dispatch = new $controllerName($controller,$action);
 		}
-		catch (AutoloadClassException $ex) {
-			//echo "controller not found<br>";
-			/* controller not found -> 404 */
-			if ($controllerName != "ErrorController") {
-				return _callControllerAction("error", $queryString, "ErrorController", "e404");
-			}
-			else {
-				echo "<h1>Class $controllerName 404 Not Found...</h1><hr><br><font color=#aaa>C=$controller, A=$action</font>";
-			}
+		catch (Exeception $ex) {
+			echo "<h1>" . __LINE__ . " Class $controllerName 404 Not Found...</h1><hr><br><font color=#aaa>C=$controller, A=$action</font>";
+			print $ex->getMessage();
 			return; //stop algorithm here on error
 		}
 	}
