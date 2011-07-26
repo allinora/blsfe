@@ -146,7 +146,10 @@ function _callControllerAction ($controller, $queryString, $controllerName, $act
 			}
 		} catch (ActionFailedException $x) {
 			/* this should be fired if the action intentionnaly fails (invalid querystring vars, user not logged in, etc.) */
-			return _callControllerAction("error", $queryString, "ErrorController", "e404");
+			print "Controller $controllerName could not be executed";
+			
+			// Dont be cute
+			// return _callControllerAction("error", $queryString, "ErrorController", "e404");
 		}
 	}
 	else {
