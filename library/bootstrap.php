@@ -21,6 +21,14 @@ if (!file_exists($appRoutingFile)){
 } else {
 	require_once($appRoutingFile);
 }
+function blsfe_local_exception_handler($exception) {
+  echo "Uncaught exception: <font color=red>" , $exception->getMessage(), "</font>\n";
+	if (defined("DEVELOPMENT_ENVIRONMENT") && DEVELOPMENT_ENVIRONMENT === true) {
+  		echo "<pre>" . $exception. "</pre>";
+	}
+}
+set_exception_handler('blsfe_local_exception_handler');
+
 // Require the rest of the bootstrap logic
 require_once (__DIR__ . DS .  'shared.php');
 

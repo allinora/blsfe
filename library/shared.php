@@ -254,19 +254,6 @@ removeMagicQuotes();
 unregisterGlobals();
 setLanguage();
 
-if (DEVELOPMENT_ENVIRONMENT) {
-	try {
-		callHook();
-	}
-	catch (Exception $ex) {
-		/* displaying error in a readable way.... */
-		echo "<h1>Exception</h1>";
-		echo "<pre>$ex</pre>";
-		exit;
-	}
-}
-else {
-	callHook();
-}
+callHook();
 
 ?>

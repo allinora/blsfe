@@ -10,7 +10,13 @@ class Template_Smarty extends Template {
 
 		//automatically load the right template from the app views folder
 		$ctl = ($controller == null || $controller === "") ? "" : ($this->_controller);
-		$this->templateFile = ROOT . DS . 'application' . DS . 'views' . DS . $ctl . DS . $this->_action . '.html';
+		$_template_file=ROOT . DS . 'application' . DS . 'views' . DS . $ctl . DS . $this->_action . '.html';
+		if (file_exists($_template_file)){
+			$this->templateFile = $_template_file;
+		} else {
+			// Just kill the processing here, no need to propogate to smarty ..
+			throw new Exception("Smarty view file [ $_template_file ]not found");
+		}
 	}
 	
 	
@@ -21,6 +27,9 @@ class Template_Smarty extends Template {
 		
 		//useful vars for plugins like media
 		$this->smarty->assign("DEVELOPMENT_ENVIRONMENT", DEVELOPMENT_ENVIRONMENT);
+
+		// Supress notices.
+		$this->smarty->error_reporting = error_reporting() & ~E_NOTICE; 
 		
 		$this->smarty->template_dir = SMARTY_template_dir;
 		$this->smarty->compile_dir = SMARTY_compile_dir;
