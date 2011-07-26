@@ -118,7 +118,7 @@ function _callControllerAction ($controller, $queryString, $controllerName, $act
 	/* first set dispatch if null */
 	if ($dispatch === null) {
 		try {
-			print "Trying to dispath to $controllerName";
+			// print "Trying to dispath to $controllerName";
 			$dispatch = new $controllerName($controller,$action);
 		}
 		catch (Exeception $ex) {
