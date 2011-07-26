@@ -22,7 +22,7 @@ class Template_Smarty extends Template {
 	
 	public function __construct () {
 		
-		include_once(SMARTY_lib_dir);
+		include_once(SMARTY_LIBRARY);
 		$this->smarty = new Smarty();
 		
 		//useful vars for plugins like media
@@ -35,13 +35,16 @@ class Template_Smarty extends Template {
 
 		// Supress notices.
 		$this->smarty->error_reporting = error_reporting() & ~E_NOTICE; 
+
+		// Allow space between delimeters
+		$smarty->auto_literal = false;
 		
-		$this->smarty->template_dir = SMARTY_template_dir;
-		$this->smarty->compile_dir = SMARTY_compile_dir;
-		$this->smarty->cache_dir = SMARTY_cache_dir;
-		$this->smarty->plugins_dir[] = SMARTY_plugins_dir;
-		$this->smarty->left_delimiter = SMARTY_left_delimiter;
-		$this->smarty->right_delimiter = SMARTY_right_delimiter;
+		$this->smarty->template_dir = SMARTY_TEMPLATE_DIR;
+		$this->smarty->compile_dir = SMARTY_COMPILE_DIR;
+		$this->smarty->cache_dir = SMARTY_CACHE_DIR;
+		$this->smarty->plugins_dir[] = SMARTY_PLUGINS_DIR;
+		$this->smarty->left_delimiter = SMARTY_LEFT_DELIMETER;
+		$this->smarty->right_delimiter = SMARTY_RIGHT_DELIMETER;
 		
 	}
 	
