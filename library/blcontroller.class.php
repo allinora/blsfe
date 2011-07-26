@@ -20,9 +20,6 @@ class BLController {
 		$this->render = 1;
 		
 		$templateClass= "Template";
-		if (defined('TEMPLATE_CLASS')) {
-			$templateClass = TEMPLATE_CLASS;
-		}
 		$this->_template =  Template::factory();
 		$this->_template->init($controller,$action);
 
@@ -43,16 +40,19 @@ class BLController {
 	    $numargs = func_num_args();
 		$arguments=func_get_args();
 		//print $numargs;
-		//print "<pre>" . print_r($arguments,true) . "</pre>";
 		if ($numargs){
 			if ($numargs>1){
-				return $this->__construct($arguments[0], $arguments[1]);
+				performAction(array_shift($arguments), array_shift($arguments), array_shift($arguments), 1);
 			} else {
-				return $this->__construct($this->_controller, $arguments[0]);
+				performAction($this->_controller, array_shift($arguments),array_shift($arguments),10);
 			}
 		}
 	}
 	
+	public function run(&$controller, $action, $q) {
+		$controller->$action($q);
+		
+	}
 	function action() {
 		return $this->_action;
 	}

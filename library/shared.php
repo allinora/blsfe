@@ -69,9 +69,15 @@ function unregisterGlobals() {
 function performAction($controller,$action,$queryString = null,$render = 0) {
 	
 	$controllerName = ucfirst($controller).'Controller';
+	$actionName=$action . "Action"; // This is done to avoid clash with reserved function names like list();
 	$dispatch = new $controllerName($controller,$action);
 	$dispatch->render = $render;
-	return call_user_func_array(array($dispatch,$action),$queryString);
+	$dispatch->$actionName($queryString);
+	
+	if ($dispatch->render >0) {
+			$dispatch->display();
+	}
+	
 }
 
 /** Routing **/
@@ -113,46 +119,6 @@ function cleanURL($url){
 	
 }
 
-/** Calling controller/action method with fallbacks **/
-function _callControllerAction ($controller, $queryString, $controllerName, $action, $dispatch=null) {
-	/* first set dispatch if null */
-	if ($dispatch === null) {
-		try {
-			// print "Trying to dispath to $controllerName";
-			$dispatch = new $controllerName($controller,$action);
-		}
-		catch (Exeception $ex) {
-			echo "<h1>" . __LINE__ . " Class $controllerName 404 Not Found...</h1><hr><br><font color=#aaa>C=$controller, A=$action</font>";
-			print $ex->getMessage();
-			return; //stop algorithm here on error
-		}
-	}
-	
-	/* assuming controller class found from now */
-	
-	if ((int)method_exists($controllerName, $action)) {
-		//echo "ACK: DISPLAY $controllerName/$action with dispatch=".$dispatch->controller()."/".$dispatch->action()." NOW<hr>";
-		try {
-			call_user_func_array(array($dispatch,"beforeAction"),$queryString);
-			call_user_func_array(array($dispatch,$action),$queryString);
-			call_user_func_array(array($dispatch,"afterAction"),$queryString);
-			if ($dispatch->render) {
-				$dispatch->display();
-			}
-		} catch (ActionFailedException $x) {
-			/* this should be fired if the action intentionnaly fails (invalid querystring vars, user not logged in, etc.) */
-			print "Controller $controllerName could not be executed";
-			
-			// Dont be cute
-			// return _callControllerAction("error", $queryString, "ErrorController", "e404");
-		}
-	}
-	else {
-		/* display 404 - action not found... */
-		//echo "controller ok, action not found<br>";
-		return _callControllerAction("error", $queryString, "ErrorController", "e404");
-	}
-}
 
 /** Main Call Function **/
 
@@ -191,7 +157,30 @@ function callHook() {
 	//print "Controller: $controllerName $action";exit;
 	
 	/* recursively handle cases and fallback nicely */
-	_callControllerAction($controller, $queryString, $controllerName, $action);
+	_runControllerAction($controller, $action, $queryString, $controllerName, $action);
+}
+
+function _runControllerAction($controller, $action, $queryString){
+	$controllerName = ucfirst($controller).'Controller';
+	$actionName=$action . "Action"; // This is done to avoid clash with reserved function names like list();
+
+	$dispatch = new $controllerName($controller,$action);
+	if (method_exists($controllerName, $actionName)) {
+		if (method_exists($controllerName, "beforeAction")) {
+			$dispatch->beforeAction($queryString);
+		}
+		
+		
+		$dispatch->$actionName($queryString);
+		
+		if (method_exists($controllerName, "afterAction")) {
+			$dispatch->afterAction($queryString);
+		}
+		
+		if ($dispatch->render) {
+			$dispatch->display();
+		}
+	}
 }
 
 

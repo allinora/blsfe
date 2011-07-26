@@ -21,7 +21,9 @@ class Template_Smarty extends Template {
 	
 	
 	public function __construct () {
-		
+		if (!defined("SMARTY_LIBRARY")) {
+			throw new Exception("SMARTY_LIBRARY is not defined");
+		}
 		include_once(SMARTY_LIBRARY);
 		$this->smarty = new Smarty();
 		
@@ -39,6 +41,13 @@ class Template_Smarty extends Template {
 		// Allow space between delimeters
 		$smarty->auto_literal = false;
 		
+		if (!defined("SMARTY_TEMPLATE_DIR")) {
+			throw new Exception("SMARTY_TEMPLATE_DIR is not defined");
+		}
+		if (!defined("SMARTY_COMPILE_DIR")) {
+			throw new Exception("SMARTY_COMPILE_DIR is not defined");
+		}
+
 		$this->smarty->template_dir = SMARTY_TEMPLATE_DIR;
 		$this->smarty->compile_dir = SMARTY_COMPILE_DIR;
 		$this->smarty->cache_dir = SMARTY_CACHE_DIR;
