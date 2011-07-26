@@ -28,6 +28,11 @@ class Template_Smarty extends Template {
 		//useful vars for plugins like media
 		$this->smarty->assign("DEVELOPMENT_ENVIRONMENT", DEVELOPMENT_ENVIRONMENT);
 
+		// Define the language
+		if (defined("LANG")){
+			$this->smarty->assign("lang", LANG);
+		}
+
 		// Supress notices.
 		$this->smarty->error_reporting = error_reporting() & ~E_NOTICE; 
 		
