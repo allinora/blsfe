@@ -49,6 +49,20 @@ class BLController {
 		}
 	}
 	
+	function redirect($controller, $action, $params=array()){
+		$url="/" . LANG . "/$controller/$action/?" . http_build_query($params);
+		if (headers_sent()){
+			print "Redirecting to $url<br>";
+			print "Headers already sent. Must redirect via javascript<br>";
+		} else {
+			header("Location: $url");exit;
+		}
+		
+		exit;
+		
+		
+	}
+	
 	public function run(&$controller, $action, $q) {
 		$controller->$action($q);
 		
