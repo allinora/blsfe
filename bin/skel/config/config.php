@@ -38,7 +38,7 @@ define('SMARTY_COMPILE_DIR', ROOT.DS."tmp".DS."smarty_compile");
 define('SMARTY_CACHE_DIR', ROOT.DS."tmp".DS."smarty_cache");
 
 // YOUR smarty plugins directory. This will be added to the list of smarty plugins
-define('SMARTY_PLUGINS_DIR', ROOT.DS."library".DS."smarty-plugins");
+define('SMARTY_LOCAL_PLUGINS_DIR', ROOT.DS."library".DS."smarty-plugins");
 
 // left and right delimeters for smarty tags. we recommend <{ $something }>
 define('SMARTY_LEFT_DELIMETER', "<{");
