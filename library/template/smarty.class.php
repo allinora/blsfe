@@ -51,7 +51,7 @@ class Template_Smarty extends Template {
 		$this->smarty->template_dir = SMARTY_TEMPLATE_DIR;
 		$this->smarty->compile_dir = SMARTY_COMPILE_DIR;
 		$this->smarty->cache_dir = SMARTY_CACHE_DIR;
-		$this->smarty->plugins_dir[] = SMARTY_PLUGINS_DIR;
+		$this->smarty->plugins_dir[] = SMARTY_LOCAL_PLUGINS_DIR;
 		$this->smarty->left_delimiter = SMARTY_LEFT_DELIMETER;
 		$this->smarty->right_delimiter = SMARTY_RIGHT_DELIMETER;
 		
