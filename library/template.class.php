@@ -31,11 +31,11 @@ class Template {
 		}
 	}
 	
+	function get($name) {
+	}
 	function set($name, $value) {
-		
 	}
 	function render($noWrapper=0) {
-		
 	}	
 	
 	function __call($name, $arguments){
