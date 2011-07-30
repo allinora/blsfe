@@ -126,15 +126,15 @@ function callHook() {
 	global $url;
 	global $default;
 
-	if(empty($url)){
-		$url=$_SERVER["SCRIPT_NAME"];
-	}
 	$queryString = array();
 	
 	if (!isset($url) || $url == "") {
 		$controller = $default['controller'];
 		$action = $default['action'];
 	} else {
+		if(empty($url)){
+			$url=$_SERVER["SCRIPT_NAME"];
+		}
 		//print "URL is $url<br>";
 		cleanURL(&$url); // Get rid of the junk..
 		//print "URL is $url<br>";
