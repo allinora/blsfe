@@ -126,6 +126,9 @@ function callHook() {
 	global $url;
 	global $default;
 
+	if(empty($url)){
+		$url=$_SERVER["SCRIPT_NAME"];
+	}
 	$queryString = array();
 	
 	if (!isset($url) || $url == "") {
