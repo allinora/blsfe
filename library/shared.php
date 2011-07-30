@@ -127,34 +127,33 @@ function callHook() {
 	global $default;
 
 	$queryString = array();
+	if(empty($url)){
+		$url=$_SERVER["REQUEST_URI"];
+	}
+	//print "URL is $url<br>";
+	cleanURL(&$url); // Get rid of the junk..
+	//print "URL is $url<br>";
+	i18nURL(&$url);
 	
-	if (!isset($url) || $url == "") {
-		$controller = $default['controller'];
-		$action = $default['action'];
-	} else {
-		if(empty($url)){
-			$url=$_SERVER["SCRIPT_NAME"];
-		}
-		//print "URL is $url<br>";
-		cleanURL(&$url); // Get rid of the junk..
-		//print "URL is $url<br>";
-		i18nURL(&$url);
-		$url = routeURL($url);
-		$urlArray = array();
-		
-		$urlArray = explode("/",$url);
-		
-		//print "<pre>" . print_r($urlArray, true) . "</pre>";exit;
+	$url = routeURL($url);
+	$urlArray = array();
+	$urlArray = explode("/",$url);
+	
+	//print "<pre>" . print_r($urlArray, true) . "</pre>";exit;
+	if (isset($urlArray[0]) && !empty($urlArray[0])) {
 		$controller = $urlArray[0];
 		array_shift($urlArray);
-		if (isset($urlArray[0]) && !empty($urlArray[0])) {
-			$action = $urlArray[0];
-			array_shift($urlArray);
-		} else {
-			$action = 'index'; // Default Action
-		}
-		$queryString = $urlArray;
+	} else {
+		$controller = $default['controller'];
 	}
+	
+	if (isset($urlArray[0]) && !empty($urlArray[0])) {
+		$action = $urlArray[0];
+		array_shift($urlArray);
+	} else {
+		$action = $default['action'];; // Default Action
+	}
+	$queryString = $urlArray;
 	
 	$controllerName = ucfirst($controller).'Controller';
 	//print "Controller: $controllerName $action";exit;
