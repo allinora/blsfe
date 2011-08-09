@@ -39,7 +39,7 @@ class Template_Smarty extends Template {
 		$this->smarty->error_reporting = error_reporting() & ~E_NOTICE; 
 
 		// Allow space between delimeters
-		$smarty->auto_literal = false;
+		$this->smarty->auto_literal = false;
 		
 		if (!defined("SMARTY_TEMPLATE_DIR")) {
 			throw new Exception("SMARTY_TEMPLATE_DIR is not defined");

@@ -82,6 +82,9 @@ class BLController {
 	function set($name,$value) {
 		$this->_template->set($name,$value);
 	}
+	function get($name){
+		$this->_template->get($name);
+	}
 	
 	function display () {
 		$this->_template->render($this->doNotRenderHeader);
