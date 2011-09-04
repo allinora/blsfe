@@ -131,7 +131,7 @@ function callHook() {
 	}
 	$queryString = array();
 	
-	if (!isset($url) || $url == "") {
+	if (!isset($url) || $url == "" || $url=="/index.php") {
 		$controller = $default['controller'];
 		$action = $default['action'];
 	} else {
