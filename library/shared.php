@@ -129,6 +129,9 @@ function callHook() {
 	if(empty($url)){
 		$url=$_SERVER["SCRIPT_NAME"];
 	}
+	if ($url=="/index.php"){
+		unset($url); 
+	}
 	$queryString = array();
 	
 	if (!isset($url) || $url == "") {
