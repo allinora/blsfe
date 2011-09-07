@@ -12,6 +12,23 @@ class Template_Php extends Template {
 		$this->variables[$name] = $value;
 	}
 	
+	
+	function fetch($template){
+        extract($this->variables);
+		ob_start();
+		$template=ROOT . DS . 'application' . DS . 'views' . DS . $template . '.php';
+
+
+        if (file_exists($template)) {
+          include ($template);
+		}
+		$content=ob_get_contents();
+		ob_end_clean();
+		return $content;
+	}
+	
+	
+	
 	/** Display Template **/
     function render($noWrapper = 0) {
         extract($this->variables);

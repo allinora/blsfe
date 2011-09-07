@@ -6,7 +6,12 @@ if (!defined("ROOT")) {
 	die("Error: ROOT constant is not defined");
 }
 
+if (!defined("APPCONFIGFILE")) {
 $appConfigFile= ROOT . DS . 'config' . DS . 'config.php';
+} else {
+$appConfigFile= APPCONFIGFILE;
+}
+
 if (!file_exists($appConfigFile)){
 	die("Application config file does not exists. Please create it");
 } else {
