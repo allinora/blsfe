@@ -38,7 +38,7 @@ class Template {
 	function render($noWrapper=0) {
 	}	
 	
-	function __call($name, $arguments){
+	function __call($name, $xx){
 		if (!defined("ROOT")){
 			return;
 		}
@@ -49,7 +49,7 @@ class Template {
 			include_once($helper_file);
 		}
 		if (function_exists($name)){
-			call_user_func($name, $arguments);
+			call_user_func_array($name,$xx);
 		}
 	}
 }
