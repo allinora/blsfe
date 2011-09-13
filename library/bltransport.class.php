@@ -5,24 +5,8 @@ class BLTransport{
 	function __construct(){
 	}
 
-    //protected function callBusinessLogicService($service, $request_params=array(), $method="GET", $params=array()){
-	protected function callBusinessLogicService($service, $arguments){
-		$request_params=array();
-		$method="GET";
-		$params=array();
-		
-		if (is_array($arguments)){
-			if (isset($arguments[0])){
-				$request_params=$arguments[0];
-			}
-			if (isset($arguments[1])){
-				$method=$arguments[1];
-			}
-			if (isset($arguments[2])){
-				$params=$arguments[2];
-			}
-		}
-	
+    protected function callBusinessLogicService($service, $request_params=array(), $method="GET", $params=array()){
+	//protected function callBusinessLogicService($service, $arguments){
         global $_SESSION;
 	if (isset($_SESSION["lang"])){
         	$request_params["lang"]=$_SESSION["lang"]; // Multilanguage stuff if available
