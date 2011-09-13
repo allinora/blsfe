@@ -5,7 +5,7 @@ class BLModel extends BLQuery {
 	protected $_idField;
 	protected $_searchField;
 
-	function __construct($model, $_idF="id", $_searchF) {
+	function __construct($model, $_idF="id", $_searchF=null) {
 		parent::__construct();
 		$this->_model = $model;
 		$this->_idField=$_idF;
