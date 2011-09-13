@@ -6,6 +6,7 @@ if (!defined("ROOT")) {
 	die("Error: ROOT constant is not defined");
 }
 
+ini_set("allow_call_time_pass_reference", true);
 if (!defined("APPCONFIGFILE")) {
 $appConfigFile= ROOT . DS . 'config' . DS . 'config.php';
 } else {
@@ -35,6 +36,6 @@ function blsfe_local_exception_handler($exception) {
 set_exception_handler('blsfe_local_exception_handler');
 
 // Require the rest of the bootstrap logic
-require_once (__DIR__ . DS .  'shared.php');
+require_once (dirname(__FILE__)  . DS .  'shared.php');
 
 
