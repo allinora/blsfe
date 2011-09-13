@@ -6,7 +6,7 @@ function setReporting() {
 	if (DEVELOPMENT_ENVIRONMENT == true) {
 		error_reporting(E_ALL);
 		ini_set('display_errors','On');
-		error_reporting(E_ALL & ~E_DEPRECATED);
+		error_reporting(E_ALL);
 	} else {
 		error_reporting(E_ALL);
 		ini_set('display_errors','Off');
@@ -96,7 +96,7 @@ function routeURL($url) {
 	return ($url);
 }
 
-function i18nURL($url){
+function i18nURL(&$url){
 	if (!defined('LANGUAGES')){
 		return;
 	}
@@ -112,7 +112,7 @@ function i18nURL($url){
 		$url=preg_replace("@^(" . LANGUAGES . ")/*@", "", $url);
 	}
 }
-function cleanURL($url){
+function cleanURL(&$url){
 	// Do whatever need to clean the url..
 	$url=preg_replace("@^/*@", "", $url);
 	$url=preg_replace("@/*$@", "", $url);
@@ -139,9 +139,9 @@ function callHook() {
 		$action = $default['action'];
 	} else {
 		//print "URL is $url<br>";
-		cleanURL(&$url); // Get rid of the junk..
+		cleanURL($url); // Get rid of the junk..
 		//print "URL is $url<br>";
-		i18nURL(&$url);
+		i18nURL($url);
 		$url = routeURL($url);
 		$urlArray = array();
 		
