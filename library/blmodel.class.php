@@ -1,5 +1,7 @@
 <?php
 include_once(dirname(__FILE__) . "/blquery.class.php");
+
+
 class BLModel extends BLQuery {
 	protected $_model;
 	protected $_idField;
