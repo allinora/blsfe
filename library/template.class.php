@@ -49,7 +49,7 @@ class Template {
 			include_once($helper_file);
 		}
 		if (function_exists($name)){
-			call_user_func_array($name,$xx);
+			return call_user_func_array($name,$xx);
 		}
 	}
 }
