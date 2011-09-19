@@ -50,7 +50,10 @@ class BLController {
 	}
 	
 	function redirect($controller, $action, $params=array()){
-		$url="/" . LANG . "/$controller/$action/?" . http_build_query($params);
+		$url="/" . LANG . "/$controller/$action";
+		if (is_array($params) && count($params)){
+			$url.="/?" . http_build_query($params);
+		}
 		if (headers_sent()){
 			print "Redirecting to $url<br>";
 			print "Headers already sent. Must redirect via javascript<br>";
