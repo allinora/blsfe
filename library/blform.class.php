@@ -132,5 +132,34 @@ class BLForm extends BLModel {
 		$text.="</textarea>";
 		return $text;
 	}
+	
+	function render(){
+		$formData=$this->tray;
+		$data="<form method='POST'><table class='blsfeformtable'>";
+		foreach($formData as $id=>$f){
+			$data.= "\n<tr ";
+			if ($f["class"]){
+				$data.=" class='" . $f["class"] . "'";
+			}
+			if ($f["hidden"]){
+				$data.=" style='display: none;'";
+			}
+			$data.=">";
+			$data.= "<th align='right'>" . $f["label"];
+			if ($f["required"]){
+				$data.= " * ";
+			}
+			$data.=  "</th>";
+			$data.= "<td>" . $f["field"] . "</td>";
+
+			$data.= "</tr>";
+		}
+		$data.="<tr><td colspan=2 align=right>";
+		$data.="<input type='submit'>";
+		$data.="</td></tr>";
+
+		$data.="</table></form>";
+		return $data;
+	}
 }
 
