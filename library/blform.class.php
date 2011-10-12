@@ -57,6 +57,10 @@ class BLForm extends BLModel {
 	function hideFromTray($id){
 		$this->tray[$id]["hidden"]=1;
 	}
+	function setTrayClass($id, $value){
+		$this->tray[$id]["class"]=$value;
+	}
+	
 	function setupTray(){
 		$this->tray=array();
 		foreach ($this->vars as $id=> $f) {
