@@ -33,12 +33,16 @@ class BLForm extends BLModel {
 
 		// Fillin data for the vars if provided
 		foreach ($this->vars as $id=> &$var) {
+			$var["label"]=$id; // Set the name as the label
 			if (isset($data[$id])){
 				$var["value"]=$data[$id];
 			}
 		}
 	}
 	
+	function setLabel($id, $value){
+		$this->vars[$id]["label"]=$value;
+	}
 	function setCss($id, $value){
 		$this->vars[$id]["css"]=$value;
 	}
@@ -50,7 +54,8 @@ class BLForm extends BLModel {
 			if (in_array($id, array("id", "createtime", "ts"))){ // Ignore these always. They are handled by the system
 				continue;
 			}
-			$this->tray[$id]=$this->setupField($id, $f);
+			$this->tray[$id]["field"]=$this->setupField($id, $f);
+			$this->tray[$id]["label"]=$f["label"];
 		}
 	}
 	
