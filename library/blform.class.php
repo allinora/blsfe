@@ -47,7 +47,16 @@ class BLForm extends BLModel {
 		$this->vars[$id]["css"]=$value;
 	}
 	
-	
+	function replaceTray($id, $value){
+		//print "<pre>" . print_r($this->tray, true) . "</pre>";
+		$this->tray[$id]["field"]=$value;
+	}
+	function removeFromTray($id){
+		unset($this->tray[$id]);
+	}
+	function hideFromTray($id){
+		$this->tray[$id]["hidden"]=1;
+	}
 	function setupTray(){
 		$this->tray=array();
 		foreach ($this->vars as $id=> $f) {
@@ -56,6 +65,7 @@ class BLForm extends BLModel {
 			}
 			$this->tray[$id]["field"]=$this->setupField($id, $f);
 			$this->tray[$id]["label"]=$f["label"];
+			$this->tray[$id]["required"]=$f["required"];
 		}
 	}
 	
@@ -89,11 +99,15 @@ class BLForm extends BLModel {
 		if ($f["maxlength"]){
 			$text.=" maxlength="  . $f["maxlength"];
 		}
-		if ($f["maxlength"]>50){
-			$text.=" size=50 ";
-		} else {
-			$text.=" size=" . $f["maxlength"] ;
+
+		if ($f["maxlength"]){
+			if ($f["maxlength"]>50){
+				$text.=" size=50 ";
+			} else {
+				$text.=" size=" . $f["maxlength"] ;
+			}
 		}
+		
 		
 		
 		if ($f["css"]){
