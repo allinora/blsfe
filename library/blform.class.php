@@ -19,36 +19,52 @@ define('OBJ_DTYPE_CURRDATE',15);
 
 
 class BLForm extends BLModel {
+	var $tray;
+	
 	function __construct($model, $id) {
 		
 		$x=new bltransport();
-		$shadow=$x->callBusinessLogicService("/core/user/reflectjson");
-		$y=json_decode($shadow);
-		return $this->render($y);
-		
-		exit;
+		$shadow=$x->callBusinessLogicService($model . "/reflect");
+		$objectProperties = get_object_vars($shadow);
+        $vars=$objectProperties["vars"];
+        $this->tray($vars);
+        //return $this->render($vars);
 		
 	}
-	function render($y){
-		$_vars=$y->vars;
-		//print "<pre>" . print_r($_vars->lastname, true) . "</pre>";
+	function getTray(){
+		return $this->tray;
+	}
+	function tray($_vars){
+		$this->tray=array();
 		foreach ($_vars as $id=> $f) {
-			$this->field($id, $f);
-			//print "<pre>" . print_r($f, true) . "</pre>";
+			$this->tray[$id]=$this->field($id, $f);
 		}
 	}
 
-	function field($id, $z){
+	function render($y){
+		$_vars=$y;
+		//print "<pre>" . print_r($_vars->lastname, true) . "</pre>";
+		foreach ($_vars as $id=> $f) {
+			$this->field($id, $f);
+		}
+	}
+
+	function field($id, $field){
 		
-		print "<pre>" . print_r($z, true) . "</pre>";
-		switch($z->data_type){
-			case OBJ_DTYPE_STRING:
-			if ($z->maxlength>40){
-				return $this->textarea($id, $z);
+		//print "<pre>" . print_r($z, true) . "</pre>";
+		switch($field["data_type"]){
+			case OBJ_DTYPE_STRING:	
+			if ($field['maxlength'] > 200){
+				return $this->textarea($id, $field);
 			} else {
-				return $this->textbox($id, $z);
+				return $this->textbox($id, $field);
 			} 
-			print "Its a string \n";
+			break;
+			case OBJ_DTYPE_INT:	
+				return $this->textbox($id, $field);
+			break;
+			default:	
+				return $this->textbox($id, $field);
 			break;
 		
 		}
@@ -57,11 +73,11 @@ class BLForm extends BLModel {
 	
 	function textbox($id, $f){
 		$text="<input type='text' name='$id' id='id' value=''>";
-		print $text;
+		return $text;
 	}
 	function textarea($id, $f){
 		$text="<textarea name='$id' id='id'></textarea>";
-		print $text;
+		return $text;
 	}
 }
 

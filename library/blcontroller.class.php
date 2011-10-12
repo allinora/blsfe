@@ -1,6 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__) . "/blmodel.class.php");
+include_once(dirname(__FILE__) . "/blform.class.php");
 include_once(dirname(__FILE__) . "/template.class.php");
 class BLController {
 	
