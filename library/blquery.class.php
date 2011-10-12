@@ -42,7 +42,7 @@ class BLQuery extends BLTransport{
 		return $result;
     }
 
-	public function set($params, $method="POST", $extraParams){
+	public function set($params, $method="POST", $extraParams=array()){
 		// No cache for set
         $result=$this->callBusinessLogicService($this->_model . "/set" , $params, "POST", $extraParams);
 		return $result;

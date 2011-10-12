@@ -15,7 +15,7 @@ class Template_Smarty extends Template {
 			$this->templateFile = $_template_file;
 		} else {
 			// Just kill the processing here, no need to propogate to smarty ..
-			throw new Exception("Smarty view file [ $_template_file ]not found");
+			//throw new Exception("Smarty view file [ $_template_file ]not found");
 		}
 	}
 	

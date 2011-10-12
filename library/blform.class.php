@@ -51,7 +51,7 @@ class BLForm extends BLModel {
 	function setupTray(){
 		$this->tray=array();
 		foreach ($this->vars as $id=> $f) {
-			if (in_array($id, array("id", "createtime", "ts"))){ // Ignore these always. They are handled by the system
+			if (in_array($id, array("createtime", "ts"))){ // Ignore these always. They are handled by the system
 				continue;
 			}
 			$this->tray[$id]["field"]=$this->setupField($id, $f);
