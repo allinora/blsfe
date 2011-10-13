@@ -5,15 +5,11 @@ class BLHelper{
 	function __construct(){
 	}
 	
-	function hello(){
-		print "Hello World";
-	}
-
-
 	function __call($name, $params){
 		if (!defined("ROOT")){
 			return;
 		}
+		
 		$helpers_directory=ROOT . DS . "application" . DS . "helpers";
 		$helper_file=$helpers_directory . DS . $name . ".php";
 		//print "Loading $helper_file<br>";

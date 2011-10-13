@@ -176,10 +176,12 @@ class BLForm extends BLModel {
 	}
 	
 	function render(){
+		$this->hideFromTray("id"); // This should be always hidden if not removed completely.
+		
 		$formData=$this->tray;
 		$data="<form method='POST'><table class='blsfeformtable'>";
 		foreach($formData as $id=>$f){
-			$data.= "\n<tr ";
+			$data.= "<tr";
 			if ($f["class"]){
 				$data.=" class='" . $f["class"] . "'";
 			}
