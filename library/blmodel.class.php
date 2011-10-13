@@ -14,6 +14,14 @@ class BLModel extends BLQuery {
 		$this->_searchField=$_searchF;
 	}
 
+	function model(){
+		return $this->_model;
+	}
+
+	function idField(){
+		return $this->_idField;
+	}
+	
 	function __destruct() {
 	}
 }
