@@ -79,6 +79,12 @@ class BLForm extends BLModel {
 
 
 	function setupField($id, $field){
+		if ($id=="country"){
+			return $this->countryList($id, $field);
+		}
+		if ($id=="language"){
+			return $this->languageList($id, $field);
+		}
 		switch($field["data_type"]){
 			case OBJ_DTYPE_STRING:	
 			if ($field['maxlength'] > 200){
@@ -97,6 +103,42 @@ class BLForm extends BLModel {
 		}
 		
 	}
+	
+	function selectbox($id, $field, $values=array()){
+		$text="<select name='$id' id='$id'>";
+		foreach($values as $v){
+			$text.="<option value='" . $v["id"] . "'";
+			if ($field["value"]==$v["id"]){
+				$text.=" selected ";
+			}
+			$text.=">" . $v["value"] . "</option>";
+		}
+		$text.="</select>";
+		return $text;
+	}
+	
+	function countryList($id, $field){
+		$m=new BLModel("core/country");
+		$list=$m->getall(1);
+		$ret=array();
+		foreach($list as $c){
+			$ret[$c["isocode"]]["id"]=$c["isocode"];
+			$ret[$c["isocode"]]["value"]=$c["name"];
+		}
+		return $this->selectbox($id, $field, $ret);
+	}
+	
+	function languageList($id, $field){
+		$m=new BLModel("core/language");
+		$list=$m->getall(1);
+		$ret=array();
+		foreach($list as $l){
+			$ret[$l["lang"]]["id"]=$l["lang"];
+			$ret[$l["lang"]]["value"]=$l["name"];
+		}
+		return $this->selectbox($id, $field, $ret);
+	}
+	
 	
 	function textbox($id, $f){
 		$text="<input type='text' name='$id' id='$id' value='"  . $f["value"].  "'";
