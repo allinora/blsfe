@@ -3,6 +3,7 @@ class Template_Smarty extends Template {
 	protected $smarty;
 	protected $templateFile = null;
 	
+	protected $helper;
 	
 	function init($controller,$action) {
 		$this->_controller = $controller;
@@ -24,6 +25,9 @@ class Template_Smarty extends Template {
 		if (!defined("SMARTY_LIBRARY")) {
 			throw new Exception("SMARTY_LIBRARY is not defined");
 		}
+		
+		$this->helper=new BLHelper();
+		
 		include_once(SMARTY_LIBRARY);
 		$this->smarty = new Smarty();
 		

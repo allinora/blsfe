@@ -1,7 +1,9 @@
 
 <?php
 class Template_Php extends Template {
+	protected $helper;
 	function __construct() {
+		$this->helper=new BLHelper();
 	}
 	function init($controller,$action) {
 		$this->_controller = $controller;

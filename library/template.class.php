@@ -1,4 +1,6 @@
 <?php
+include_once(dirname(__FILE__) . "/blhelper.class.php");
+
 class Template {
 	private static $instance;
 	protected $variables = array();
@@ -29,6 +31,7 @@ class Template {
 		} else {
 			die("Template driver class file [ $backend_driver_file ] not found");
 		}
+		
 	}
 	
 	function get($name) {
@@ -38,19 +41,12 @@ class Template {
 	function render($noWrapper=0) {
 	}	
 	
-	function __call($name, $xx){
-		if (!defined("ROOT")){
-			return;
-		}
-		$helpers_directory=ROOT . DS . "application" . DS . "helpers";
-		$helper_file=$helpers_directory . DS . $name . ".php";
-		//print "Loading $helper_file<br>";
-		if (file_exists ($helper_file)){
-			include_once($helper_file);
-		}
-		if (function_exists($name)){
-			return call_user_func_array($name,$xx);
-		}
+	function __call($name, $params){
+		// Make a warning.
+		print "Please do not use \$this->_template->function any more. Use \$this->helper->fuction instead<br><hr>";
+		// Create the helper instance
+		$helper = new BLHelper();
+		return $helper->$name($params);
 	}
 }
 

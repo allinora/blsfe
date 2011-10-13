@@ -2,12 +2,14 @@
 
 include_once(dirname(__FILE__) . "/blmodel.class.php");
 include_once(dirname(__FILE__) . "/blform.class.php");
+include_once(dirname(__FILE__) . "/blhelper.class.php");
 include_once(dirname(__FILE__) . "/template.class.php");
 class BLController {
 	
 	protected $_controller;
 	protected $_action;
 	protected $_template;
+	protected $helper;
 
 	public $doNotRenderHeader;
 	public $render;
@@ -23,6 +25,8 @@ class BLController {
 		$templateClass= "Template";
 		$this->_template =  Template::factory();
 		$this->_template->init($controller,$action);
+		
+		$this->helper = new BLHelper();
 
 	}
 	
