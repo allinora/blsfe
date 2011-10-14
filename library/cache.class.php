@@ -3,7 +3,7 @@ class Cache {
 	private static $instance;
 	
 	// Combine factory + Singleton
-	function factory(){
+	public static function factory(){
 		if (!defined("CACHE_BACKEND")){
 			die("Cache backend is not defined");
 		}

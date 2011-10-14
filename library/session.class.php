@@ -3,7 +3,7 @@ class Session {
 	private static $instance;
 	
 	// Combine factory + Singleton
-	function factory(){
+	public static function factory(){
 		if (!defined("SESSION_BACKEND")){
 			die("Sessions backend is not defined");
 		}
