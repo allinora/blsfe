@@ -70,6 +70,7 @@ class BLForm extends BLModel {
 			$this->tray[$id]["field"]=$this->setupField($id, $f);
 			$this->tray[$id]["label"]=$f["label"];
 			$this->tray[$id]["required"]=$f["required"];
+			$this->tray[$id]["value"]=$f["value"];
 		}
 	}
 	

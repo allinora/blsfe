@@ -8,9 +8,9 @@ class BLTransport{
     protected function callBusinessLogicService($service, $request_params=array(), $method="GET", $params=array()){
 	//protected function callBusinessLogicService($service, $arguments){
         global $_SESSION;
-	if (isset($_SESSION["lang"])){
+		if (isset($_SESSION["lang"])){
         	$request_params["lang"]=$_SESSION["lang"]; // Multilanguage stuff if available
-	}
+		}
    
         $action_url=BLSERVER_URL . "/" . $service;
         $params["request_data"]=$request_params;
