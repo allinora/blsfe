@@ -14,6 +14,7 @@
 
 class BLUpload {
 	var $target_directory = "/tmp";
+	var $target_filename;
 	
 	public function _construct(){
 		
@@ -21,6 +22,9 @@ class BLUpload {
 	
 	function setTargetDirectory($_dir){
 		$this->target_directory=$_dir;
+	}
+	function setFileName($n){
+		$this->target_filename=$n;
 	}
 	
 	function startUpload(){
@@ -62,7 +66,11 @@ class BLUpload {
 		if (strpos($contentType, "multipart") !== false) {
 			if (isset($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
 				// Open temp file
-				$outfile=$targetDir . DIRECTORY_SEPARATOR . $fileName;
+				if ($this->target_filename) {
+					$outfile=$targetDir . DIRECTORY_SEPARATOR . $this->target_filename;
+ 				} else {
+					$outfile=$targetDir . DIRECTORY_SEPARATOR . $this->fileName;
+				}
 				$out = fopen($outfile, $chunk == 0 ? "wb" : "ab");
 				if ($out) {
 					// Read binary input stream and append it to temp file
@@ -100,7 +108,7 @@ class BLUpload {
 		}
 
 		// Return JSON-RPC response
-		return $this->returnResponse('{"jsonrpc" : "2.0", "result" : null, "id" : "' . $fileName  . '"}');
+		return $this->returnResponse('{"jsonrpc" : "2.0", "result" : null, "id" : "' . $outfile  . '"}');
 		
 	}
 	
