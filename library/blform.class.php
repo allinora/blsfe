@@ -43,8 +43,14 @@ class BLForm extends BLModel {
 	function setLabel($id, $value){
 		$this->vars[$id]["label"]=$value;
 	}
+	function setValue($id, $value){
+		$this->vars[$id]["value"]=$value;
+	}
 	function setCss($id, $value){
 		$this->vars[$id]["css"]=$value;
+	}
+	function setClass($id, $value){
+		$this->vars[$id]["class"]=$value;
 	}
 	
 	function replaceTray($id, $value){
@@ -97,6 +103,12 @@ class BLForm extends BLModel {
 			case OBJ_DTYPE_INT:	
 				return $this->textbox($id, $field);
 			break;
+			case OBJ_DTYPE_DATE:
+				$this->setClass($id, "date");
+				$field=$this->vars[$id];
+				return $this->textbox($id, $field);
+			break;
+			
 			default:	
 				return $this->textbox($id, $field);
 			break;
@@ -160,6 +172,9 @@ class BLForm extends BLModel {
 		if ($f["css"]){
 			$text.=" style='" . $f["css"] . "'";
 		}
+		if ($f["class"]){
+			$text.=" class='" . $f["class"] . "'";
+		}
 		$text.=" >";
 		return $text;
 	}
@@ -182,7 +197,7 @@ class BLForm extends BLModel {
 		$formData=$this->tray;
 		$data="<form method='POST'><table class='blsfeformtable'>";
 		foreach($formData as $id=>$f){
-			$data.= "<tr";
+			$data.= "\n<tr";
 			if ($f["class"]){
 				$data.=" class='" . $f["class"] . "'";
 			}
