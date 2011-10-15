@@ -23,7 +23,7 @@ class Template_Smarty extends Template {
 	
 	public function __construct () {
 		if (!defined("SMARTY_LIBRARY")) {
-			throw new Exception("SMARTY_LIBRARY is not defined");
+			define("SMARTY_LIBRARY", BLSFE_ROOT . "/3rdparty/smarty/Smarty-3.0.8/libs/Smarty.class.php");
 		}
 		
 		$this->helper=new BLHelper();
@@ -46,11 +46,28 @@ class Template_Smarty extends Template {
 		$this->smarty->auto_literal = false;
 		
 		if (!defined("SMARTY_TEMPLATE_DIR")) {
-			throw new Exception("SMARTY_TEMPLATE_DIR is not defined");
+			// Default template directory 
+			define('SMARTY_TEMPLATE_DIR', ROOT.DS."application".DS."views");
 		}
 		if (!defined("SMARTY_COMPILE_DIR")) {
-			throw new Exception("SMARTY_COMPILE_DIR is not defined");
+			define('SMARTY_COMPILE_DIR', ROOT.DS."tmp".DS."smarty_compile");
 		}
+		if (!defined("SMARTY_CACHE_DIR")) {
+			define('SMARTY_CACHE_DIR', ROOT.DS."tmp".DS."smarty_cache");
+		}
+		if(!defined("SMARTY_LEFT_DELIMETER")){
+			define('SMARTY_LEFT_DELIMETER', "<{");
+		}
+		if(!defined("SMARTY_RIGHT_DELIMETER")){
+			define('SMARTY_RIGHT_DELIMETER', "<{");
+		}
+		
+
+
+
+		// YOUR smarty plugins directory. This will be added to the list of smarty plugins
+		define('SMARTY_LOCAL_PLUGINS_DIR', ROOT.DS."library".DS."smarty-plugins");
+
 
 		$this->smarty->template_dir = SMARTY_TEMPLATE_DIR;
 		$this->smarty->compile_dir = SMARTY_COMPILE_DIR;
