@@ -1,5 +1,6 @@
 <?php
 
+include_once(dirname(__FILE__) . "/bllog.class.php");
 include_once(dirname(__FILE__) . "/blmodel.class.php");
 include_once(dirname(__FILE__) . "/blform.class.php");
 include_once(dirname(__FILE__) . "/blhelper.class.php");
@@ -27,6 +28,7 @@ class BLController {
 		$this->_template->init($controller,$action);
 		
 		$this->helper = new BLHelper();
+		$this->logger = new BLLog();
 
 	}
 	
