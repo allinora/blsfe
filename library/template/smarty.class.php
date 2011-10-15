@@ -28,6 +28,26 @@ class Template_Smarty extends Template {
 		
 		$this->helper=new BLHelper();
 		
+		if (!defined("SMARTY_TEMPLATE_DIR")) {
+			// Default template directory 
+			define('SMARTY_TEMPLATE_DIR', ROOT.DS."application".DS."views");
+		}
+		if (!defined("SMARTY_COMPILE_DIR")) {
+			define('SMARTY_COMPILE_DIR', ROOT.DS."tmp".DS."smarty_compile");
+		}
+		if (!defined("SMARTY_CACHE_DIR")) {
+			define('SMARTY_CACHE_DIR', ROOT.DS."tmp".DS."smarty_cache");
+		}
+		if(!defined("SMARTY_LEFT_DELIMETER")){
+			define('SMARTY_LEFT_DELIMETER', "<{");
+		}
+		if(!defined("SMARTY_RIGHT_DELIMETER")){
+			define('SMARTY_RIGHT_DELIMETER', "}>");
+		}
+		
+		// YOUR smarty plugins directory. This will be added to the list of smarty plugins
+		define('SMARTY_LOCAL_PLUGINS_DIR', ROOT.DS."library".DS."smarty-plugins");
+		
 		include_once(SMARTY_LIBRARY);
 		$this->smarty = new Smarty();
 		
@@ -45,28 +65,10 @@ class Template_Smarty extends Template {
 		// Allow space between delimeters
 		$this->smarty->auto_literal = false;
 		
-		if (!defined("SMARTY_TEMPLATE_DIR")) {
-			// Default template directory 
-			define('SMARTY_TEMPLATE_DIR', ROOT.DS."application".DS."views");
-		}
-		if (!defined("SMARTY_COMPILE_DIR")) {
-			define('SMARTY_COMPILE_DIR', ROOT.DS."tmp".DS."smarty_compile");
-		}
-		if (!defined("SMARTY_CACHE_DIR")) {
-			define('SMARTY_CACHE_DIR', ROOT.DS."tmp".DS."smarty_cache");
-		}
-		if(!defined("SMARTY_LEFT_DELIMETER")){
-			define('SMARTY_LEFT_DELIMETER', "<{");
-		}
-		if(!defined("SMARTY_RIGHT_DELIMETER")){
-			define('SMARTY_RIGHT_DELIMETER', "<{");
-		}
 		
 
 
 
-		// YOUR smarty plugins directory. This will be added to the list of smarty plugins
-		define('SMARTY_LOCAL_PLUGINS_DIR', ROOT.DS."library".DS."smarty-plugins");
 
 
 		$this->smarty->template_dir = SMARTY_TEMPLATE_DIR;
