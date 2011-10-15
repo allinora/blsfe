@@ -14,5 +14,5 @@ use File::Copy;
 unless (-d $appname){
 	print "Creating Directory $appname\n";
 	mkpath($appname);
-	copy("./skel/*", $appname);
 }
+	copy("skel/*", $appname);
