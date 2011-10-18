@@ -231,7 +231,7 @@ function gzipOutput() {
 
 /** Get Required Files **/
 
-// gzipOutput() || ob_start("ob_gzhandler");
+gzipOutput() || ob_start("ob_gzhandler");
 
 
 include_once(dirname(__FILE__) . "/cache.class.php");
@@ -246,6 +246,10 @@ setReporting();
 removeMagicQuotes();
 unregisterGlobals();
 setLanguage();
+
+if (function_exists("_app_preHook")){
+	_app_preHook();
+}
 
 callHook();
 
