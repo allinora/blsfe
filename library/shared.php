@@ -124,11 +124,14 @@ function cleanURL(&$url){
 function callHook() {
 	global $url;
 	global $default;
+	
+	list($url, $params)=split('\?', $_SERVER["REQUEST_URI"]);   // Just get everything before t
+	
 
 	if(empty($url)){
 		$url=$_SERVER["SCRIPT_NAME"];
 	}
-	if ($url=="/index.php"){
+	if ($url=="/index.php" || $url=="/"){
 		unset($url); 
 	}
 	$queryString = array();
@@ -228,7 +231,7 @@ function gzipOutput() {
 
 /** Get Required Files **/
 
- gzipOutput() || ob_start("ob_gzhandler");
+// gzipOutput() || ob_start("ob_gzhandler");
 
 
 include_once(dirname(__FILE__) . "/cache.class.php");
