@@ -26,6 +26,9 @@ class BLUpload {
 	function setFileName($n){
 		$this->target_filename=$n;
 	}
+	function getFileName(){
+		return $this->target_filename;
+	}
 	
 	function startUpload(){
 		$targetDir = $this->target_directory;
@@ -66,11 +69,11 @@ class BLUpload {
 		if (strpos($contentType, "multipart") !== false) {
 			if (isset($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
 				// Open temp file
-				if ($this->target_filename) {
-					$outfile=$targetDir . DIRECTORY_SEPARATOR . $this->target_filename;
- 				} else {
-					$outfile=$targetDir . DIRECTORY_SEPARATOR . $this->fileName;
-				}
+				if (!$this->target_filename) {
+					// No specific name is defined
+					$this->setFileName($fileName);
+				};
+				$outfile=$targetDir . DIRECTORY_SEPARATOR . $this->getFileName();
 				$out = fopen($outfile, $chunk == 0 ? "wb" : "ab");
 				if ($out) {
 					// Read binary input stream and append it to temp file
@@ -108,12 +111,25 @@ class BLUpload {
 		}
 
 		// Return JSON-RPC response
-		return $this->returnResponse('{"jsonrpc" : "2.0", "result" : null, "id" : "' . $outfile  . '"}');
-		
+		return $this->reply("success", 200, "File uploaded successfully", $outfile);
 	}
 	
 	function returnResponse($str){
+		json_decode($str);
 		return $str;
+	}
+	
+	function reply($type, $code, $message, $filepath=null){
+		$res=array();
+		$res["type"]=$type;
+		$res["code"]=$code;
+		$res["message"]=$message;
+		$res["filename"]=$this->target_filename;
+		$res["filepath"]=$filepath;
+		
+		return $res;
+		
+		
 	}
 	
 	
