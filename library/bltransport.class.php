@@ -41,7 +41,7 @@ class BLTransport{
     }
 
 
-    private function getURL($url, $params=array()){
+    public function getURL($url, $params=array()){
         //syslog(LOG_DEBUG, "getURL: $url");
         require_once("HTTP/Request.php");
         $req =new HTTP_Request($url);
