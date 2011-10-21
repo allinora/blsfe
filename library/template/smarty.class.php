@@ -46,7 +46,8 @@ class Template_Smarty extends Template {
 		}
 		
 		// YOUR smarty plugins directory. This will be added to the list of smarty plugins
-		define('SMARTY_LOCAL_PLUGINS_DIR', ROOT.DS."library".DS."smarty-plugins");
+		define('SMARTY_LOCAL_PLUGINS_DIR', ROOT.DS."application" .DS. "helpers".DS."smarty-plugins");
+	
 		
 		include_once(SMARTY_LIBRARY);
 		$this->smarty = new Smarty();
