@@ -1,5 +1,6 @@
 <?php
 
+include_once(dirname(__FILE__)  . "/bllog.class.php");
 class BLTransport{
 
 	function __construct(){
