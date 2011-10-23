@@ -2,6 +2,8 @@
 class Cache_File extends Cache {
 
 	function __construct(){
+		blsfe_load_class("BLLog");
+		$this->logger=new BLLog();
 	}
 	
 	function read($key) {
@@ -10,6 +12,7 @@ class Cache_File extends Cache {
 		}
 		$cache_path=CACHE_PATH . DS .  $key;
 		if (file_exists($cache_path)){
+			$this->logger->log("Cache:read:$key");
 			return unserialize(file_get_contents($cache_path));
 		}
 	}
@@ -31,5 +34,6 @@ class Cache_File extends Cache {
 			
 		}
 		file_put_contents($cache_path, serialize($value));
+		$this->logger->log("Cache:write:$key");
 	}
 }
