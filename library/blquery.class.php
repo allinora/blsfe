@@ -1,5 +1,6 @@
 <?php
 
+include_once(dirname(__FILE__)  . "/bllog.class.php");
 include_once(dirname(__FILE__) . "/bltransport.class.php");
 class BLQuery extends BLTransport{
     protected $_result;
@@ -15,7 +16,11 @@ class BLQuery extends BLTransport{
 	}
 
 	public function __call($action, $params){
-        return $this->callBusinessLogicService($this->_model . "/$action" , $params);
+
+		// print "Calling $action with <pre>" . print_r($params, true) . "</pre>";
+		
+		
+        return $this->callBusinessLogicService($this->_model . "/$action" , $params[0], $params[1] , $params[2]);
 	}
 
     public function get($id){

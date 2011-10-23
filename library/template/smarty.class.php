@@ -46,7 +46,8 @@ class Template_Smarty extends Template {
 		}
 		
 		// YOUR smarty plugins directory. This will be added to the list of smarty plugins
-		define('SMARTY_LOCAL_PLUGINS_DIR', ROOT.DS."library".DS."smarty-plugins");
+		define('SMARTY_LOCAL_PLUGINS_DIR', ROOT.DS."application" .DS. "helpers".DS."smarty-plugins");
+	
 		
 		include_once(SMARTY_LIBRARY);
 		$this->smarty = new Smarty();
@@ -85,12 +86,19 @@ class Template_Smarty extends Template {
 	}
 	
 	public function render ($noWrapper=0) {
-		//echo "XXX Smarty_template.render(templateFile=".$this->templateFile.")<br>\n";
+		//echo "XXX Smarty_template.render(noWrapper=$noWrapper, templateFile=".$this->templateFile.")<br>\n";
+		$res="";
+		$content=$this->smarty->fetch($this->templateFile);
+		
 		if ($noWrapper) {
-			$this->smarty->display($this->templateFile);
+			$res=$content;
 		} else {
-			$this->renderInWrapper();
+			$wrapper=$this->smarty->template_dir . "/wrapper.html";
+			$this->set("content", $content);
+			$res=$this->smarty->fetch($wrapper);
+			//$this->renderInWrapper();
 		}
+		print $res;
 	}
 	
 	public function fetch () {
@@ -98,12 +106,15 @@ class Template_Smarty extends Template {
 	}
 	
 	private function renderInWrapper () {
+		// Not using this any more. Was not propogating smarty vars to the master template
 		//open the generic application wrapper template
+		/*
 		$C = __CLASS__;
 		$st = new $C();
 		$st->init(null, "wrapper");
 		$st->set("content", $this->fetch());
 		$st->render(true);
+		*/
 	}
 
 }
