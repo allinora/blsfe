@@ -22,8 +22,76 @@ class BLTranslate extends BLTransport{
 	    $projects=$this->callBusinessLogicService("/core/po/string/getProjects");
 		return $projects;
 	}
+
+
+	private  function getStringWithTranslations($id){
+		$_params["id"]=$id;
+	    $result=$this->callBusinessLogicService("/core/po/string/getStringWithTranslations", $_params);
+		return $result;
+		
+	}
+
+	public function handle(){
+		$data="";
+		
+		if ($_REQUEST["project"]){
+			$_SESSION["PO_project"]=$_REQUEST["project"];
+		}
+		if ($_REQUEST["language"]){
+			$_SESSION["PO_language"]=$_REQUEST["language"];
+		}
+		if ($_REQUEST["q"]){
+			$_SESSION["PO_q"]=$_REQUEST["q"];
+		}
+		
+		$data.=$this->searchForm($_SESSION["PO_project"],$_SESSION["PO_language"],$_SESSION["PO_q"]);
+		if ($_REQUEST["op"]=="search"){
+			$data.=$this->searchResult($_REQUEST["q"], $_REQUEST["project"], $_REQUEST["language"]);
+		}
+		if ($_REQUEST["op"]=="edit"){
+			$data.=$this->editForm($_REQUEST["id"]);
+		}
+		
+		return $data;
+	}
 	
-	public function search($string, $project="", $lang=""){
+	private function editForm($id){
+		$x=$this->getStringWithTranslations($id);
+		print "<pre>" . print_r($x, true) . "</pre>";
+		
+	}
+	
+	
+	public function searchResult($string, $project="", $lang=""){
+		$result=$this->search($string, $project, $lang);
+		if (!is_array($result)){
+			$data="No result found";
+			return $data;
+		}
+
+		$data="<div style='max-width: 600px;'>";
+		$languages=$this->getLanguages();
+		foreach($result as $r){
+			$data.="\n<form>";
+			$data.="\n<input type='hidden' name='op' value='edit'>";
+			$data.="\n<input type='hidden' name='id' value='" . $r["id"]. "'>";
+			$data.="\n<table border=1>";
+			$data.="\n<tr><th>Project</th><td>"  . $r["project"] . "</td></tr>";
+			$data.="\n<tr><th>Source</th><td>"  . htmlentities($r["msgid"]) . "</td></tr>";
+			foreach($languages as $l){
+				$data.="\n<tr><th>$l</th><td>"  . htmlentities($r["translations"][$l]["msgstr"]) . "</td></tr>";
+			}
+			$data.="\n</table>";
+			$data.="\n<input type='submit' value='edit' onclick='this.form.submit()'>";
+			$data.="\n</form>";
+			$data.="<hr />";
+		}
+		$data.="</div>";
+		return $data;
+		print "<pre>" . print_r($result, true) . "</pre>";
+	}
+	
+	private  function search($string, $project="", $lang=""){
 		$_params["q"]=$string;
 		$_params["project"]=$project;
 		$_params["language"]=$lang;
@@ -39,17 +107,32 @@ class BLTranslate extends BLTransport{
 	
 	public function searchForm($project=null,$language=null,$string=null){
 		$projects=$this->getProjects();
-		$data=$this->projectList( $projects, $project);
-		print $data;
-		$data=$this->languageList( $this->getLanguages(), $language);
-		print $data;
+		$data="\n<form>";
+		$data.="\n<input type=hidden name='op' value='search'>";
+		$data.="\nProject";
+		$data.=$this->projectList( $projects, $project);
+		$data.="\nLanguage";
+		$data.=$this->languageList( $this->getLanguages(), $language);
+		$data.="\nText";
+		$data.=$this->searchBox($string);
+		$data.="\n<input type='submit'>";
+		$data.="\n</form>\n\n";
+		return $data;
+	}
+	private function searchBox($string){
+		$data="<input type=text name='q' value='$string'>";
+		return $data;
 	}
 	
 	private function projectList($options, $selected){
 		$data="<select id='project' name='project'>";
 		$data.="<option value=''>Any</option>";
 		foreach($options as $o){
-			$data.="<option value='$o'>$o</option>";
+			$data.="<option value='$o'";
+			if ($o==$selected){
+				$data.=" selected ";
+			}
+			$data.=">$o</option>";
 		}
 		$data.="</select>";
 		return $data;
@@ -60,7 +143,11 @@ class BLTranslate extends BLTransport{
 		$data.="<option value=''>Any</option>";
 		$data.="<option value='00'>Source</option>";
 		foreach($options as $o){
-			$data.="<option value='$o'>$o</option>";
+			$data.="<option value='$o'";
+			if ($o==$selected){
+				$data.=" selected ";
+			}
+			$data.=">$o</option>";
 		}
 		$data.="</select>";
 		return $data;
