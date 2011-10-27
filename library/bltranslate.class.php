@@ -13,7 +13,7 @@ class BLTranslate extends BLTransport{
 	public function translate($string){
 	    $translation=$this->callBusinessLogicService("/core/po/string/getTranslation", array("string"=>trim($string[1]), "language"=>$this->lang, "project"=>$this->project), "GET");
 		//print "<pre>" . print_r($translation, true) . "</pre>";exit;
-	    if ($translation) {
+	    if ($translation["msgstr"]) {
 			return $translation["msgstr"];
 	    }
 	    return "X:" . $string[1];
