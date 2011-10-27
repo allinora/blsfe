@@ -173,7 +173,8 @@ function _runControllerAction($controller, $action, $queryString){
 	$actionName=$action . "Action"; // This is done to avoid clash with reserved function names like list();
 
 	$dispatch = new $controllerName($controller,$action);
-	//print "<pre>" . print_r($queryString, true) . "</pre>";exit;
+	
+	//print "<pre>" . print_r($dispatch, true) . "</pre>";exit;
 	if (method_exists($controllerName, $actionName)) {
 		call_user_func_array(array($dispatch, "beforeAction"), $queryString);
 		
@@ -182,7 +183,12 @@ function _runControllerAction($controller, $action, $queryString){
 		call_user_func_array(array($dispatch, "afterAction"), $queryString);
 		
 		if ($dispatch->render) {
-			$dispatch->display();
+			$_content=$dispatch->getContents();
+			if (function_exists("_app_contentHook")){
+				print _app_contentHook($_content);
+			} else {
+				print $_content;
+			}
 		}
 	}
 }

@@ -40,6 +40,8 @@ class Template {
 	}
 	function render($noWrapper=0) {
 	}	
+	function getContents($noWrapper=0) {
+	}	
 	
 	function __call($name, $params){
 		// Make a warning.

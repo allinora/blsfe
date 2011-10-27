@@ -99,6 +99,9 @@ class BLController {
 	function display () {
 		$this->_template->render($this->doNotRenderHeader);
 	}
+	function getContents() {
+		return $this->_template->getContents($this->doNotRenderHeader);
+	}
 	
 	/*
 	function __destruct() {

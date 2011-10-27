@@ -85,7 +85,7 @@ class Template_Smarty extends Template {
 		$this->smarty->assign($key, $value);
 	}
 	
-	public function render ($noWrapper=0) {
+	public function getContents($noWrapper=0){
 		//echo "XXX Smarty_template.render(noWrapper=$noWrapper, templateFile=".$this->templateFile.")<br>\n";
 		$res="";
 		$content=$this->smarty->fetch($this->templateFile);
@@ -98,6 +98,12 @@ class Template_Smarty extends Template {
 			$res=$this->smarty->fetch($wrapper);
 			//$this->renderInWrapper();
 		}
+		return $res;
+		
+	}
+	
+	public function render ($noWrapper=0) {
+		$res=$this->getContents($noWrapper);
 		print $res;
 	}
 	

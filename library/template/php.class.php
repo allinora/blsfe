@@ -30,6 +30,12 @@ class Template_Php extends Template {
 	}
 	
 	
+	function getContents($noWrapper=0){
+		// Dont really know what to do here yet..
+		return $this->render($noWrapper);
+		
+	}
+	
 	
 	/** Display Template **/
     function render($noWrapper = 0) {
