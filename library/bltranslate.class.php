@@ -51,13 +51,41 @@ class BLTranslate extends BLTransport{
 		if ($_REQUEST["op"]=="edit"){
 			$data.=$this->editForm($_REQUEST["id"]);
 		}
+		if ($_REQUEST["op"]=="update"){
+			$this->updatePO($_REQUEST["id"], $_REQUEST["po"]);
+		}
 		
 		return $data;
 	}
 	
+	private function updatePO($id, $po){
+		print "Updating $id";
+		$_params["id"]=$id;
+		$_params["po"]=$po;
+		print "<pre>" . print_r($_params, true) . "</pre>";
+		
+	    $result=$this->callBusinessLogicService("/core/po/string/updateTranslations", $_params);
+		print "<pre>" . print_r($result, true) . "</pre>";
+		
+		
+	}
+	
 	private function editForm($id){
-		$x=$this->getStringWithTranslations($id);
-		print "<pre>" . print_r($x, true) . "</pre>";
+		$r=$this->getStringWithTranslations($id);
+		//print "<pre>xx" . print_r($r, true) . "</pre>";
+		$data.="\n<form>";
+		$data.="\n<input type='hidden' name='op' value='update'>";
+		$data.="\n<input type='hidden' name='id' value='" . $id. "'>";
+		$data.="\n<table border=1>";
+		$data.="\n<tr><th>Source</th><td>"  . htmlentities($r["msgid"]) . "</td></tr>";
+		foreach($this->getLanguages() as $l){
+			$data.="\n<tr><th>$l</th><td><textarea class='po_textarea' name='po[$l]'>"  . $r["translations"][$l]["msgstr"] . "</textarea></td></tr>";
+		}
+		$data.="\n</table>";
+		$data.="\n<input type='submit' value='update' onclick='this.form.submit()'>";
+		$data.="\n</form>";
+		
+		return $data;
 		
 	}
 	
