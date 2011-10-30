@@ -41,7 +41,6 @@ class BLSystemCCTemplate extends BLTransport{
 	}
 
 	private function saveText(){
-		print "<pre>" . print_r($_REQUEST, true) . "</pre>";
 		if ($_REQUEST["id"]>0){
 			// Do the update
 			$x=$this->callBusinessLogicService("/core/mailer/template/system/data/set", $_REQUEST);
@@ -50,8 +49,8 @@ class BLSystemCCTemplate extends BLTransport{
 			$x=$this->callBusinessLogicService("/core/mailer/template/system/data/add", $_REQUEST);
 		}
 		//print "<pre>" . print_r($x, true) . "</pre>";
-		
 	}
+
 	private function editTemplate($id){
 		$template=$this->getTemplateWithTranslations($id);
 		//print "<pre>" . print_r($template, true) . "</pre>";
