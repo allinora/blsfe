@@ -58,7 +58,7 @@ class BLPage extends BLTransport{
 		//print "<pre>" . print_r($page, true) . "</pre>";
 		$data="<h1>Editing Page: " . $page["name"] . "</h1>";
 		foreach($this->getLanguages() as $l){
-			$data.="<form>";
+			$data.="<form method='POST'>";
 			$data.="<input type='hidden' name='op' value='saveText'>";
 			$data.="<input type='hidden' name='page_id' value='$id'>";
 			$data.="<input type='hidden' name='id' value='" .  $page["translations"][$l]["id"]  . "'>";
@@ -66,15 +66,15 @@ class BLPage extends BLTransport{
 			$data.="$l<table border=1>";
 			$data.="<tr>";
 			$data.="<th>Title</th>";
-			$data.="<td><input type='text' id='title' name='title' value='".$page["translations"][$l]["title"] . "'></td>";
+			$data.="<td><input type='text' class='title' name='title' value='".$page["translations"][$l]["title"] . "'></td>";
 			$data.="</tr>";
 			$data.="<tr>";
 			$data.="<th>summary</th>";
-			$data.="<td><textarea id='description' name='description'>".$page["translations"][$l]["description"] . "</textarea></td>";
+			$data.="<td><textarea class='description'  name='description'>".$page["translations"][$l]["description"] . "</textarea></td>";
 			$data.="</tr>";
 			$data.="<tr>";
 			$data.="<th>Content</th>";
-			$data.="<td><textarea name='data' id='data'>".$page["translations"][$l]["data"] . "</textarea></td>";
+			$data.="<td><textarea name='data' class='data' >".$page["translations"][$l]["data"] . "</textarea></td>";
 			$data.="</tr>";
 			$data.="</table>";
 			$data.="<input type=submit value='Save version: $l'>";
