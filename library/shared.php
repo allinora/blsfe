@@ -134,6 +134,9 @@ function callHook() {
 	if ($url=="/index.php" || $url=="/"){
 		unset($url); 
 	}
+	cleanURL($url);
+	i18nURL($url);
+	
 	$queryString = array();
 	
 	if (!isset($url) || $url == "") {
