@@ -151,9 +151,12 @@ function coreHook(&$urlArray){
 	array_shift($urlArray);
 	
 
+	// Load the core controller class
+	include_once(BLSFEROOT . "/core/controller.php");
+	
 	//print "controller is $controller";
-	$module_controller_file=BLSFEROOT . DS . 'modules' . DS .  strtolower($module) . DS . "controllers" . DS .  strtolower($_controller) .'.php';
-	$module_controller_index=BLSFEROOT . DS . 'modules' . DS .  strtolower($module) . DS . "controllers" . DS .'index.php';
+	$module_controller_file=BLSFEROOT . DS . 'core' . DS .  strtolower($module) . DS . "controllers" . DS .  strtolower($_controller) .'.php';
+	$module_controller_index=BLSFEROOT . DS . 'core' . DS .  strtolower($module) . DS . "controllers" . DS .'index.php';
 	if (file_exists($module_controller_file)){
 		include_once($module_controller_file);
 	} else {
