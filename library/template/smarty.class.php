@@ -5,7 +5,24 @@ class Template_Smarty extends Template {
 	
 	protected $helper;
 	
+	private function moduleinit($controller, $action){
+		$this->_controller = $controller;
+		$this->_action = $action;
+
+		//print "<br>Controller is $controller<br>";
+		$path_tokens=split("_", strtolower($controller));
+		$_template_file=ROOT . DS . 'application' . DS . 'views' . DS . join("/", $path_tokens) .  DS . $this->_action . '.html';
+		if (file_exists($_template_file)){
+			$this->templateFile = $_template_file;
+		}
+	}
+
 	function init($controller,$action) {
+
+		if (strtolower(substr($controller, 0,7))=="modules"){
+			return $this->moduleinit($controller,$action);
+			
+		}
 		$this->_controller = $controller;
 		$this->_action = $action;
 
