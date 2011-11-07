@@ -134,9 +134,6 @@ function callHook() {
 	if ($url=="/index.php" || $url=="/"){
 		unset($url); 
 	}
-	cleanURL($url);
-	i18nURL($url);
-	
 	$queryString = array();
 	
 	if (!isset($url) || $url == "") {
@@ -155,6 +152,31 @@ function callHook() {
 		//print "<pre>" . print_r($urlArray, true) . "</pre>";exit;
 		$controller = $urlArray[0];
 		array_shift($urlArray);
+		
+		if ($controller=="modules"){
+			//print "<pre>" . print_r($urlArray, true) . "</pre>";;
+			// Load the module
+			$module = $urlArray[0];
+			array_shift($urlArray);
+
+			$_controller = $urlArray[0]; // controller within module
+			array_shift($urlArray);
+			
+	
+			//print "controller is $controller";
+			$module_controller_file=ROOT . DS . 'application' . DS . 'controllers' . DS . 'modules' . DS . strtolower($module) . DS .  strtolower($_controller) .'controller.php';
+			if (file_exists($module_controller_file)){
+				//print "Loading $module_controller_file <br>";
+				include_once($module_controller_file);
+			} else {
+				die("Module controller $module_controller_file does not exists");
+			}
+			
+			// Create the controller class such as Modules_Gallery_List
+			$controller="Modules_" . ucfirst(strtolower($module)) . "_" . ucfirst(strtolower($_controller)); 
+			//print "Controller is $controller<br>";
+			
+		}
 		if (isset($urlArray[0]) && !empty($urlArray[0])) {
 			$action = $urlArray[0];
 			array_shift($urlArray);
@@ -178,20 +200,22 @@ function _runControllerAction($controller, $action, $queryString){
 	$dispatch = new $controllerName($controller,$action);
 	
 	//print "<pre>" . print_r($dispatch, true) . "</pre>";exit;
-	if (method_exists($controllerName, $actionName)) {
-		call_user_func_array(array($dispatch, "beforeAction"), $queryString);
+
+	// Call the init stuff
+	call_user_func_array(array($dispatch, "beforeAction"), $queryString);
+
+	// Dont care if the action does not exist. Let the __call handle it
+	call_user_func_array(array($dispatch, $actionName), $queryString);
+
+	// Call the cleanup stuff
+	call_user_func_array(array($dispatch, "afterAction"), $queryString);
 		
-		call_user_func_array(array($dispatch, $actionName), $queryString);
-		
-		call_user_func_array(array($dispatch, "afterAction"), $queryString);
-		
-		if ($dispatch->render) {
-			$_content=$dispatch->getContents();
-			if (function_exists("_app_contentHook")){
-				print _app_contentHook($_content);
-			} else {
-				print $_content;
-			}
+	if ($dispatch->render) {
+		$_content=$dispatch->getContents();
+		if (function_exists("_app_contentHook")){
+			print _app_contentHook($_content);
+		} else {
+			print $_content;
 		}
 	}
 }
