@@ -153,10 +153,18 @@ function coreHook(&$urlArray){
 
 	//print "controller is $controller";
 	$module_controller_file=BLSFEROOT . DS . 'modules' . DS .  strtolower($module) . DS . "controllers" . DS .  strtolower($_controller) .'.php';
+	$module_controller_index=BLSFEROOT . DS . 'modules' . DS .  strtolower($module) . DS . "controllers" . DS .'index.php';
 	if (file_exists($module_controller_file)){
 		include_once($module_controller_file);
 	} else {
-		die("Module controller $module_controller_file does not exists");
+		// Try the catchall/index controller
+		if (file_exists($module_controller_index)){
+			include_once($module_controller_index);
+		} else {
+			die("Module controller $module_controller_file does not exists<br>The index controller $module_controller_index also does not exists");
+			
+		}
+		
 	}
 	
 	// Create the controller class such as Modules_Gallery_List
@@ -197,14 +205,13 @@ function callHook() {
 		$controller = $urlArray[0];
 		array_shift($urlArray);
 		
-		if ($controller=="modules"){
+		if ($controller=="modules"){ // application modules
 			$controller=moduleHook($urlArray);
 		}
-		if ($controller=="core"){
+		if ($controller=="core"){  // Core modules bundled with the framework
 			$controller=coreHook($urlArray);
 		}
-		
-		
+	
 		if (isset($urlArray[0]) && !empty($urlArray[0])) {
 			$action = $urlArray[0];
 			array_shift($urlArray);
