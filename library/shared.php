@@ -16,24 +16,18 @@ function setReporting() {
 
 /** Takes care of setting the LANG cst **/
 function setLanguage () {
-	global $url;
+	global $url,$lang;
 	if (!defined("LANGUAGES")){
 		return;
 	}	
-	$languages = explode("|", LANGUAGES);
-	$lang = $languages[0]; //fallback to default if none specified
-	
-	//let's pick the lang token from the url first, if any
-	$slash = strpos($url, "/");
-	$slash = $slash === false ? -1 : $slash;
-	$t1 = $slash < 0 ? $url : substr($url, 0, $slash);
-	if (in_array($t1, $languages)) {
-		$lang = $t1;
-		$url = substr($url, strlen($lang)+1);
+	i18nURL($url);
+	if ($lang){
+		define("LANG", $lang);
+		$date_constant="DATE_FORMAT_".strtoupper(LANG);
+		if (defined($date_constant)){
+		define("DATE_FORMAT", constant($date_constant));
+		}
 	}
-	
-	define("LANG", $lang);
-	define("DATE_FORMAT", constant("DATE_FORMAT_".strtoupper(LANG)));
 }
 
 /** Check for Magic Quotes and kill them **/
@@ -96,15 +90,16 @@ function routeURL($url) {
 }
 
 function i18nURL(&$url){
+	global $lang;
 	if (!defined('LANGUAGES')){
 		return;
 	}
 	// Get the language from the url
-	
+	cleanURL($url);
 	if (preg_match("@^(" . LANGUAGES . ")$@", $url, $x)){
-		$lang=$x[0];
+		$lang=$x[1];
 	} elseif (preg_match("@^(" . LANGUAGES . ")/@", $url, $x)){
-		$lang=$x[0];
+		$lang=$x[1];
 	}
 	
 	if (isset($lang)){
