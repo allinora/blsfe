@@ -1,2 +1,5 @@
 Use pecl_http to do the http requests instead of depending on pear's HTTP_Request
+add minify library
+add basic framework files such as jquery, jquery-ui, plupload, ckeditor, etc
+
 
