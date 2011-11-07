@@ -119,6 +119,50 @@ function cleanURL(&$url){
 }
 
 
+function moduleHook(&$urlArray){
+	//print "<pre>" . print_r($urlArray, true) . "</pre>";;
+	// Load the module
+	$module = $urlArray[0];
+	array_shift($urlArray);
+
+	$_controller = $urlArray[0]; // controller within module
+	array_shift($urlArray);
+	
+
+	//print "controller is $controller";
+	$module_controller_file=ROOT . DS . 'application' . DS . 'controllers' . DS . 'modules' . DS . strtolower($module) . DS .  strtolower($_controller) .'controller.php';
+	if (file_exists($module_controller_file)){
+		include_once($module_controller_file);
+	} else {
+		die("Module controller $module_controller_file does not exists");
+	}
+	
+	// Create the controller class such as Modules_Gallery_List
+	$controller="Modules_" . ucfirst(strtolower($module)) . "_" . ucfirst(strtolower($_controller)); 
+	return $controller;
+}
+function coreHook(&$urlArray){
+	//print "<pre>" . print_r($urlArray, true) . "</pre>";;
+	// Load the core module
+	$module = $urlArray[0];
+	array_shift($urlArray);
+
+	$_controller = $urlArray[0]; // controller within module
+	array_shift($urlArray);
+	
+
+	//print "controller is $controller";
+	$module_controller_file=BLSFEROOT . DS . 'modules' . DS .  strtolower($module) . DS . "controllers" . DS .  strtolower($_controller) .'.php';
+	if (file_exists($module_controller_file)){
+		include_once($module_controller_file);
+	} else {
+		die("Module controller $module_controller_file does not exists");
+	}
+	
+	// Create the controller class such as Modules_Gallery_List
+	$controller="Core_" . ucfirst(strtolower($module)) . "_" . ucfirst(strtolower($_controller)); 
+	return $controller;
+}
 /** Main Call Function **/
 
 function callHook() {
@@ -154,29 +198,13 @@ function callHook() {
 		array_shift($urlArray);
 		
 		if ($controller=="modules"){
-			//print "<pre>" . print_r($urlArray, true) . "</pre>";;
-			// Load the module
-			$module = $urlArray[0];
-			array_shift($urlArray);
-
-			$_controller = $urlArray[0]; // controller within module
-			array_shift($urlArray);
-			
-	
-			//print "controller is $controller";
-			$module_controller_file=ROOT . DS . 'application' . DS . 'controllers' . DS . 'modules' . DS . strtolower($module) . DS .  strtolower($_controller) .'controller.php';
-			if (file_exists($module_controller_file)){
-				//print "Loading $module_controller_file <br>";
-				include_once($module_controller_file);
-			} else {
-				die("Module controller $module_controller_file does not exists");
-			}
-			
-			// Create the controller class such as Modules_Gallery_List
-			$controller="Modules_" . ucfirst(strtolower($module)) . "_" . ucfirst(strtolower($_controller)); 
-			//print "Controller is $controller<br>";
-			
+			$controller=moduleHook($urlArray);
 		}
+		if ($controller=="core"){
+			$controller=coreHook($urlArray);
+		}
+		
+		
 		if (isset($urlArray[0]) && !empty($urlArray[0])) {
 			$action = $urlArray[0];
 			array_shift($urlArray);

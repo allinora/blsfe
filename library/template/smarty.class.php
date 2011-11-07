@@ -8,8 +8,6 @@ class Template_Smarty extends Template {
 	private function moduleinit($controller, $action){
 		$this->_controller = $controller;
 		$this->_action = $action;
-
-		//print "<br>Controller is $controller<br>";
 		$path_tokens=split("_", strtolower($controller));
 		$_template_file=ROOT . DS . 'application' . DS . 'views' . DS . join("/", $path_tokens) .  DS . $this->_action . '.html';
 		if (file_exists($_template_file)){
@@ -17,10 +15,33 @@ class Template_Smarty extends Template {
 		}
 	}
 
+	private function coreinit($controller, $action){
+		$this->_controller = $controller;
+		$this->_action = $action;
+		$path_tokens=split("_", strtolower($controller));
+		array_shift($path_tokens); // remove the core
+		$module=array_shift($path_tokens); // get the module name
+		$c=array_shift($path_tokens); // get the controller name
+		
+		
+		
+		$_template_file=BLSFEROOT . DS . 'modules' .DS . $module . DS . "views" . DS . $c . DS .  $this->_action . '.html';
+		if (file_exists($_template_file)){
+			$this->templateFile = $_template_file;
+		} else {
+			// Just kill the processing here, no need to propogate to smarty ..
+			throw new Exception("Smarty view file [ $_template_file ]not found");
+		}
+	}
+
 	function init($controller,$action) {
 
 		if (strtolower(substr($controller, 0,7))=="modules"){
 			return $this->moduleinit($controller,$action);
+			
+		}
+		if (strtolower(substr($controller, 0,4))=="core"){
+			return $this->coreinit($controller,$action);
 			
 		}
 		$this->_controller = $controller;
@@ -33,7 +54,7 @@ class Template_Smarty extends Template {
 			$this->templateFile = $_template_file;
 		} else {
 			// Just kill the processing here, no need to propogate to smarty ..
-			//throw new Exception("Smarty view file [ $_template_file ]not found");
+			throw new Exception("Smarty view file [ $_template_file ]not found");
 		}
 	}
 	
@@ -106,7 +127,6 @@ class Template_Smarty extends Template {
 		//echo "XXX Smarty_template.render(noWrapper=$noWrapper, templateFile=".$this->templateFile.")<br>\n";
 		$res="";
 		$content=$this->smarty->fetch($this->templateFile);
-		
 		if ($noWrapper) {
 			$res=$content;
 		} else {
