@@ -130,7 +130,7 @@ class Template_Smarty extends Template {
 		if ($noWrapper) {
 			$res=$content;
 		} else {
-			$wrapper=$this->smarty->template_dir . "/wrapper.html";
+			$wrapper=$this->smarty->template_dir . "/" . $this->_wrapper  . ".html";
 			$this->set("content", $content);
 			$res=$this->smarty->fetch($wrapper);
 			//$this->renderInWrapper();

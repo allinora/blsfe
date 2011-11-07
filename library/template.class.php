@@ -6,6 +6,7 @@ class Template {
 	protected $variables = array();
 	protected $_controller;
 	protected $_action;
+	protected $_wrapper="wrapper";
 	
 	
 	// Combine factory + Singleton
@@ -42,7 +43,9 @@ class Template {
 	}	
 	function getContents($noWrapper=0) {
 	}	
-	
+	function setWrapper($wrapper){
+		$this->_wrapper=$wrapper;
+	}
 	function __call($name, $params){
 		// Make a warning.
 		print "Please do not use \$this->_template->function any more. Use \$this->helper->fuction instead<br><hr>";
