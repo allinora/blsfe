@@ -14,6 +14,9 @@ class Core_Controller extends BLController {
 			$this->backend_languages[$l["lang"]]=$l;	
 		}
 		$this->set("languages", $this->backend_languages);
+		
+		$this->set("coremodules", array("pages", "images", "translations"));
+		$this->set("appmodules", array("companies"));
 	}
 	
 	function afterAction(){
