@@ -7,6 +7,7 @@ class Template {
 	protected $_controller;
 	protected $_action;
 	protected $_wrapper="wrapper";
+	protected $_wrapperDir;
 	
 	
 	// Combine factory + Singleton
@@ -45,6 +46,9 @@ class Template {
 	}	
 	function setWrapper($wrapper){
 		$this->_wrapper=$wrapper;
+	}
+	function setWrapperDir($x){
+		$this->_wrapperDir=$x;
 	}
 	function __call($name, $params){
 		// Make a warning.
