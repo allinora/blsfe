@@ -7,14 +7,14 @@ class BLPage extends BLTransport{
 	}
 	
 	public function getPages(){
-	    $pages=$this->callBusinessLogicService("/core/page/getall");
+	    $pages=$this->callBusinessLogicService("/sys/page/getall");
 		return $pages;
 	}
 
 
-	private  function getPageWithTranslations($id){
+	function getPageWithTranslations($id){
 		$_params["id"]=$id;
-	    $result=$this->callBusinessLogicService("/core/page/getPageWithTranslations", $_params);
+	    $result=$this->callBusinessLogicService("/sys/page/getPageWithTranslations", $_params);
 		return $result;
 		
 	}
@@ -23,14 +23,14 @@ class BLPage extends BLTransport{
 		$data="";
 		$data.="<table border=1>";
 		$data.="<thead><tr><th>ID</th><th>Name</th><th>
-		<a href='/pages?op=add'>Add</a></th></tr></thead>";
+		<a href='?op=add'>Add</a></th></tr></thead>";
 		$data.="<tbody>";
 		$pages=$this->getPages();
 		foreach($pages as $p){
 			$data.="<tr>";
 			$data.="<td>" . $p["id"] . "</td>";
 			$data.="<td>" . $p["name"] . "</td>";
-			$data.="<td><a href='/pages?op=edit&id=" . $p["id"]. "'>Edit</a></td>";
+			$data.="<td><a href='?op=edit&id=" . $p["id"]. "'>Edit</a></td>";
 			$data.="</tr>";
 			
 		}
@@ -45,10 +45,10 @@ class BLPage extends BLTransport{
 		//print "<pre>" . print_r($_REQUEST, true) . "</pre>";
 		if ($_REQUEST["id"]>0){
 			// Do the update
-			$x=$this->callBusinessLogicService("/core/page/text/set", $_REQUEST);
+			$x=$this->callBusinessLogicService("/sys/page/text/set", $_REQUEST);
 		} else {
 			// Do the insert
-			$x=$this->callBusinessLogicService("/core/page/text/add", $_REQUEST);
+			$x=$this->callBusinessLogicService("/sys/page/text/add", $_REQUEST);
 		}
 		//print "<pre>" . print_r($x, true) . "</pre>";
 		
@@ -91,7 +91,7 @@ class BLPage extends BLTransport{
 	}
 	private function addPage(){
 		//print "<pre>" . print_r($_REQUEST ,true) . "</pre>";
-		$x=$this->callBusinessLogicService("/core/page/add", $_REQUEST);
+		$x=$this->callBusinessLogicService("/sys/page/add", $_REQUEST);
 		return $x;
 		
 	}
