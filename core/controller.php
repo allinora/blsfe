@@ -3,6 +3,9 @@
 class Core_Controller extends BLController {
 
 	function beforeAction(){
+		global $default;
+		
+		print "<pre>" . print_r($default, true) . "</pre>";
 		$_wrapper_directory=BLSFE_ROOT . "/core/admin/views";
 		$this->setWrapperDir($_wrapper_directory);
 		$this->set("blsfe_template_dir", $_wrapper_directory);
@@ -15,8 +18,8 @@ class Core_Controller extends BLController {
 		}
 		$this->set("languages", $this->backend_languages);
 		
-		$this->set("coremodules", array("pages", "images", "translations", "systememails"));
-		$this->set("appmodules", array("companies"));
+		$this->set("coremodules", $default["modules"]["sys"]);
+		$this->set("appmodules", $default["modules"]["app"]);
 	}
 	
 	function afterAction(){

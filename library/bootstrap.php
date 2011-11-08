@@ -32,6 +32,20 @@ if (!file_exists($appRoutingFile)){
 }
 
 
+if (!defined("MODULESCONFIGFILE")) {
+$modulesConfigFile= ROOT . DS . 'config' . DS . 'modules.php';
+} else {
+$modulesConfigFile= MODULESCONFIGFILE;
+}
+
+if (file_exists($modulesConfigFile)){
+	require_once($modulesConfigFile);
+	if (is_array($modulesConfig)){
+		$default["modules"]=$modulesConfig;
+	}
+}
+
+
 function blsfe_local_exception_handler($exception) {
   echo "Uncaught exception: <font color=red>" , $exception->getMessage(), "</font>\n";
 	if (defined("DEVELOPMENT_ENVIRONMENT") && DEVELOPMENT_ENVIRONMENT === true) {
