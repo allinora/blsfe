@@ -25,12 +25,12 @@ class Template_Smarty extends Template {
 		
 		
 		
-		$_template_file=BLSFEROOT . DS . 'modules' .DS . $module . DS . "views" . DS . $c . DS .  $this->_action . '.html';
+		$_template_file=BLSFE_ROOT . DS . 'core' .DS . $module . DS . "views" . DS . $c . DS .  $this->_action . '.html';
 		if (file_exists($_template_file)){
 			$this->templateFile = $_template_file;
 		} else {
 			// Just kill the processing here, no need to propogate to smarty ..
-			throw new Exception("Smarty view file [ $_template_file ]not found");
+			// throw new Exception("Smarty view file [ $_template_file ]not found");
 		}
 	}
 
@@ -61,7 +61,7 @@ class Template_Smarty extends Template {
 	
 	public function __construct () {
 		if (!defined("SMARTY_LIBRARY")) {
-			define("SMARTY_LIBRARY", BLSFE_ROOT . "/3rdparty/smarty/Smarty-3.0.8/libs/Smarty.class.php");
+			define("SMARTY_LIBRARY", BLSFE_ROOT . "/library/3rdparty/smarty/Smarty-3.0.8/libs/Smarty.class.php");
 		}
 		
 		$this->helper=new BLHelper();
@@ -130,7 +130,11 @@ class Template_Smarty extends Template {
 		if ($noWrapper) {
 			$res=$content;
 		} else {
-			$wrapper=$this->smarty->template_dir . "/" . $this->_wrapper  . ".html";
+			if ($this->_wrapperDir){
+				$wrapper=$this->_wrapperDir . "/" . $this->_wrapper  . ".html";
+			} else {
+				$wrapper=$this->smarty->template_dir . "/" . $this->_wrapper  . ".html";
+			}
 			$this->set("content", $content);
 			$res=$this->smarty->fetch($wrapper);
 			//$this->renderInWrapper();
