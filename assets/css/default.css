@@ -1,0 +1,45 @@
+HTML {
+}
+BODY {
+	padding: 0px;
+	margin: 0px;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+}
+.fbtab.topmenuleft {
+	border-left: 1px solid #1A3C6C;
+	font-size:14px !important;
+}
+.fbtab.topmenuright {
+	border-right: 1px solid #1A3C6C;
+}
+
+.fbtab.active {
+	background-color: #1A3C6C;
+}
+
+#topmenu  a {
+	color: white;
+	text-decoration: none;
+}
+#topmenu {
+	background-color: #254B82;
+	padding: 10px;	
+	height: 21px;
+	color: #333;
+	display: block;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 11px;
+	line-height: 14px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+	text-align: left;
+	border-bottom: 1px solid #1A3C6C;
+}
+
+
+.big {
+	font-size: 24px;
+	background-color: pink;
+}
