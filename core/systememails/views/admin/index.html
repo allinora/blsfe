@@ -1,0 +1,20 @@
+<table>
+<thead>
+<tr>
+	<th>ID</th>
+	<th>Name</th>
+	<th>&nbsp;</th>
+	
+</tr>
+</thead>
+	
+<{foreach from=$aData item=page}>
+<tr>
+	<td><{$page.id}></td>
+	<td><{$page.name}></td>
+	<td><a href="/<{$lang}>/core/systememails/admin/edit/<{$page.id}>">Edit</a></td>
+</tr>
+
+<{/foreach}>
+
+</table>
