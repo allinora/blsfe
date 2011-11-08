@@ -21,11 +21,17 @@ function setLanguage () {
 		return;
 	}	
 	i18nURL($url);
-	if ($lang){
-		define("LANG", $lang);
-		$date_constant="DATE_FORMAT_".strtoupper(LANG);
-		if (defined($date_constant)){
-		define("DATE_FORMAT", constant($date_constant));
+	if (!defined("LANG")){
+		
+		if ($lang){
+			define("LANG", $lang);
+			$date_constant="DATE_FORMAT_".strtoupper(LANG);
+			if (defined($date_constant)){
+			define("DATE_FORMAT", constant($date_constant));
+			}
+		} else {
+			$lang="en";
+			define("LANG", $lang);
 		}
 	}
 }
@@ -101,7 +107,6 @@ function i18nURL(&$url){
 	} elseif (preg_match("@^(" . LANGUAGES . ")/@", $url, $x)){
 		$lang=$x[1];
 	}
-	
 	if (isset($lang)){
 		$url=preg_replace("@^(" . LANGUAGES . ")/*@", "", $url);
 	}
@@ -147,11 +152,11 @@ function coreHook(&$urlArray){
 	
 
 	// Load the core controller class
-	include_once(BLSFEROOT . "/core/controller.php");
+	include_once(BLSFE_ROOT . "/core/controller.php");
 	
 	//print "controller is $controller";
-	$module_controller_file=BLSFEROOT . DS . 'core' . DS .  strtolower($module) . DS . "controllers" . DS .  strtolower($_controller) .'.php';
-	$module_controller_index=BLSFEROOT . DS . 'core' . DS .  strtolower($module) . DS . "controllers" . DS .'index.php';
+	$module_controller_file=BLSFE_ROOT . DS . 'core' . DS .  strtolower($module) . DS . "controllers" . DS .  strtolower($_controller) .'.php';
+	$module_controller_index=BLSFE_ROOT . DS . 'core' . DS .  strtolower($module) . DS . "controllers" . DS .'index.php';
 	if (file_exists($module_controller_file)){
 		include_once($module_controller_file);
 	} else {
@@ -175,9 +180,6 @@ function callHook() {
 	global $url;
 	global $default;
 	
-	list($url, $params)=split('\?', $_SERVER["REQUEST_URI"]);   // Just get everything before t
-	
-
 	if(empty($url)){
 		$url=$_SERVER["SCRIPT_NAME"];
 	}
@@ -258,8 +260,8 @@ function _runControllerAction($controller, $action, $queryString){
 
 function __autoload($className) {
 	// echo "autoload: $className<br/>";
-	if (file_exists(BLSFEROOT . DS . 'library' . DS . strtolower($className) . '.class.php')) {
-		require_once(BLSFEROOT . DS . 'library' . DS . strtolower($className) . '.class.php');
+	if (file_exists(BLSFE_ROOT . DS . 'library' . DS . strtolower($className) . '.class.php')) {
+		require_once(BLSFE_ROOT . DS . 'library' . DS . strtolower($className) . '.class.php');
 	} else if (file_exists(ROOT . DS . 'application' . DS . 'controllers' . DS . strtolower($className) . '.php')) {
 		require_once(ROOT . DS . 'application' . DS . 'controllers' . DS . strtolower($className) . '.php');
 	} else if (file_exists(ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.php')) {
@@ -308,6 +310,7 @@ $cache   = Cache::factory();
 $session = Session::factory();
 session_start();
 
+list($url, $params)=split('\?', $_SERVER["REQUEST_URI"]);   // Just get everything before t
 setReporting();
 removeMagicQuotes();
 unregisterGlobals();
