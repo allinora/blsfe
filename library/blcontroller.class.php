@@ -35,6 +35,10 @@ class BLController {
 	function setWrapper($x){
 		$this->_template->setWrapper($x);
 	}
+
+	function setWrapperDir($x){
+		$this->_template->setWrapperDir($x);
+	}
 	
 	/* 
 	Forward from an action to another action in the same or another controller
