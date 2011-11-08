@@ -6,7 +6,7 @@ if (!defined("ROOT")) {
 	die("Error: ROOT constant is not defined");
 }
 if (!defined("BLSFE_ROOT")) {
-	define("BLSFE_ROOT", dirname(__FILE__));
+	define("BLSFE_ROOT", dirname(__FILE__) . "/../");
 }
 
 ini_set("allow_call_time_pass_reference", true);
