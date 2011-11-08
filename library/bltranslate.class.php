@@ -11,7 +11,7 @@ class BLTranslate extends BLTransport{
 	}
 	
 	public function translate($string){
-	    $translation=$this->callBusinessLogicService("/core/po/string/getTranslation", array("string"=>trim($string[1]), "language"=>$this->lang, "project"=>$this->project), "GET");
+	    $translation=$this->callBusinessLogicService("/sys/po/string/getTranslation", array("string"=>trim($string[1]), "language"=>$this->lang, "project"=>$this->project), "GET");
 	    if (is_array($translation) && isset($translation["msgstr"])) {
 			return $translation["msgstr"];
 	    }
@@ -19,14 +19,14 @@ class BLTranslate extends BLTransport{
 	}
 	
 	public function getProjects(){
-	    $projects=$this->callBusinessLogicService("/core/po/string/getProjects");
+	    $projects=$this->callBusinessLogicService("/sys/po/string/getProjects");
 		return $projects;
 	}
 
 
 	private  function getStringWithTranslations($id){
 		$_params["id"]=$id;
-	    $result=$this->callBusinessLogicService("/core/po/string/getStringWithTranslations", $_params);
+	    $result=$this->callBusinessLogicService("/sys/po/string/getStringWithTranslations", $_params);
 		return $result;
 		
 	}
@@ -64,7 +64,7 @@ class BLTranslate extends BLTransport{
 		$_params["po"]=$po;
 		print "<pre>" . print_r($_params, true) . "</pre>";
 		
-	    $result=$this->callBusinessLogicService("/core/po/string/updateTranslations", $_params);
+	    $result=$this->callBusinessLogicService("/sys/po/string/updateTranslations", $_params);
 		print "<pre>" . print_r($result, true) . "</pre>";
 		
 		
@@ -123,7 +123,7 @@ class BLTranslate extends BLTransport{
 		$_params["q"]=$string;
 		$_params["project"]=$project;
 		$_params["language"]=$lang;
-	    $result=$this->callBusinessLogicService("/core/po/string/search", $_params);
+	    $result=$this->callBusinessLogicService("/sys/po/string/search", $_params);
 		return $result;
 		
 	}
