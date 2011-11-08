@@ -22,7 +22,4 @@ class Core_Controller extends BLController {
 	
 	function afterAction(){
 	}
-	
-
-
 }
