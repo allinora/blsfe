@@ -5,18 +5,22 @@ class Core_Pages_AdminController extends Core_Controller {
 	function beforeAction(){
 		parent::beforeAction();
 		$this->set("tab", "pages");
+		$this->model=new BLModel("sys/page", "id");
 	}
 	function indexAction() {
-		blsfe_load_class("BLPage");
-		$oPage=new BLPage();
-		$pages=$oPage->getPages();
+		$pages=$this->model->getall(1);
 		$this->set("aData", $pages);
+	}
+
+	function addAction() {
+		if ($_SERVER["REQUEST_METHOD"] == "POST"){
+			$this->model->add($_REQUEST);
+			$this->redirect("core", "pages/admin/");
+		}
 	}
 	
 	function editAction($id) {
-		blsfe_load_class("BLPage");
-		$oPage=new BLPage();
-		$pageData=$oPage->getPageWithTranslations($id);
+		$pageData=$this->model->getPageWithTranslations(array("id"=>$id));
 		$page=array();
 		$page["id"]=$pageData["id"];
 		$page["name"]=$pageData["name"];
@@ -38,14 +42,10 @@ class Core_Pages_AdminController extends Core_Controller {
 		$this->render=0;
 		$pageTextModel=new BLModel("sys/page/text", "id", "page_id");
 		if ($_REQUEST["id"]>0){
-			// Do the update
 			$x=$pageTextModel->set($_REQUEST);
 		} else {
-			// Do the insert
 			$x=$pageTextModel->add($_REQUEST);
 		}
-		
-		//print "<pre>" . print_r($x, true) . "</pre>";
 		$this->redirect("core", "pages/admin/edit/" . $_REQUEST["page_id"]);
 	}
 }
