@@ -10,6 +10,10 @@ class Cache_File extends Cache {
 		if (!defined("CACHE_PATH")){
 			return;
 		}
+		if (defined("DEVELOPMENT_ENVIRONMENT")){
+			// Do not read cache in dev
+			return;
+		}
 		$cache_path=CACHE_PATH . DS .  $key;
 		if (file_exists($cache_path)){
 			$this->logger->log("Cache:read:$key");
