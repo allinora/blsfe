@@ -3,6 +3,7 @@ ini_set("date.timezone", 'Europe/Berlin');
 
 /** Configuration Variables **/
 
+define ('APP_NAME', "YourAppName");
 define ('DEVELOPMENT_ENVIRONMENT',true);
 
 define('BASE_URL','/%%appname%%');
