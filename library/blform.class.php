@@ -131,7 +131,7 @@ class BLForm extends BLModel {
 	}
 	
 	function countryList($id, $field){
-		$m=new BLModel("core/country");
+		$m=new BLModel("sys/country");
 		$list=$m->getall(1);
 		$ret=array();
 		foreach($list as $c){
@@ -142,7 +142,7 @@ class BLForm extends BLModel {
 	}
 	
 	function languageList($id, $field){
-		$m=new BLModel("core/language");
+		$m=new BLModel("sys/language");
 		$list=$m->getall(1);
 		$ret=array();
 		foreach($list as $l){
