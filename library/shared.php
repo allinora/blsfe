@@ -81,16 +81,21 @@ function performAction($controller,$action,$queryString = null,$render = 0) {
 
 /** Routing **/
 
-function routeURL($url) {
+function routeURL(&$url) {
 	global $routing;
 
 	if (!isset($routing) || !is_array($routing)){
-		return $url;
+		return;
 	}
+	//print "Routing<br><pre>" . print_r($routing, true) . "</pre>";
 	foreach ( $routing as $pattern => $result ) {
-            if ( preg_match( $pattern, $url ) ) {
-				return preg_replace( $pattern, $result, $url );
+		if ($pattern){
+			//print "PAttern is $pattern, Result is $result<br>";
+            if ( preg_match($pattern, $url,$m) ) {
+				//print "MAtch: <pre>" . print_r($m, true) . "</pre>";
+				$url=preg_replace( $pattern, $result, $url );
 			}
+		}
 	}
 	return ($url);
 }
@@ -194,9 +199,8 @@ function callHook() {
 	} else {
 		//print "URL is $url<br>";
 		cleanURL($url); // Get rid of the junk..
-		//print "URL is $url<br>";
-		i18nURL($url);
-		$url = routeURL($url);
+		i18nURL($url); // Do the language stuff
+		routeURL($url); // Do the routing
 		$urlArray = array();
 		
 		$urlArray = explode("/",$url);
