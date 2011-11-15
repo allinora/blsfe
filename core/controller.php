@@ -11,6 +11,7 @@ class Core_Controller extends BLController {
 		$_wrapper_directory=BLSFE_ROOT . "/core/admin/views";
 		$this->setWrapperDir($_wrapper_directory);
 		$this->set("blsfe_template_dir", $_wrapper_directory);
+		$this->set("blsfe_root", BLSFE_ROOT);
 		
 		$language_model=new BLModel("sys/language", "id");
 		$_languages=$language_model->getall(1);
@@ -91,5 +92,6 @@ class Core_Controller extends BLController {
 	}
 	
 	function afterAction(){
+		$this->set("jslibs", $this->jsLibs);
 	}
 }
