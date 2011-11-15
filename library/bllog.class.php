@@ -7,8 +7,9 @@ class BLLog {
 	}
 	
 	public function log($str){
-		syslog(LOG_WARNING, $str);
-
+		if (is_string($str)){
+			syslog(LOG_WARNING, $str);
+		}
 	}
 }
 
