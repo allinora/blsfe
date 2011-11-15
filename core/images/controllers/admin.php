@@ -6,10 +6,26 @@ class Core_Images_AdminController extends Core_Controller {
 		parent::beforeAction();
 		$this->set("tab", "images");
 		$this->model=new BLModel("sys/image", "id", "image_category_id");
+		$this->jsLibs["pluploader"]=1;
+		
 	}
 	function indexAction() {
 		$this->render=0;
 		$this->redirect("core", "images/admin/list/1");
+	}
+	
+	function addfolderAction($name){
+		$this->render=0;
+		$categoriesModel=new BLModel("sys/image/category", "id");
+		$name=trim(urldecode($name));
+		$x=$categoriesModel->add(array("name"=>$name));
+		if ($x>0){
+			$this->redirect("core", "images/admin/list/$x");
+		} else {
+			$this->errors[]="Error creating folder with this name";
+			$this->redirect("core", "images/admin/list/1");
+			print "<pre>" . print_r($x, true) . "</pre>";
+		}
 	}
 
 	function listAction($category_id) {
@@ -53,7 +69,9 @@ class Core_Images_AdminController extends Core_Controller {
 	}
 
 	function uploadAction($category_id=1) {
-        $this->doNotRenderHeader=1;
+        $this->doNotRenderHeader=0;
+		$this->jsLibs["pluploader"]=1;
+		$this->set("noMenu", true);
 		$this->set("category_id", $category_id);
 	}
 	function addfileAction($filename, $category_id=1){

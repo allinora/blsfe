@@ -18,6 +18,15 @@ $(function() {
 		width: 400,
 		height: 200
 	})
+	
+	$('#newImageCategory').click(function(){
+		if(name=prompt("Name of the Category", "")){
+			_url="/core/images/admin/addfolder/"+escape(name);
+			self.location=_url;
+		}
+		
+		
+	});
 });
 
 </script>
@@ -28,7 +37,6 @@ $(function() {
 	width: 120px;
 }
 .category {
-	border: 1px solid blue;
 	padding: 10px;
 	margin-top: 10px;
 }
@@ -38,8 +46,12 @@ $(function() {
 #uploader {
 	text-align: left;
 }
+#newImageCategory {
+	width: 120px;
+}
 </style>
 
+<{include file="<{$blsfe_root}>/core/images/views/admin/upload.html"}>
 <div id="imageManager">
 	<table border=0 width="100%">
 	<td valign=top id="categoriesContainer">
@@ -50,13 +62,16 @@ $(function() {
 		<{/foreach}>
 	</td>
 	<td valign=top align="left">
-	<div id="uploader"><a class="uploader" href="/core/images/admin/upload/<{$category_id}>">Upload images</a></div>
+	
 	<div id="imagesContainer">
 	<{foreach from=$aData item=image}>
-		<div  style="width: 120px; height: 130px; text-align: center; background-color: lightyellow; border: 1px solid green; float: left; margin: 10px;">
+		<div  style="width: 120px; height: 130px; text-align: center; background-color: lightyellow; border: 1px solid green; float: left; margin: 10px; padding-top: 20px;">
 			<a class="fancybox" rel="group" href="/core/images/admin/show/<{$image.id}>/0/0/<{$image.name}>"><img src="/core/images/admin/show/<{$image.id}>/100/100/<{$image.name}>" width=100 height=100></a>
 			<br>
+			<a href="/core/images/admin/edit/<{$image.id}>">edit</a>
+			<{if $smarty.request.CKEditorFuncNum}>
 			<a href="javascript:void(0)" onclick="returnURL2CKE('/core/images/admin/show/<{$image.id}>')">use</a>
+			<{/if}>
 		</div>
 	<{/foreach}>
 	</div>

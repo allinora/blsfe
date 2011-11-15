@@ -1,30 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-<script type="text/javascript" src="/fwassets/js/jquery/1.6.4/jquery.min.js"></script>
-
-<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.js"></script>
-<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.silverlight.js"></script>
-<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.flash.js"></script>
-<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.html4.js"></script>
-<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.html5.js"></script>
-
-<script type="text/javascript" src="/fwassets/js/json2.js"></script>
-
-</head>
-<body>
 
 
-<h1>Upload Images</h1>
 <div id="container">
-    <div id="filelist">Init</div>
-    <a id="pickfiles" href="javascript:;">[Select files]</a> 
-    <a style="display: none" id="uploadfiles" href="javascript:;">[Upload files]</a>
+	<button id="newImageCategory" class="button">New Category</button> 
+    <button id="pickfiles" class="button">Select images to upload</button> 
 </div>
-<div id="debug" style="background-color: pink;">DEBUG</div>
+<div id="debug" style="background-color: pink; display:none;">DEBUG</div>
 
 <script type="text/javascript">
-
 $(function() {
 	var uploader = new plupload.Uploader({
 		runtimes : 'gears,html5,flash,silverlight,browserplus',
@@ -43,12 +25,9 @@ $(function() {
 	});
 
 	uploader.bind('Init', function(up, params) {
-		$('#filelist').html("<div>Current runtime: " + params.runtime + "</div>");
-	});
-
-	$('#uploadfiles').click(function(e) {
-		uploader.start();
-		e.preventDefault();
+		//$('#filelist').html("<div>Current runtime: " + params.runtime + "</div>");
+		$('#pickfiles').show();
+		//$('#pickfiles').trigger('click');
 	});
 
 	uploader.init();
@@ -81,15 +60,17 @@ $(function() {
 
 	uploader.bind('FileUploaded', function(up, file, res) {
 		$('#' + file.id + " b").html("100%");
-		$("#debug").append(res.response);
+		$("#container").append(res.response);
 		x=JSON.parse(res.response);
-		$.get("/core/images/admin/addfile/"+ x.filename + "/<{$category_id}>");
+		_url="/core/images/admin/addfile/"+ x.filename + "/<{$category_id}>";
+		$("#debug").load(_url);
 	});
 	
 	uploader.bind('StateChanged', function(uploader) {
 	        if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
 			// All files are uploaded;
-			parent.window.location.reload();
+			//parent.window.location.reload();
+			self.window.location.reload();
 	        }
 	    });	
 });
