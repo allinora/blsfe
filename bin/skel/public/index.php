@@ -1,7 +1,6 @@
 <?php	
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(dirname(__FILE__)));
-define('BLSFE_ROOT', '/Users/aghaffar/www/blsfe');
 
 
 
@@ -9,16 +8,11 @@ define('BLSFE_ROOT', '/Users/aghaffar/www/blsfe');
 $blsfe_locations=array(
         '/opt/git/blsfe',
         "/Users/aghaffar/www/blsfe",
-        "/home/tipi/blsfe"
+        "/home/tipi/blsfe",
+	"/usr/local/blsfe"
 );
 
-$_blsfe_bootstrap_file=_findBootstrap($blsfe_locations);
-
-foreach($blsfe_locations as $l){
-	if (file_exists($l)){
-    	$_blsfe_bootstrap_file=$l;
-    }
-}
+$_blsfe_bootstrap_file=_findBootstrap($blsfe_locations) . "/library/bootstrap.php";
 
 
 
@@ -54,4 +48,3 @@ if ($_SERVER["BLSFE_BOOTSTRAP_FILE"]){
         }
 }
 
-require_once (BLSFEROOT . DS . 'library' . DS . 'bootstrap.php');
