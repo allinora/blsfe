@@ -30,6 +30,11 @@ class BLUpload {
 		return $this->target_filename;
 	}
 	
+	function cleanFileName($fileName){
+		$fileName = preg_replace('/[^\w\._]+/', '', $fileName);
+		return $fileName;
+	}
+	
 	function startUpload(){
 		$targetDir = $this->target_directory;
 		// Get parameters
@@ -38,7 +43,7 @@ class BLUpload {
 		$fileName = isset($_REQUEST["name"]) ? $_REQUEST["name"] : '';
 
 		// Clean the fileName for security reasons
-		$fileName = preg_replace('/[^\w\._]+/', '', $fileName);
+		$fileName = $this->cleanFileName($fileName);
 
 		// Make sure the fileName is unique but only if chunking is disabled
 		if ($chunks < 2 && file_exists($targetDir . DIRECTORY_SEPARATOR . $fileName)) {
@@ -126,10 +131,8 @@ class BLUpload {
 		$res["message"]=$message;
 		$res["filename"]=$this->target_filename;
 		$res["filepath"]=$filepath;
-		
+		$res["mime_type"]=$_FILES['file']["type"];
 		return $res;
-		
-		
 	}
 	
 	
