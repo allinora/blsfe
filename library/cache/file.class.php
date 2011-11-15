@@ -10,7 +10,7 @@ class Cache_File extends Cache {
 		if (!defined("CACHE_PATH")){
 			return;
 		}
-		if (defined("DEVELOPMENT_ENVIRONMENT")){
+		if (defined("DEVELOPMENT_ENVIRONMENT") && DEVELOPMENT_ENVIRONMENT){
 			// Do not read cache in dev
 			return;
 		}
