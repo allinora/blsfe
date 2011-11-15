@@ -24,7 +24,9 @@ $(function() {
 			_url="/core/images/admin/addfolder/"+escape(name);
 			self.location=_url;
 		}
-		
+	});
+	$(".category").click(function(){
+		self.location=jQuery(this).attr("href");
 		
 	});
 });
@@ -40,11 +42,9 @@ $(function() {
 	padding: 10px;
 	margin-top: 10px;
 }
-.category.selected {
-	background-color: pink;
-}
-#uploader {
-	text-align: left;
+.category:hover {
+	background-color: #ccc;
+	cursor: pointer;
 }
 #newImageCategory {
 	width: 120px;
@@ -56,8 +56,7 @@ $(function() {
 	<table border=0 width="100%">
 	<td valign=top id="categoriesContainer">
 		<{foreach from=$categories item=category}>
-		<div class="category <{if $category.id eq $category_id}> selected <{/if}>"><a href="/core/images/admin/list/<{$category.id}>?CKEditorFuncNum=<{$smarty.request.CKEditorFuncNum}>">
-			<{$category.name}></a></div>
+		<div href="/core/images/admin/list/<{$category.id}>?CKEditorFuncNum=<{$smarty.request.CKEditorFuncNum}>" class="category fbgreybox <{if $category.id eq $category_id}> fbbluebox <{/if}>"><{$category.name}></div>
 		
 		<{/foreach}>
 	</td>
@@ -65,7 +64,7 @@ $(function() {
 	
 	<div id="imagesContainer">
 	<{foreach from=$aData item=image}>
-		<div  style="width: 120px; height: 130px; text-align: center; background-color: lightyellow; border: 1px solid green; float: left; margin: 10px; padding-top: 20px;">
+		<div class="fbbluebox"  style="width: 120px; height: 130px; text-align: center; float: left; margin: 10px; padding-top: 20px;">
 			<a class="fancybox" rel="group" href="/core/images/admin/show/<{$image.id}>/0/0/<{$image.name}>"><img src="/core/images/admin/show/<{$image.id}>/100/100/<{$image.name}>" width=100 height=100></a>
 			<br>
 			<a href="/core/images/admin/edit/<{$image.id}>">edit</a>
