@@ -3,7 +3,11 @@
 class Core_Controller extends BLController {
 
 	function beforeAction(){
-		global $default;
+		global $default, $cache;
+
+		// Set the reference to cache
+		$this->cache=$cache;
+		
 		$_wrapper_directory=BLSFE_ROOT . "/core/admin/views";
 		$this->setWrapperDir($_wrapper_directory);
 		$this->set("blsfe_template_dir", $_wrapper_directory);
