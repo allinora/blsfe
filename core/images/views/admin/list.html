@@ -1,0 +1,66 @@
+
+<script>
+<{if $smarty.request.CKEditorFuncNum}>
+	function returnURL2CKE(url){
+		window.opener.CKEDITOR.tools.callFunction(<{$smarty.request.CKEditorFuncNum}>, url);
+		self.close();
+	}
+<{/if}>
+
+$(function() {
+
+	$("a.fancybox").fancybox();
+	$("a.uploader").fancybox({
+		type: 'iframe',
+		modal: false,
+		autoDimensions: false,
+		autoScale: false,
+		width: 400,
+		height: 200
+	})
+});
+
+</script>
+
+<style>
+
+#categoriesContainer {
+	width: 120px;
+}
+.category {
+	border: 1px solid blue;
+	padding: 10px;
+	margin-top: 10px;
+}
+.category.selected {
+	background-color: pink;
+}
+#uploader {
+	text-align: left;
+}
+</style>
+
+<div id="imageManager">
+	<table border=0 width="100%">
+	<td valign=top id="categoriesContainer">
+		<{foreach from=$categories item=category}>
+		<div class="category <{if $category.id eq $category_id}> selected <{/if}>"><a href="/core/images/admin/list/<{$category.id}>?CKEditorFuncNum=<{$smarty.request.CKEditorFuncNum}>">
+			<{$category.name}></a></div>
+		
+		<{/foreach}>
+	</td>
+	<td valign=top align="left">
+	<div id="uploader"><a class="uploader" href="/core/images/admin/upload/<{$category_id}>">Upload images</a></div>
+	<div id="imagesContainer">
+	<{foreach from=$aData item=image}>
+		<div  style="width: 120px; height: 130px; text-align: center; background-color: lightyellow; border: 1px solid green; float: left; margin: 10px;">
+			<a class="fancybox" rel="group" href="/core/images/admin/show/<{$image.id}>/0/0/<{$image.name}>"><img src="/core/images/admin/show/<{$image.id}>/100/100/<{$image.name}>" width=100 height=100></a>
+			<br>
+			<a href="javascript:void(0)" onclick="returnURL2CKE('/core/images/admin/show/<{$image.id}>')">use</a>
+		</div>
+	<{/foreach}>
+	</div>
+	</td>
+</table>
+
+</div>

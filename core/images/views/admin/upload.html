@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<script type="text/javascript" src="/fwassets/js/jquery/1.6.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.js"></script>
+<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.silverlight.js"></script>
+<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.flash.js"></script>
+<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.html4.js"></script>
+<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.html5.js"></script>
+
+<script type="text/javascript" src="/fwassets/js/json2.js"></script>
+
+</head>
+<body>
+
+
+<h1>Upload Images</h1>
+<div id="container">
+    <div id="filelist">Init</div>
+    <a id="pickfiles" href="javascript:;">[Select files]</a> 
+    <a style="display: none" id="uploadfiles" href="javascript:;">[Upload files]</a>
+</div>
+<div id="debug" style="background-color: pink;">DEBUG</div>
+
+<script type="text/javascript">
+
+$(function() {
+	var uploader = new plupload.Uploader({
+		runtimes : 'gears,html5,flash,silverlight,browserplus',
+		browse_button : 'pickfiles',
+		container : 'container',
+		multi_selection: true,
+		max_file_size : '2000mb',
+		chunk_size: '1mb',
+		url : '/core/images/admin/uploadfile',
+		flash_swf_url : '/fwassets/js/plupload/js/plupload.flash.swf',
+		silverlight_xap_url : '/fwassets/js/plupload/js/plupload.silverlight.xap',
+		filters : [
+		{title : "PDF files", extensions : "pdf"},
+		{title : "Images files", extensions : "jpg,gif,png"},
+		],
+	});
+
+	uploader.bind('Init', function(up, params) {
+		$('#filelist').html("<div>Current runtime: " + params.runtime + "</div>");
+	});
+
+	$('#uploadfiles').click(function(e) {
+		uploader.start();
+		e.preventDefault();
+	});
+
+	uploader.init();
+
+	uploader.bind('FilesAdded', function(up, files) {
+		$.each(files, function(i, file) {
+			$('#filelist').append(
+				'<div id="' + file.id + '">' +
+				file.name + ' (' + plupload.formatSize(file.size) + ') <b></b>' +
+			'</div>');
+		});
+
+		up.refresh(); // Reposition Flash/Silverlight
+		up.start();
+	});
+
+	uploader.bind('UploadProgress', function(up, file, res) {
+		$('#' + file.id + " b").html(file.percent + "%");
+	});
+
+	uploader.bind('Error', function(up, err) {
+		$('#filelist').append("<div>Error: " + err.code +
+			", Message: " + err.message +
+			(err.file ? ", File: " + err.file.name : "") +
+			"</div>"
+		);
+
+		up.refresh(); // Reposition Flash/Silverlight
+	});
+
+	uploader.bind('FileUploaded', function(up, file, res) {
+		$('#' + file.id + " b").html("100%");
+		$("#debug").append(res.response);
+		x=JSON.parse(res.response);
+		$.get("/core/images/admin/addfile/"+ x.filename + "/<{$category_id}>");
+	});
+	
+	uploader.bind('StateChanged', function(uploader) {
+	        if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
+			// All files are uploaded;
+			parent.window.location.reload();
+	        }
+	    });	
+});
+
+</script>

@@ -1,0 +1,79 @@
+<script src="/fwassets/js/ckeditor/ckeditor.js"></script>
+<script src="/fwassets/js/ckeditor/adapters/jquery.js"></script>
+<script type="text/javascript"> 
+jQuery(document).ready(function() {
+        jQuery('.ckeditor').ckeditor({
+            filebrowserBrowseUrl : '/browser/',
+	        customConfig : '/fwassets/admin/ckeditor.js',
+
+			toolbar : 'Full',
+			height: '400px',
+			width: '100%'
+			
+        });
+});
+</script>
+<style>
+.page-title {
+	width: 600px;
+}
+.page-description {
+	width: 600px;
+	height: 40px;
+}
+
+</style>
+
+<div id="tabs" style="width: 800px">
+<ul>
+<{foreach from=$aData["translations"] item=l}>
+<li><a href="#tabs-<{$l.lang}>"><{$l.lang}></a></li>
+<{/foreach}>
+</ul>	
+
+
+<{foreach from=$aData["translations"] item=l}>
+<div id="tabs-<{$l.lang}>">
+	<form method="POST" action="/core/pages/admin/save">
+	<input type="hidden" name="id" value="<{$l.id}>">
+	<input type="hidden" name="page_id" value="<{$l.page_id}>">
+	<input type="hidden" name="lang" value="<{$l.lang}>">
+	<table>
+		<tr class="even">
+			<td style="width:130px">Name</td>
+			<td><{$aData.name}></td>
+		</tr>
+		<tr class="odd">
+			<td style="width:130px">Translation ID</td>
+			<td><{$l.id}></td>
+		</tr>
+		<tr class="even">
+			<td style="width:130px">Last updated</td>
+			<td><{$l.ts}></td>
+		</tr>
+		<tr class="odd">
+			<td style="width:130px">Title</td>
+			<td><input type="text" name="title" class="page-title" size=80 value="<{$l.title}>"></td>
+		</tr> 
+		<tr class="even">
+			<td>Meta Description</td>
+			<td><textarea name="description"  class="page-description" cols=50 rows=2><{$l.description}></textarea></td>
+		</tr>
+		<tr class="odd">
+			<td colspan=2>Data
+				<br>
+			<textarea name="data" id="data-<{$l.lang}>" class="ckeditor" cols=50 rows=30><{$l.data}></textarea></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="right"><button id="save" class="color" name="save" type="submit">Save <{$l.lang}></button></td>
+		</tr>
+    </table>
+	</form>
+</div>
+<{/foreach}>
+
+
+
+
+</div>
+	
