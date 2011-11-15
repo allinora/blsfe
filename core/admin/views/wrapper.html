@@ -15,10 +15,23 @@
 <script type="text/javascript" src="/fwassets/js/jquery/ui/1.8.16/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/fwassets/js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 <script type="text/javascript" src="/fwassets/js/jquery/tableSorter/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="/fwassets/js/json2.js"></script>
 <script type="text/javascript" src="/fwassets/js/adminbootstrap.js"></script>
+
+<{if $jslibs.pluploader}>
+<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.js"></script>
+<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.silverlight.js"></script>
+<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.flash.js"></script>
+<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.html4.js"></script>
+<script type="text/javascript" src="/fwassets/js/plupload/js/plupload.html5.js"></script>
+
+
+<{/if}>
 
 </head>
 <body class="fbbody">
+<{if ! $noMenu}>
 <{ include file="$blsfe_template_dir/menu.html" }>
+<{/if}>
 <{$content}>
 </body>
