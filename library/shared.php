@@ -158,6 +158,7 @@ function coreHook(&$urlArray){
 
 	// Load the core controller class
 	include_once(BLSFE_ROOT . "/core/controller.php");
+	include_once(BLSFE_ROOT . "/core/admin.php");
 	
 	//print "controller is $controller";
 	$module_controller_file=BLSFE_ROOT . DS . 'core' . DS .  strtolower($module) . DS . "controllers" . DS .  strtolower($_controller) .'.php';
