@@ -6,6 +6,7 @@ class Core_Images_AdminController extends Core_Controller {
 		parent::beforeAction();
 		$this->set("tab", "images");
 		$this->model=new BLModel("sys/image", "id", "image_category_id");
+		$this->model->cache(false); // Do not cache the result of this model
 		$this->jsLibs["pluploader"]=1;
 		
 	}
@@ -30,6 +31,7 @@ class Core_Images_AdminController extends Core_Controller {
 
 	function listAction($category_id) {
 		$categoriesModel=new BLModel("sys/image/category", "id");
+		$categoriesModel->cache(false); // Do not cache the result of this cal
 		$categories=$categoriesModel->getAll(1);
 		$this->set("categories", $categories);
 		$this->set("category_id", $category_id);
