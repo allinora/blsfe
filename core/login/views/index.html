@@ -1,7 +1,27 @@
-<h1>Login</h1>
-Welcome to <{$smarty.const.APP_NAME}>
+<div id="loginForm"  style="display:block" title="<{$smarty.const.APP_NAME}>">
+
 <form method="POST">
-	LOGIN <input type="text" name="login" size=30>
-	PASS <input type="password" name="passwd" size=30>
-	<input type="submit">
+	<table border=0>
+		<tr>
+			<td>Login</td>
+			<td><input type="text" name="login" size=30></td>
+		</tr>
+		<tr>
+			<td>Password</td>
+			<td><input type="password" name="passwd" size=30></td>
+		</tr>
+		<tr>
+			<td colspan="2" align=right><input type="submit"></td>
+		</tr>
+	</table>
 </form>
+</div>
+
+<script>
+$(function() {
+	$('#loginForm').dialog({
+		'modal': true
+	});
+});
+
+</script>
