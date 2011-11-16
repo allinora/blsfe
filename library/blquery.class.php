@@ -26,9 +26,12 @@ class BLQuery extends BLTransport{
     public function get($id){
 		// Always uses GET method. Is Cacheable
 		$key=$this->_model . DS . __CLASS__ . DS . __FUNCTION__ . DS .  "$id";
-		$result=$this->cache->read($key);
-		if (!empty($result)){
-			return $result;
+		if ($this->cache()){
+			// Caching reading allowed for this model
+			$result=$this->cache->read($key);
+			if (!empty($result)){
+				return $result;
+			}
 		}
         $result=$this->callBusinessLogicService($this->_model . "/get" , array($this->_idField => $id) );
 		$this->cache->write($key, $result);
@@ -38,9 +41,12 @@ class BLQuery extends BLTransport{
     public function getall($id){
 		// Always uses GET method. Is Cacheable
 		$key=$this->_model . DS . __CLASS__ . DS . __FUNCTION__ . DS .  "$id";
-		$result=$this->cache->read($key);
-		if (!empty($result)){
-			return $result;
+		if ($this->cache()){
+			// Caching reading allowed for this model
+			$result=$this->cache->read($key);
+			if (!empty($result)){
+				return $result;
+			}
 		}
         $result=$this->callBusinessLogicService($this->_model . "/getall" , array($this->_searchField => $id) );
 		$this->cache->write($key, $result);

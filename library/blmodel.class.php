@@ -6,6 +6,7 @@ class BLModel extends BLQuery {
 	protected $_model;
 	protected $_idField;
 	protected $_searchField;
+	protected $_cached=true;
 
 	function __construct($model, $_idF="id", $_searchF=null) {
 		parent::__construct();
@@ -14,6 +15,14 @@ class BLModel extends BLQuery {
 		$this->_searchField=$_searchF;
 	}
 
+	function cache($x=null){
+		if (isset($x)){
+			$this->_cached=$x;
+		} else {
+			return $this->_cached;
+		}
+		
+	}
 	function model(){
 		return $this->_model;
 	}
