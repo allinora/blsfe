@@ -1,6 +1,6 @@
 <?php
 
-class Core_Translations_AdminController extends Core_Controller {
+class Core_Translations_AdminController extends Admin_Controller {
 
 	function beforeAction(){
 		parent::beforeAction();

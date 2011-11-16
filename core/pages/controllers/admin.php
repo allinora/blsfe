@@ -1,6 +1,6 @@
 <?php
 
-class Core_Pages_AdminController extends Core_Controller {
+class Core_Pages_AdminController extends Admin_Controller {
 
 	function beforeAction(){
 		parent::beforeAction();

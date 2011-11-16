@@ -1,7 +1,6 @@
 <?php
 
-class Core_Admin_Controller extends Core_Controller {
-
+class Core_Admin_Controller extends Admin_Controller {
 	function beforeAction(){
 		parent::beforeAction();
 		$this->set("tab", "adminhome");

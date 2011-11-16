@@ -1,6 +1,6 @@
 <?php
 
-class Core_Images_AdminController extends Core_Controller {
+class Core_Images_AdminController extends Admin_Controller {
 
 	function beforeAction(){
 		parent::beforeAction();
@@ -42,6 +42,15 @@ class Core_Images_AdminController extends Core_Controller {
 		$this->set("aData", $images);
 	}
 	
+	function editAction($id){
+		$image=$this->model->get($id);
+		if (!$image["id"]){
+			die("Error 404: Record not found");
+		}
+		$this->set("image", $image);
+		
+		
+	}
 	function showAction($id, $x=0, $y=0){
 		$this->render=0;
 		//$key=$this->_model . DS . __CLASS__ . DS . __FUNCTION__ . DS .  "$id-$x-$y";
