@@ -14,3 +14,7 @@ push:
 deploydev:
 	ssh root@tipi.lilarox.com make -C /opt/git/blsfe pull
 
+deploydreamhost:
+	rsync -av --exclude=.git -e ssh . tipi@abudhabi.dreamhost.com:blsfe/
+
+
