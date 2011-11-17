@@ -180,6 +180,12 @@ function coreHook(&$urlArray){
 	$controller="Core_" . ucfirst(strtolower($module)) . "_" . ucfirst(strtolower($_controller)); 
 	return $controller;
 }
+
+function fwassetsHook(&$urlArray){
+	include_once(BLSFE_ROOT . "/core/fwassets.php");
+	return "Fwassets";
+}
+
 /** Main Call Function **/
 
 function callHook() {
@@ -215,6 +221,9 @@ function callHook() {
 		}
 		if ($controller=="core"){  // Core modules bundled with the framework
 			$controller=coreHook($urlArray);
+		}
+		if ($controller=="fwassets"){  // Someone forgot to make the symlink / Server Alias
+			$controller=fwassetsHook($urlArray);
 		}
 	
 		if (isset($urlArray[0]) && !empty($urlArray[0])) {
