@@ -14,5 +14,11 @@ use File::Copy;
 unless (-d $appname){
 	print "Creating Directory $appname\n";
 	mkpath($appname);
+	$dir_to_copy=$FindBin::Dir . "/skel";
+	$cmd="rsync -av $dir_to_copy/ $appname/";
+	print "Copying files to the newly created app\n";
+	print $cmd, "\n";
+	system($cmd);
+} else {
+	print "Directory $appname already exists. Not doing anything destructive\n";
 }
-	copy("skel/*", $appname);
