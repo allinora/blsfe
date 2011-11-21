@@ -3,7 +3,6 @@ define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(dirname(__FILE__)));
 
 
-
 // Possible location where we can find the BLSFE library
 $blsfe_locations=array(
         '/opt/git/blsfe',
@@ -23,7 +22,7 @@ function _app_preHook(){
 
 // Do something with the content just before its being printed.
 function _app_contentHook($_content){
-        print $content;
+        print $_content;
 }
 
 
