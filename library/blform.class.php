@@ -66,7 +66,9 @@ class BLForm extends BLModel {
 	function setTrayClass($id, $value){
 		$this->tray[$id]["class"]=$value;
 	}
-	
+	function setFormtype($id, $value){
+		$this->vars[$id]["formtype"]=$value;
+	}
 	function setupTray(){
 		$this->tray=array();
 		foreach ($this->vars as $id=> $f) {
@@ -91,6 +93,15 @@ class BLForm extends BLModel {
 		}
 		if ($id=="language"){
 			return $this->languageList($id, $field);
+		}
+		
+		if ($field["formtype"]){
+			switch($field["formtype"]){
+				case "html":
+				return $this->htmlarea($id, $field);
+				break;
+			}
+			
 		}
 		switch($field["data_type"]){
 			case OBJ_DTYPE_STRING:	
@@ -185,12 +196,20 @@ class BLForm extends BLModel {
 		if ($f["css"]){
 			$text.="style='" . $f["css"] . "'";
 		}
+		if ($f["class"]){
+			$text.=" class='" . $f["class"] . "'";
+		}
 		$text.=">";
 		if ($f["value"]){
 			$text.=$f["value"];
 		}
 		$text.="</textarea>";
 		return $text;
+	}
+	
+	function htmlarea($id, $f){
+		$f["class"]="ckeditor";
+		return $this->textarea($id, $f);
 	}
 	
 	function render(){
