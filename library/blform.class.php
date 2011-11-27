@@ -100,6 +100,9 @@ class BLForm extends BLModel {
 				case "html":
 				return $this->htmlarea($id, $field);
 				break;
+				case "company_image":
+				return $this->companyImage($id, $field);
+				break;
 			}
 			
 		}
@@ -128,6 +131,22 @@ class BLForm extends BLModel {
 		
 		}
 		
+	}
+	
+	function companyImage($id, $f){
+		$data="";
+		$data="<input type=hidden id='$id' name='$id' value='".$f["value"] . "'>";
+		$data.= "<a class='imageManager' href='/core/images/company/list/0?CKEditorFuncNum=companyImage&updateSelector=$id'>";
+		$data.="<div id='companyImageManager-$id'>";
+		if ($f["value"]){
+			$image_url="/core/images/company/show/" . $f["value"] . "/100";
+			$data.="<img src='$image_url'>";
+		} else {
+			$data.= "open imageManager";
+		}
+		$data.="</div></a>";
+		return $data;
+		print "<pre>" . print_r($f, true) . "</pre>";
 	}
 	
 	function selectbox($id, $field, $values=array()){
