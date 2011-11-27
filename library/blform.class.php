@@ -94,10 +94,12 @@ class BLForm extends BLModel {
 		}
 		switch($field["data_type"]){
 			case OBJ_DTYPE_STRING:	
-			if ($field['maxlength'] > 200){
-				return $this->textarea($id, $field);
-			} else {
+			
+			
+			if (($field['maxlength']>0) && ($field['maxlength'] < 256)){
 				return $this->textbox($id, $field);
+			} else {
+				return $this->textarea($id, $field);
 			} 
 			break;
 			case OBJ_DTYPE_INT:	
@@ -205,7 +207,7 @@ class BLForm extends BLModel {
 				$data.=" style='display: none;'";
 			}
 			$data.=">";
-			$data.= "<th align='right'>" . $f["label"];
+			$data.= "<th align='right' valign='top'>" . $f["label"];
 			if ($f["required"]){
 				$data.= " * ";
 			}
