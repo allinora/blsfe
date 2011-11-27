@@ -136,7 +136,7 @@ class BLForm extends BLModel {
 	function companyImage($id, $f){
 		$data="";
 		$data="<input type=hidden id='$id' name='$id' value='".$f["value"] . "'>";
-		$data.= "<a class='imageManager' href='/core/images/company/list/0?CKEditorFuncNum=companyImage&updateSelector=$id'>";
+		$data.= "<a class='imageManager' href='/core/images/company/?CKEditorFuncNum=companyImage&updateSelector=$id'>";
 		$data.="<div id='companyImageManager-$id'>";
 		if ($f["value"]){
 			$image_url="/core/images/company/show/" . $f["value"] . "/100";
