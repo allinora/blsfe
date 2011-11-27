@@ -16,6 +16,7 @@ class Core_Images_CompanyController extends Core_Controller {
 		$this->model=new BLModel("sys/company/image", "id", "image_category_id");
 		$this->model->cache(false); // Do not cache the result of this model
 		$this->jsLibs["pluploader"]=1;
+		$this->set("noMenu", true);
 		
 	}
 	function indexAction() {
@@ -27,10 +28,10 @@ class Core_Images_CompanyController extends Core_Controller {
 		
 		if (is_array($categories) && count($categories)){
 			$default_category=array_shift($categories);
-			$this->redirect("core", "images/company/list/" . $default_category["id"]);
+			$this->redirect("core", "images/company/list/" . $default_category["id"] . "/?" . $_SERVER["QUERY_STRING"]);
 			
 		} else {
-			$this->redirect("core", "images/company/addfolder/DEFAULT");
+			$this->redirect("core", "images/company/addfolder/DEFAULT/?". $_SERVER["QUERY_STRING"]);
 			
 		}
 		
@@ -49,10 +50,10 @@ class Core_Images_CompanyController extends Core_Controller {
 			));
 	
 		if ($x>0){
-			$this->redirect("core", "images/company/list/$x");
+			$this->redirect("core", "images/company/list/$x/?". $_SERVER["QUERY_STRING"]);
 		} else {
 			$this->errors[]="Error creating folder with this name";
-			$this->redirect("core", "images/company/list/1");
+			//$this->redirect("core", "images/company/list/0");
 			print "<pre>" . print_r($x, true) . "</pre>";
 		}
 	}
