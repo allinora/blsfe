@@ -9,9 +9,14 @@ class Template_Smarty extends Template {
 		$this->_controller = $controller;
 		$this->_action = $action;
 		$path_tokens=split("_", strtolower($controller));
-		$_template_file=ROOT . DS . 'application' . DS . 'views' . DS . join("/", $path_tokens) .  DS . $this->_action . '.html';
+		array_shift($path_tokens); // remove the core
+		$module=array_shift($path_tokens); // get the module name
+		$c=array_shift($path_tokens); // get the controller name
+		
+		$_template_file=ROOT . DS . 'modules' .DS . $module . DS . "views" . DS . $c . DS .  $this->_action . '.html';
 		if (file_exists($_template_file)){
 			$this->templateFile = $_template_file;
+		} else {
 		}
 	}
 
