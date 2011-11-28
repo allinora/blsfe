@@ -134,13 +134,19 @@ function moduleHook(&$urlArray){
 	array_shift($urlArray);
 	
 
+	//print "controller is $_controller<br>";
+	if (!$_controller) {
+		$_controller="index";
+	}
 	//print "controller is $controller";
-	$module_controller_file=ROOT . DS . 'application' . DS . 'controllers' . DS . 'modules' . DS . strtolower($module) . DS .  strtolower($_controller) .'controller.php';
+	$module_controller_file=ROOT . DS . 'modules' . DS .  strtolower($module) . DS . "controllers" . DS .  strtolower($_controller) .'.php';
 	if (file_exists($module_controller_file)){
 		include_once($module_controller_file);
 	} else {
 		die("Module controller $module_controller_file does not exists");
 	}
+	
+
 	
 	// Create the controller class such as Modules_Gallery_List
 	$controller="Modules_" . ucfirst(strtolower($module)) . "_" . ucfirst(strtolower($_controller)); 
