@@ -74,11 +74,15 @@ $(function() {
 	<{/if}>
 	<{foreach from=$aData item=image}>
 		<div class="fbbluebox"  style="width: 120px; height: 130px; text-align: center; float: left; margin: 10px; padding-top: 20px;">
-			<a class="fancybox" rel="group" href="/core/images/company/show/<{$image.id}>/0/0/<{$image.name}>"><img src="/core/images/company/show/<{$image.id}>/100/100/<{$image.name}>" width=100 height=100></a>
-			<br>
-			<a href="/core/images/company/edit/<{$image.id}>">edit</a>
 			<{if $smarty.request.CKEditorFuncNum}>
-			<a href="javascript:void(0)" onclick="returnURL2CKE(<{$image.id}>, '/core/images/company/show/<{$image.id}>')">use</a>
+			<a href="javascript:void(0)" onclick="returnURL2CKE(<{$image.id}>, '/core/images/company/show/<{$image.id}>')">
+			<{else}>
+			<a class="fancybox" rel="group" href="/core/images/company/show/<{$image.id}>/0/0/<{$image.name}>">
+			<{/if}>	
+				<img src="/core/images/company/show/<{$image.id}>/100/100/<{$image.name}>" width=100 height=100></a>
+			<br>
+			<{if !$smarty.request.CKEditorFuncNum}>
+			<a href="/core/images/company/edit/<{$image.id}>">edit</a>
 			<{/if}>
 		</div>
 	<{/foreach}>
