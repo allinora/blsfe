@@ -3,6 +3,7 @@
 class Core_Images_CompanyController extends Core_Controller {
 
 	function beforeAction(){
+		parent::beforeAction();
 		if (!$_SESSION["companyData"]){
 			die("Sorry. I could not find any company data");
 		};
@@ -11,7 +12,6 @@ class Core_Images_CompanyController extends Core_Controller {
 		$this->dest_directory=CMS_IMAGES_DIRECTORY . "/company/" .$this->company_id;
 		
 		
-		parent::beforeAction();
 		$this->set("tab", "images");
 		$this->model=new BLModel("sys/company/image", "id", "image_category_id");
 		$this->model->cache(false); // Do not cache the result of this model
