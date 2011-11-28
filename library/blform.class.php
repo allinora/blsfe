@@ -103,6 +103,12 @@ class BLForm extends BLModel {
 				case "company_image":
 				return $this->companyImage($id, $field);
 				break;
+				case "single_checkbox":
+				return $this->singleCheckbox($id, $field);
+				break;
+				case "yesno_radio":
+				return $this->yesnoRadio($id, $field);
+				break;
 			}
 			
 		}
@@ -183,6 +189,49 @@ class BLForm extends BLModel {
 		}
 		return $this->selectbox($id, $field, $ret);
 	}
+	
+	
+	function singleCheckbox($id, $f){
+		$text="<input type='checkbox' name='$id' id='$id' ";
+		if ($f["value"]){
+			$text.=" checked='checked' ";
+		}
+		if ($f["css"]){
+			$text.=" style='" . $f["css"] . "'";
+		}
+		if ($f["class"]){
+			$text.=" class='" . $f["class"] . "'";
+		}
+		$text.=" >";
+		return $text;
+	}
+	function yesnoRadio($id, $f){
+		$text="<input type='radio' name='$id' value=1";
+		if ($f["value"]){
+			$text.=" checked='checked' ";
+		}
+		if ($f["css"]){
+			$text.=" style='" . $f["css"] . "'";
+		}
+		if ($f["class"]){
+			$text.=" class='" . $f["class"] . "'";
+		}
+		$text.=" ><po>Yes</po> &nbsp;";
+		$text.="<input type='radio' name='$id' value=0";
+		if (!$f["value"]){
+			$text.=" checked='checked' ";
+		}
+		if ($f["css"]){
+			$text.=" style='" . $f["css"] . "'";
+		}
+		if ($f["class"]){
+			$text.=" class='" . $f["class"] . "'";
+		}
+		$text.=" ><po>No</po>";
+		return $text;
+	}
+	
+	
 	
 	
 	function textbox($id, $f){
