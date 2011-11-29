@@ -1,5 +1,5 @@
-<{if $comments|@count}>
 <{foreach item=comment from=$comments}>
+<{if $comment.comment}>
 <table class="comment-entry" border=0>
 	<tr>
 	<td class="comment-avatar-col"><img src="/avatars/<{$comment.avatar}>" style="width:25px"></td>
@@ -12,5 +12,5 @@
 	<tr>
 </table>
 
-<{/foreach}>
 <{/if}>
+<{/foreach}>
