@@ -6,3 +6,15 @@ $(function() {
 		jQuery(this).load(_url);
 	});
 });
+
+
+function handleCommentAdd(f,lyr){
+	_url="/core/comments/add/?object_type="+f.object_type.value+"&object_id="+f.object_id.value+"&comment="+escape(f.comment.value);
+	$.get(_url, function(){
+		_url="/core/comments/show/html?object_type="+f.object_type.value+"&object_id="+f.object_id.value;
+		lyr.load(_url);
+	});
+	return false;
+}
+
+	
