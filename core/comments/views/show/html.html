@@ -1,3 +1,4 @@
+<{if $comments|@count}>
 <{foreach item=comment from=$comments}>
 <table class="comment-entry" border=0>
 	<tr>
@@ -10,4 +11,6 @@
 	</td>
 	<tr>
 </table>
+
 <{/foreach}>
+<{/if}>
