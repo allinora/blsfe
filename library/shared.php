@@ -138,6 +138,7 @@ function moduleHook(&$urlArray){
 	if (!$_controller) {
 		$_controller="index";
 	}
+	include_once(BLSFE_ROOT . "/core/modules.php");
 	//print "controller is $controller";
 	$module_controller_file=ROOT . DS . 'modules' . DS .  strtolower($module) . DS . "controllers" . DS .  strtolower($_controller) .'.php';
 	if (file_exists($module_controller_file)){
