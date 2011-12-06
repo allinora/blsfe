@@ -11,8 +11,8 @@ define('BASE_URL','/%%appname%%');
 
 # use this for development. Makes a direct connections to the BLS backend
 define('BLSEBE_TRANSPORT','local'); 
-define('BLSBE_PROJECT_HOME','/Users/aghaffar/www/sanbls'); 
-define('BLSBE_BOOTSTRAP_FILE','/usr/local/blsbe/library/bootstrap.php'); 
+define('BLSBE_PROJECT_HOME','/some/path/to/your/appbls'); 
+define('BLSBE_BOOTSTRAP_FILE','/usr/local/allinora/blsbe/library/bootstrap.php'); 
 
 # use this for production. The backend server shoud be on a different host / load balancer
 # define('BLSEBE_TRANSPORT','http'); 
