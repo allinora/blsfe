@@ -8,11 +8,22 @@ class Core_Images_AdminController extends Admin_Controller {
 		$this->model=new BLModel("sys/image", "id", "image_category_id");
 		$this->model->cache(false); // Do not cache the result of this model
 		$this->jsLibs["pluploader"]=1;
+		$this->set("noMenu", true);
+		$this->set("imageManagerRole", "admin");
 		
 	}
 	function indexAction() {
 		$this->render=0;
-		$this->redirect("core", "images/admin/list/1");
+		$categoriesModel=new BLModel("sys/image/category", "id", "null");
+		$categoriesModel->cache(false); // Do not cache the result of this cal
+		$categories=$categoriesModel->getAll(1);
+		if (is_array($categories) && count($categories)){
+			$default_category=array_shift($categories);
+			$this->redirect("core", "images/admin/list/" . $default_category["id"] . "/?" . $_SERVER["QUERY_STRING"]);
+		} else {
+			$this->redirect("core", "images/admin/addfolder/DEFAULT/?". $_SERVER["QUERY_STRING"]);
+		}
+		
 	}
 	
 	function addfolderAction($name){
@@ -40,6 +51,7 @@ class Core_Images_AdminController extends Admin_Controller {
 		
 		$images=$this->model->getall($category_id);
 		$this->set("aData", $images);
+        
 	}
 	
 	function editAction($id){

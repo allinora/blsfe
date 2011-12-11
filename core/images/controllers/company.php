@@ -17,6 +17,7 @@ class Core_Images_CompanyController extends Core_Controller {
 		$this->model->cache(false); // Do not cache the result of this model
 		$this->jsLibs["pluploader"]=1;
 		$this->set("noMenu", true);
+		$this->set("imageManagerRole", "company");
 		
 	}
 	function indexAction() {

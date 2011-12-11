@@ -8,6 +8,6 @@ class Core_Images_Controller extends Core_Controller {
 	}
 	function indexAction() {
 		$this->render=0;
-		$this->redirect("core", "images/admin/list/1");
+		$this->redirect("core", "images/admin/");
 	}
 }

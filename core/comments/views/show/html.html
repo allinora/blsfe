@@ -7,7 +7,7 @@
 	<td class="comment-title-col">
 		<span class="comment-user-name"><{$comment.firstname}> <{$comment.lastname}></span> &nbsp;
 		<span class="comment-user-comment"><{$comment.comment|nl2br}></span>
-		<div class="comment-createtime"><{$comment.createtime}></div>
+		<div class="comment-createtime"><abbr class="commenttimeago" title="<{$comment.createtime}>"><{$comment.createtime}></abbr></div>
 		
 	</td>
 	<tr>

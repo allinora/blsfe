@@ -123,5 +123,46 @@ class BLController {
 
 	function afterAction(){
 	}
+	
+	function formatters(){
+		return array();
+	}
+	function preFormatters(&$form, $res=array()){
+		$formatters=$this->formatters();
+		foreach($formatters as $id=>$f){
+			if ($f["label"]){
+				$form->setLabel($id, $f["label"]);
+			}
+			if ($f["value"]){
+				$form->setValue($id, $f["value"]);
+			}
+			if ($f["css"]){
+				$form->setCSS($id, $f["css"]);
+			}
+			if ($f["class"]){
+				$form->setClass($id, $f["class"]);
+			}
+			if ($f["formtype"]){
+				$form->setFormtype($id, $f["formtype"]);
+			}
+		}
+	}
+	function postFormatters(&$form, $res=array()){
+		$formatters=$this->formatters();
+		foreach($formatters as $id=>$f){
+			if ($f["helper"]){
+				$helper=$f["helper"];
+				$form->replaceTray($id, $this->helper->$helper($res[$id]));
+			}
+			if ($f["tray_class"]){
+				$form->setTrayClass($id, $f["tray_class"]);
+			}
+			if ($f["hidden"]){
+				$form->hideFromTray($id);
+			}
+		}
+	}
+
+	
 		
 }

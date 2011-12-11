@@ -25,9 +25,6 @@ class Core_Controller extends BLController {
 		$this->set("appmodules", $default["modules"]["app"]);
 	}
 	
-	function formatters(){
-		return array();
-	}
 	
 	function listAction() {
 		$x=$this->model->getall(1);
@@ -68,29 +65,15 @@ class Core_Controller extends BLController {
 	}
 	
 	function preFormatters(&$form, $res=array()){
-		$formatters=$this->formatters();
-		foreach($formatters as $id=>$f){
-			if ($f["label"]){
-				$form->setLabel($id, $f["label"]);
-			}
-			if ($f["css"]){
-				$form->setCSS($id, $f["css"]);
-			}
-		}
+		// Default postFormatting
+		parent::preFormatters($form, $res);
 	}
+
 	function postFormatters(&$form, $res=array()){
-		$formatters=$this->formatters();
-		foreach($formatters as $id=>$f){
-			if ($f["helper"]){
-				$helper=$f["helper"];
-				$form->replaceTray($id, $this->helper->$helper($res[$id]));
-			}
-			if ($f["tray_class"]){
-				$form->setTrayClass($id, $f["tray_class"]);
-			}
-		}
+		// Default postFormatting
+		parent::postFormatters($form, $res);
 	}
-	
+
 	function afterAction(){
 		$this->set("jslibs", $this->jsLibs);
 	}

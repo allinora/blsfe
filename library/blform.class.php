@@ -103,6 +103,12 @@ class BLForm extends BLModel {
 				case "company_image":
 				return $this->companyImage($id, $field);
 				break;
+				case "system_image":
+				return $this->systemImage($id, $field);
+				break;
+				case "user_image":
+				return $this->userImage($id, $field);
+				break;
 				case "single_checkbox":
 				return $this->singleCheckbox($id, $field);
 				break;
@@ -152,7 +158,20 @@ class BLForm extends BLModel {
 		}
 		$data.="</div></a>";
 		return $data;
-		print "<pre>" . print_r($f, true) . "</pre>";
+	}
+	function systemImage($id, $f){
+		$data="";
+		$data="<input type=hidden id='$id' name='$id' value='".$f["value"] . "'>";
+		$data.= "<a class='imageManager' href='/core/images/admin/?CKEditorFuncNum=companyImage&updateSelector=$id'>";
+		$data.="<div id='systemImageManager-$id'>";
+		if ($f["value"]){
+			$image_url="/core/images/admin/show/" . $f["value"] . "/100";
+			$data.="<img src='$image_url'>";
+		} else {
+			$data.= "open imageManager";
+		}
+		$data.="</div></a>";
+		return $data;
 	}
 	
 	function selectbox($id, $field, $values=array()){
