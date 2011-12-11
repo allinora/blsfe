@@ -162,7 +162,7 @@ class BLForm extends BLModel {
 	function systemImage($id, $f){
 		$data="";
 		$data="<input type=hidden id='$id' name='$id' value='".$f["value"] . "'>";
-		$data.= "<a class='imageManager' href='/core/images/admin/?CKEditorFuncNum=companyImage&updateSelector=$id'>";
+		$data.= "<a class='imageManager' href='/core/images/admin/?CKEditorFuncNum=systemImage&updateSelector=$id'>";
 		$data.="<div id='systemImageManager-$id'>";
 		if ($f["value"]){
 			$image_url="/core/images/admin/show/" . $f["value"] . "/100";

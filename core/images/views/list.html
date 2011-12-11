@@ -14,14 +14,6 @@
 $(function() {
 
 	$("a.fancybox").fancybox();
-	$("a.uploader").fancybox({
-		type: 'iframe',
-		modal: false,
-		autoDimensions: false,
-		autoScale: false,
-		width: 400,
-		height: 200
-	})
 	
 	$('#newImageCategory').click(function(){
 		if(name=prompt("Name of the Category", "")){
