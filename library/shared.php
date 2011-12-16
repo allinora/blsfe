@@ -199,13 +199,23 @@ function callHook() {
 	global $url;
 	global $default;
 	
+	//print "URL is $url<br>";
 	if(empty($url)){
 		$url=$_SERVER["SCRIPT_NAME"];
 	}
-	if ($url=="/index.php" || $url=="/"){
+	
+	//print "URL is $url<br>";
+	
+	// Nginx is putting the /en etc to the SCRIPT_NAME
+	i18nURL($url); // Do the language stuff
+	
+	//print "URL is $url<br>";
+	
+	if ($url=="/index.php" || $url=="/" || $url=="index.php"){
 		unset($url); 
 	}
 	$queryString = array();
+	//print "URL is $url<br>";
 	
 	if (!isset($url) || $url == "") {
 		$controller = $default['controller'];
@@ -219,7 +229,7 @@ function callHook() {
 		
 		$urlArray = explode("/",$url);
 		
-		//print "<pre>" . print_r($urlArray, true) . "</pre>";exit;
+		// print "<pre>" . print_r($urlArray, true) . "</pre>";exit;
 		$controller = $urlArray[0];
 		array_shift($urlArray);
 		
