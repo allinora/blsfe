@@ -88,6 +88,9 @@ class Template_Smarty extends Template {
 			define('SMARTY_RIGHT_DELIMETER', "}>");
 		}
 		
+		// Framework smarty plugins directory. This will be added to the list of smarty plugins
+		define('SMARTY_BLSFE_PLUGINS_DIR', BLSFE_ROOT . DS . "helpers" .DS ."smarty-plugins");
+
 		// YOUR smarty plugins directory. This will be added to the list of smarty plugins
 		define('SMARTY_LOCAL_PLUGINS_DIR', ROOT.DS."application" .DS. "helpers".DS."smarty-plugins");
 	
@@ -118,6 +121,7 @@ class Template_Smarty extends Template {
 		$this->smarty->template_dir = SMARTY_TEMPLATE_DIR;
 		$this->smarty->compile_dir = SMARTY_COMPILE_DIR;
 		$this->smarty->cache_dir = SMARTY_CACHE_DIR;
+		$this->smarty->plugins_dir[] = SMARTY_BLSFE_PLUGINS_DIR;
 		$this->smarty->plugins_dir[] = SMARTY_LOCAL_PLUGINS_DIR;
 		$this->smarty->left_delimiter = SMARTY_LEFT_DELIMETER;
 		$this->smarty->right_delimiter = SMARTY_RIGHT_DELIMETER;
