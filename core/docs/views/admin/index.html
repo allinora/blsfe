@@ -1,0 +1,20 @@
+<table>
+<thead>
+<tr>
+	<th>ID</th>
+	<th>Title</th>
+	<th><a href='/<{$lang}>/core/docs/admin/add'>Add</a></th>
+	
+</tr>
+</thead>
+	
+<{foreach from=$aData item=page}>
+<tr>
+	<td><{$page.id}></td>
+	<td><{$page.title}></td>
+	<td><a href="/<{$lang}>/core/docs/admin/edit/<{$page.id}>">Edit</a></td>
+</tr>
+
+<{/foreach}>
+
+</table>

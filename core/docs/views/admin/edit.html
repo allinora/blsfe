@@ -1,0 +1,41 @@
+<script src="/fwassets/js/ckeditor/ckeditor.js"></script>
+<script src="/fwassets/js/ckeditor/adapters/jquery.js"></script>
+<script type="text/javascript"> 
+jQuery(document).ready(function() {
+        jQuery('#draft').ckeditor({
+            filebrowserBrowseUrl : '/core/images/admin/list/1/',
+	        customConfig : '/fwassets/admin/ckeditor.js',
+			toolbar : 'Full',
+			height: '400px',
+			width: '100%'
+        });
+});
+</script>
+
+	<form method="POST" action="/core/docs/admin/autosave">
+		<input type="hidden" name="id" value="<{$aData.id}>">
+		<input type="hidden" name="AUTO_SAVE_URL" id="AUTO_SAVE_URL" value="/core/docs/admin/autosave	">
+	<table>
+		<tr class="even">
+			<td style="width:130px">Last updated</td>
+			<td><{$aData.ts}></td>
+		</tr>
+		<tr class="even">
+			<td style="width:130px">Published ID</td>
+			<td><{$aData.published_version_id}></td>
+		</tr>
+		<tr class="odd">
+			<td style="width:130px">Title</td>
+			<td><input type="text" name="title" class="page-title" size=80 value="<{$aData.title}>"></td>
+		</tr> 
+		<tr class="odd">
+			<td colspan=2>
+			<textarea name="draft" id="draft" class="ckeditor" cols=50 rows=30><{$aData.draft}></textarea></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="right"><button id="save" class="color" name="save" type="submit">Save</button></td>
+		</tr>
+    </table>
+	</form>
+
+	

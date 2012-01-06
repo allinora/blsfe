@@ -1,0 +1,13 @@
+<h1><{$aData.title}></h1>
+<table border=1 cellspacing=0 cellpadding=10>
+	<tr>
+		<th align="right">Last modified</th><td><{$aData.ts}></td>
+	</tr>
+	<tr>
+		<th align="right">Author</th><td><{userData user_id=$aData.user_id field="firstnameLastname"}></td>
+	</tr>
+</table>
+<hr>
+
+<{$aData.draft}>
+	
