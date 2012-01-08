@@ -125,7 +125,14 @@ class Template_Smarty extends Template {
 		$this->smarty->plugins_dir[] = SMARTY_LOCAL_PLUGINS_DIR;
 		$this->smarty->left_delimiter = SMARTY_LEFT_DELIMETER;
 		$this->smarty->right_delimiter = SMARTY_RIGHT_DELIMETER;
-		
+
+		if (DEVELOPMENT_ENVIRONMENT){
+			$this->smarty->caching = 0;
+			$this->smarty->compile_check = true;
+		} else {
+			$this->smarty->caching = 1;
+			$this->smarty->compile_check = false;
+		}		
 	}
 	
 	public function set ($key, $value) {
