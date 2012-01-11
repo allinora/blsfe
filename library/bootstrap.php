@@ -47,9 +47,11 @@ if (file_exists($modulesConfigFile)){
 
 
 function blsfe_local_exception_handler($exception) {
-  echo "Uncaught exception: <font color=red>" , $exception->getMessage(), "</font>\n";
 	if (defined("DEVELOPMENT_ENVIRONMENT") && DEVELOPMENT_ENVIRONMENT === true) {
-  		echo "<pre>" . $exception. "</pre>";
+  		echo "<pre>" . $exception . "</pre>";
+	} else {
+	  echo "<h1>Error: 500</h1><pre>";
+	  echo "<font color=red>" .  $exception->getMessage() . "</font>\n";
 	}
 }
 set_exception_handler('blsfe_local_exception_handler');
