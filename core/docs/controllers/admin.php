@@ -1,13 +1,10 @@
 <?php
 
-class Core_Docs_AdminController extends Admin_Controller {
+include_once(dirname(_FILE_) . "/index.php");
+class Core_Docs_AdminController extends Core_Docs_Controller {
 
 	function beforeAction(){
 		parent::beforeAction();
-		$this->set("tab", "docs");
-		$this->model=new BLModel("sys/document", "id", "category_id");
-		$this->categoriesModel=new BLModel("sys/document/category", "id");
-		$this->categories=$this->categoriesModel->getall(1);
 		$this->set("categories", $this->categories);
 	}
 
