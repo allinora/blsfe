@@ -132,6 +132,8 @@ class Template_Smarty extends Template {
 		} else {
 			$this->smarty->caching = 1;
 			$this->smarty->compile_check = false;
+			$this->smarty->clear_cache('wrapper.html');
+
 		}		
 	}
 	
