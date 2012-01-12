@@ -10,7 +10,11 @@ $(function() {
 		height: '100%'
 		
 	});
-	
+    $(".sortable").tablesorter(); 
+
+  	$('.tablesorter tr:odd').addClass("odd");
+  	$('.tablesorter tr:even').addClass("even");
+    
 });
 
 function systemImage(lyr,id,url){
