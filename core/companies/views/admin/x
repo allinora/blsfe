@@ -1,0 +1,21 @@
+<table class="tablesorter">
+        <thead>
+                <tr>
+                        <th>Company</th>
+                        <th>City</th>
+                        <th>Zip</th>
+						<th><a href='/<{$lang}>/core/companies/admin/add'>Add</a></th>
+                </tr>
+        </thead>
+<{foreach item=company  from=$aData}>
+<tr>
+        <td><{$company.name}></td>
+        <td><{$company.city}></td>
+        <td><{$company.zip}></td>
+        <td><a href="/modules/companies/admin/edit/<{$company.id}>">Edit</a></td>
+</tr>
+
+<{/foreach}>
+</table>
+
+abcd

@@ -4,6 +4,7 @@ class Core_Categories_AdminController extends Admin_Controller {
 
 	function beforeAction(){
 		parent::beforeAction();
+		$this->set("tab", "categories");
 		$this->model=new BLModel("sys/category", "id");
 	}
 	function indexAction() {
