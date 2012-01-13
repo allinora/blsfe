@@ -1,10 +1,10 @@
-<table class="tablesorter">
+<table class="tablesorter sortable">
         <thead>
                 <tr>
                         <th>Company</th>
                         <th>City</th>
                         <th>Zip</th>
-						<th><a href='/<{$lang}>/core/companies/admin/add'>Add</a></th>
+						<th class="{sorter: false}"><a href='/<{$lang}>/core/companies/admin/add'>Add</a></th>
                 </tr>
         </thead>
 <{foreach item=company  from=$aData}>
@@ -18,4 +18,3 @@
 <{/foreach}>
 </table>
 
-abcd
