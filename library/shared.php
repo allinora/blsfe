@@ -196,6 +196,10 @@ function fwassetsHook(&$urlArray){
 /** Main Call Function **/
 
 function callHook() {
+	
+	// This provides the setup and some helper functions
+	include_once(BLSFE_ROOT . "/core/app.php");  // The app controller. 
+	
 	global $url;
 	global $default;
 	
