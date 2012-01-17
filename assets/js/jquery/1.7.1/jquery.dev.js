@@ -5760,8 +5760,8 @@ jQuery.fn.extend({
 	append: function() {
 		return this.domManip(arguments, true, function( elem ) {
 			if ( this.nodeType === 1 ) {
-				if (window.coincoin >= 20) {
-					alert("wtf "+window.coincoin);
+				if (window.coincoin >= 25) {
+					alert("wtf "+window.coincoin+ " | "+this + " | "+elem);
 				}
 				window.coincoin = (window.coincoin || 0) +1;
 				
