@@ -8,10 +8,11 @@ class Core_Subcategories_AdminController extends Admin_Controller {
 		$this->model=new BLModel("sys/category/sub", "id", "category_id");
 	}
 	function indexAction() {
-		$res=$this->model->getAllSubcategories(1);
+		$res=$this->model->getAllSubcategories();
 		$this->set("aData", $res);
 	}
 	
+
 	function formatters(){
 		$formatters=array();
 		$formatters["category_id"]["helper"]="categoryList";
