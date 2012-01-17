@@ -13,9 +13,8 @@ class App_Controller extends BLController {
         $auth=$userModel->login($_REQUEST);
 		if ($auth["user_id"]>0){
 			$_SESSION["user"]=$auth;
-			$this->redirect("/");
-		} 
-		if ($auth["status"]=="ERROR"){
+			// $this->redirect("/");
+		}  else {
 			$this->set("errorMessage", "Authentication failure");
 		}
 		
