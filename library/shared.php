@@ -345,7 +345,7 @@ $cache   = Cache::factory();
 $session = Session::factory();
 session_start();
 
-list($url, $params)=split('\?', $_SERVER["REQUEST_URI"]);   // Just get everything before t
+list($url, $params)=explode('\?', $_SERVER["REQUEST_URI"]);   // Just get everything before t
 setReporting();
 removeMagicQuotes();
 unregisterGlobals();
