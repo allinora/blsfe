@@ -6,11 +6,31 @@ class App_Controller extends BLController {
 		// Set the reference to cache
 		$this->cache=$cache;
 	}
+	
+	
+	function login(){
+        $userModel=new BLModel("sys/auth/user", "id");
+        $auth=$userModel->login($_REQUEST);
+		if ($auth["user_id"]>0){
+			$_SESSION["user"]=$auth;
+			$this->redirect("/");
+		} 
+		if ($auth["status"]=="ERROR"){
+			$this->set("errorMessage", "Authentication failure");
+		}
+		
+	}
 	function facebooklogin(){
+		if ($_REQUEST["op"]=="logout"){
+			return;
+		}
+		
+		
 		if ($_SESSION["user"]){
 			// Already logged in
 			return;
 		}
+		// print "Doing facebook login";
 		$userAccountParams=array();
 		$userAccountParams["passwd"]=$_SESSION["fb_user_data"]->id;
 		$userAccountParams["email"]=$_SESSION["fb_user_data"]->email;
@@ -33,7 +53,14 @@ class App_Controller extends BLController {
 		}
 		
 	}
-	
+
+
+	function logout(){
+		$_SESSION=array();
+		unset($_SESSION);
+		//$this->redirect("/");
+	}
+
 	function afterAction(){
 		$this->set("jslibs", $this->jsLibs);
 	}
