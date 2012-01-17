@@ -5760,6 +5760,11 @@ jQuery.fn.extend({
 	append: function() {
 		return this.domManip(arguments, true, function( elem ) {
 			if ( this.nodeType === 1 ) {
+				if (window.coincoin >= 20) {
+					alert("wtf "+window.coincoin);
+				}
+				window.coincoin = (window.coincoin || 0) +1;
+				
 				this.appendChild( elem );
 			}
 		});
