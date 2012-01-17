@@ -36,7 +36,6 @@ class Core_Blocks_AdminController extends Admin_Controller {
 			
 		}
 		$this->set("aData", $block);
-		print "<pre>" . print_r($block, true) . "</pre>";
 	}
 	function saveAction(){
 		$this->render=0;
