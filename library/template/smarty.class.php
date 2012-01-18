@@ -132,7 +132,6 @@ class Template_Smarty extends Template {
 		} else {
 			$this->smarty->caching = 1;
 			$this->smarty->compile_check = false;
-			$this->smarty->clear_cache('wrapper.html');
 
 		}		
 	}
@@ -153,6 +152,7 @@ class Template_Smarty extends Template {
 			} else {
 				$wrapper=$this->smarty->template_dir . "/" . $this->_wrapper  . ".html";
 			}
+			$this->smarty->clearCache($wrapper);
 			$this->set("content", $content);
 			$res=$this->smarty->fetch($wrapper);
 			//$this->renderInWrapper();
