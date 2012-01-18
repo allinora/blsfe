@@ -1,0 +1,9 @@
+Ellipsis.PRECISION = 24;
+
+Drawable.DefaultStyles = {
+	"default": new DrawableStyle({ fillColor: "rgba(0,0,255, 0.15)", lineColor: "rgba(0,0,255, 0.5)", thickness:1.0 }),
+	"hover": new DrawableStyle({ fillColor: "rgba(0,0,255, 0.25)", lineColor: "blue", thickness:1.5 }),
+	"selected": new DrawableStyle({ fillColor: "rgba(0,0,255, 0.5)", lineColor: "red", thickness:3.0 })
+};
+
+Drawable.RENDER_BOUNDINGBOXES = false;
