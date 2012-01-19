@@ -90,6 +90,10 @@ var Drawable = function() {
 				if (Drawable.Selected) {
 					Drawable.Selected.trigger("deselect");
 					Drawable.Selected.state = "default";
+					//allows cross-canvas behavior
+					if (Drawable.Selected._parent && Drawable.Selected._parent.canvas) {
+						Drawable.Selected._parent.render();
+					}
 				}
 				Drawable.Selected = this;
 				this.trigger("select");
