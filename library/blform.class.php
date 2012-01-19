@@ -154,7 +154,7 @@ class BLForm extends BLModel {
 			$image_url="/core/images/company/show/" . $f["value"] . "/100";
 			$data.="<img src='$image_url'>";
 		} else {
-			$data.= "open imageManager";
+			$data.= "<button>choose image</button>";
 		}
 		$data.="</div></a>";
 		return $data;
@@ -168,7 +168,7 @@ class BLForm extends BLModel {
 			$image_url="/core/images/admin/show/" . $f["value"] . "/100";
 			$data.="<img src='$image_url'>";
 		} else {
-			$data.= "open imageManager";
+			$data.= "<button>choose image</button>";
 		}
 		$data.="</div></a>";
 		return $data;
@@ -303,7 +303,7 @@ class BLForm extends BLModel {
 		$this->hideFromTray("id"); // This should be always hidden if not removed completely.
 		
 		$formData=$this->tray;
-		$data="<form method='POST'><table class='blsfeformtable'>";
+		$data="<form method='POST'><table class='blsfeformtable' border=1>";
 		foreach($formData as $id=>$f){
 			$data.= "\n<tr";
 			if ($f["class"]){
