@@ -6,11 +6,11 @@ class Cache_File extends Cache {
 		$this->logger=new BLLog();
 	}
 	
-	function read($key) {
+	function read($key, $force=0) {
 		if (!defined("CACHE_PATH")){
 			return;
 		}
-		if (defined("DEVELOPMENT_ENVIRONMENT") && DEVELOPMENT_ENVIRONMENT){
+		if (defined("DEVELOPMENT_ENVIRONMENT") && DEVELOPMENT_ENVIRONMENT &&!$force){
 			// Do not read cache in dev
 			return;
 		}
