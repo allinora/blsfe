@@ -3,6 +3,7 @@
 class App_Controller extends BLController {
 
 	function beforeAction(){
+		global $cache;
 		// Set the reference to cache
 		$this->cache=$cache;
 		// Allow getting just the output without the wrapper
