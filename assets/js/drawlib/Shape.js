@@ -81,6 +81,7 @@ Shape.prototype._render = function (ctx, style) {
 				ctx.lineTo(firstVertex.x, firstVertex.y);
 				break;
 		}
+		ctx.closePath();
 	}
 	
 	ctx.strokeStyle = style.lineColor;

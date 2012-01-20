@@ -118,6 +118,15 @@ Drawable.prototype.addChild = function (c) {
 	this._children.push(c);
 };
 
+Drawable.Deselect = function () {
+	if (!Drawable.Selected)
+		return;
+	
+	Drawable.Selected.state = "default";
+	Drawable.Selected.trigger("deselect");
+	Drawable.Selected = null;
+};
+
 Drawable.prototype._getChildUnderMouse = function() {
 	for (var i=this._children.length-1; i>=0; i--) {
 		var c = this._children[i];
@@ -197,6 +206,10 @@ Drawable.prototype.render = function (ctx) {
 		this.init = false;
 	}
 	
+	if (typeof this._beforeRender == "function") {
+		this._beforeRender();
+	}
+	
 	//apply transform on vertices and compute bbox
 	if (this.transform._validatedVertices == null) {
 		this.transform._validatedVertices = [];
@@ -236,7 +249,26 @@ Drawable.prototype.render = function (ctx) {
 	//temporarily swap vertices with transformed vertices
 	var _v = this.vertices;
 	this.vertices = this.transform._validatedVertices;
+	
+	//shadow pass
+	if (style.shadow.x != 0 || style.shadow.y != 0) {
+		ctx.shadowOffsetX = style.shadow.x;
+		ctx.shadowOffsetY = style.shadow.y;
+		ctx.shadowBlur = style.shadow.blur;
+		ctx.shadowColor = style.shadow.color;
+		
+		this._render(ctx, style);
+		
+		ctx.shadowOffsetX = 0;
+		ctx.shadowOffsetY = 0;
+		ctx.shadowBlur = 0;
+		ctx.shadowColor = "transparent black";
+	}
+	
+	//normal pass
 	this._render(ctx, style);
+	
+	//swap vertices back
 	this.vertices = _v;
 	_v = null;
 	
@@ -296,6 +328,8 @@ Drawable.prototype.deleteChild = function (child) {
 };
 
 Drawable.RENDER_BOUNDINGBOXES = false;
+
+Drawable.prototype._beforeRender = null;
 
 /* abstract methods */
 

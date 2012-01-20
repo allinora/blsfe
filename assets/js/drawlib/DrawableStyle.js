@@ -5,6 +5,13 @@ var DrawableStyle = function(p) {
 	this.lineColor = p.lineColor || p.L || "#ff0000";
 	this.fillColor = p.fillColor || p.F || "rgba(255,0,0, 0.25)";
 	this.linestyle = p.linestyle || p.S || DrawableStyle.Linestyle.Simple;
+	
+	this.shadow = {
+		x: 0.0,
+		y: 0.0,
+		blur: 0.0,
+		color: "black"
+	};
 };
 
 DrawableStyle.Linestyle = {
