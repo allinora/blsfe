@@ -17,4 +17,5 @@ deploydev:
 deploydreamhost:
 	rsync -av --exclude=.git -e ssh . tipi@abudhabi.dreamhost.com:blsfe/
 
-
+css:
+	lessc assets/js/jquery/cowrousel/cowrousel.less.css assets/js/jquery/cowrousel/cowrousel.css

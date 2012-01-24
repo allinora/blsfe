@@ -9,7 +9,7 @@
   height: 15px;
   width: 15px;
   margin: 0;
-  background: transparent url(images/arrow.png) no-repeat;
+  background: transparent url(/images/cowrousel/arrow.png) no-repeat;
   background-position: -90px 0px;
 }
 .cowrousel > * {
