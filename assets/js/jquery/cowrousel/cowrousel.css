@@ -1,0 +1,56 @@
+.cowrousel {
+  display: block;
+}
+.cowrousel .nav {
+  padding: 10px;
+}
+.cowrousel .nav div {
+  display: block;
+  height: 15px;
+  width: 15px;
+  margin: 0;
+  background: transparent url(images/arrow.png) no-repeat;
+  background-position: -90px 0px;
+}
+.cowrousel > * {
+  display: block;
+  float: left;
+}
+.cowrousel .content {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.cowrousel .content > ul {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 10000px;
+  margin: 0;
+  padding: 0;
+}
+.cowrousel .content > ul > li {
+  float: left;
+  height: 100%;
+  overflow: hidden;
+}
+.cowrousel .right {
+  padding-right: 0;
+}
+.cowrousel .right div {
+  background-position: -90px 0px;
+  cursor: pointer;
+}
+.cowrousel .right div:hover {
+  background-position: -90px -15px;
+}
+.cowrousel .left {
+  padding-left: 0;
+}
+.cowrousel .left div {
+  background-position: -90px -30px;
+  cursor: pointer;
+}
+.cowrousel .left div:hover {
+  background-position: -90px -45px;
+}

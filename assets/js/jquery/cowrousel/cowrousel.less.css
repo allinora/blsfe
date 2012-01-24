@@ -1,0 +1,63 @@
+.cowrousel {
+    display: block;
+    .nav {
+		padding: 10px;
+        div {
+            display: block;
+            height: 15px;
+            width: 15px;
+            margin: 0;
+            background: transparent url(images/arrow.png) no-repeat;
+            background-position: -90px 0px;
+        }
+    }
+    
+    > * {
+		display: block;
+		float: left;
+    }
+    
+    .content {
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        
+        > ul {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 10000px;
+            margin: 0;
+            padding: 0;
+            > li {
+                float: left;
+                height: 100%;
+                overflow: hidden;
+            }
+        }
+    }
+    
+    .right {
+		padding-right: 0;
+        div {
+            background-position: -90px 0px;
+            cursor:pointer;
+        }
+        
+        div:hover {
+            background-position: -90px -15px;
+        }
+    }
+    
+    .left {
+		padding-left: 0;
+        div {
+            background-position: -90px -30px;
+            cursor:pointer;
+        }
+        
+        div:hover {
+            background-position: -90px -45px;
+        }
+    }
+}
