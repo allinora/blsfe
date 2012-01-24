@@ -11,8 +11,21 @@
  * 		.autoInterval (int)			: delay in ms before autoscrolling the widget
  * 		.spacing (int)				: spacing in pixels between two <li>
  * 
+ * Example:
+ * 
+	$("ul").Cowrousel({
+		loop: true,
+		hideBordersBelow: 0,
+		speed: 100,
+		height: 90,
+		numElementsVisible: 3,
+		elementWidth: 100,
+		autoInterval: 2000,
+		spacing: 15,
+		slideCallback: function(x) { console.log("SlideCallback"); }
+	});
  */
-
+ 
 $.fn.Cowrousel = function (Args) {
 	return $(this).each(function (j, el) {
 		var $this = $(el);
