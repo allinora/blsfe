@@ -2,6 +2,7 @@
 <thead>
 <tr>
 	<th>ID</th>
+	<th>Icon</th>
 	<th>Name</th>
 	<th><a href='/<{$lang}>/core/categories/admin/add'>Add</a></th>
 	
@@ -11,6 +12,7 @@
 <{foreach from=$aData item=page}>
 <tr>
 	<td><{$page.id}></td>
+	<td><{cmsImage id=$page.icon width=25}></td>
 	<td><{$page.name}></td>
 	<td><a href="/<{$lang}>/core/categories/admin/edit/<{$page.id}>">Edit</a></td>
 </tr>
