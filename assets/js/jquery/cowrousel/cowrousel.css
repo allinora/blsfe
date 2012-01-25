@@ -2,6 +2,8 @@
   display: block;
 }
 .cowrousel .nav {
+  height: 15px;
+  width: 15px;
   padding: 10px;
 }
 .cowrousel .nav div {
@@ -26,13 +28,17 @@
   left: 0;
   top: 0;
   width: 10000px;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  border: none;
 }
 .cowrousel .content > ul > li {
   float: left;
   height: 100%;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: none;
 }
 .cowrousel .right {
   padding-right: 0;
