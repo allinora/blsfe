@@ -112,6 +112,9 @@ class BLForm extends BLModel {
 				case "single_checkbox":
 				return $this->singleCheckbox($id, $field);
 				break;
+				case "hidden_with_value":
+				return $this->hiddenWithValue($id, $field);
+				break;
 				case "yesno_radio":
 				return $this->yesnoRadio($id, $field);
 				break;
@@ -252,7 +255,13 @@ class BLForm extends BLModel {
 	
 	
 	
-	
+	function hiddenWithValue($id, $f){
+		$text="<input type='hidden' name='$id' id='$id' value='"  . $f["value"].  "'";
+		$text.=">"  . $f["value"];
+
+		return $text;
+		
+	}
 	function textbox($id, $f){
 		$text="<input type='text' name='$id' id='$id' value='"  . $f["value"].  "'";
 		if ($f["maxlength"]){
