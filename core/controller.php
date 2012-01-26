@@ -55,7 +55,13 @@ class Core_Controller extends BLController {
 			if (!$id){
 				die("Go away");
 			}
-			$res=$this->model->get($id);
+			if ($this->model->methodReplacements["get"]){
+				$getter=$this->model->methodReplacements["get"];
+				$res=$this->model->$getter(array($this->model->idField() => $id));
+			} else {
+				// Standard method
+				$res=$this->model->get($id);
+			}
 			$form=new BLForm($this->model->model(), $res);
 			$this->preFormatters($form, $res, $formatters);
 			$form->setupTray();
