@@ -15,7 +15,7 @@ class Core_Subcategories_AdminController extends Admin_Controller {
 
 	function formatters(){
 		$formatters=array();
-		$formatters["category_id"]["helper"]="categoryList";
+		$formatters["category_id"]["helper"]="blsfe_helper_systemCategoryList";
 		//$formatters["icon"]["formtype"]="system_image";
 		$formatters["icon"]["hidden"]="true";
 		return $formatters;
