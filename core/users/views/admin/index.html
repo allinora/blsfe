@@ -1,0 +1,20 @@
+<table class="tablesorter">
+<thead>
+<tr>
+	<th>ID</th>
+	<th>Email</th>
+	<th><a href='/<{$lang}>/core/users/admin/add'>Add</a></th>
+	
+</tr>
+</thead>
+	
+<{foreach from=$aData item=user}>
+<tr>
+	<td><{$user.id}></td>
+	<td><{$user.email}></td>
+	<td><a href="/<{$lang}>/core/users/admin/edit/<{$user.id}>">Edit</a></td>
+</tr>
+
+<{/foreach}>
+
+</table>
