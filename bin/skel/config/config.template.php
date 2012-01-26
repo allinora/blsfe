@@ -32,6 +32,9 @@ define('DATE_FORMAT_EN', "n-j-Y, H:i:s");
 define('DATE_FORMAT_FR', "j/n/Y, H:i:s");
 define('DATE_FORMAT_DE', "j/n/Y, H:i:s");
 
+// Images directory
+define('CMS_IMAGES_DIRECTORY', $_SERVER["DOCUMENT_ROOT"] . "/uploads/cms/images");
+
 define('TEMPLATE_BACKEND', "Smarty");
 
 

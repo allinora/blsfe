@@ -1,8 +1,8 @@
 default:
 	echo Read the Makefile
 install:
-	mkdir -p tmp/cache tmp/logs tmp/sessions tmp/smarty_compile tmp/smarty_cache
-	chmod 777  tmp/cache tmp/logs tmp/sessions tmp/smarty_compile tmp/smarty_cache
+	mkdir -p tmp/cache tmp/logs tmp/sessions tmp/smarty_compile tmp/smarty_cache public/uploads/cms/images/spool
+	chmod -R 777  tmp/cache tmp/logs tmp/sessions tmp/smarty_compile tmp/smarty_cache public/uploads
 
 clean:
 	rm -rf tmp
