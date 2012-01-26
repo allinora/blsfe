@@ -63,6 +63,16 @@ class Core_Images_AdminController extends Admin_Controller {
 		
 		
 	}
+	function deleteAction($id){
+		$this->render=0;
+		$image=$this->model->get($id);
+		if ($image["id"]){
+			$ret=$this->model->delete($id);
+			//die("Error 404: Record not found");
+			$this->redirect("core", "images/admin/list/" . $image["image_category_id"]);
+		}
+		//print "<pre>" . print_r($ret, true) . "</pre>";
+	}
 	function showAction($id, $x=0, $y=0){
 		$this->render=0;
 		//$key=$this->_model . DS . __CLASS__ . DS . __FUNCTION__ . DS .  "$id-$x-$y";

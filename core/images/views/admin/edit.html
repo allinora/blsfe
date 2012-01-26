@@ -1,1 +1,17 @@
+<div id="container" class="fbbluebox" align=right>
+<button style="color: red" onclick="deleteImage('<{$imageManagerRole}>', <{$image.id}>)">Delete this image</button>
+</div>
+
 <{include file="<{$blsfe_root}>/core/images/views/edit.html"}>
+<br><br>
+
+<script>
+function deleteImage(role,id){
+	if(confirm("Are you sure you want to delete this image??\n\nThis action is not reversable!!\n\nThe system will NOT check for any dependencies of this image")){
+		_url="/core/images/"+role+"/delete/"+id;
+		self.location=_url;
+		//alert(_url);
+	}
+}
+</script>
+
