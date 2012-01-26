@@ -82,6 +82,8 @@ $.fn.Cowrousel = function (Args) {
 		li.width(Args.elementWidth).height(Args.height).css("marginRight", Args.spacing);
 		li.appendTo($ul);
 		
+		li.append("<div style=\"clear:both;\"></div>");
+		
 		return li;
 	};
 	
@@ -202,14 +204,14 @@ $.fn.Cowrousel = function (Args) {
 	//add custom functions
 	$this.addEntry = function (content) {
 		var li = addLI();
-		li.append(content);
+		li.prepend(content);
 		onContentChanged();
 	};
 	
 	$this.addEntries = function (contents) {
 		for (var i=0; i<contents.length; i++) {
 			var li = addLI();
-			li.append(contents[i]);
+			li.prepend(contents[i]);
 		}
 		onContentChanged();
 	};
