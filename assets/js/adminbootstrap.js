@@ -15,6 +15,10 @@ $(function() {
   	$('.tablesorter tr:odd').addClass("odd");
   	$('.tablesorter tr:even').addClass("even");
     
+	$( "input.date" ).datepicker({
+		'dateFormat' : 'yy-mm-dd'
+	});
+
 });
 
 function systemImage(lyr,id,url){
