@@ -13,7 +13,6 @@ class Core_Users_AdminController extends Admin_Controller {
 
 	function indexAction() {
 		$res=$this->model->getUsersList();
-		print "<pre>" . print_r($res, true) . "</pre>";
 		$this->set("aData", $res);
 	}
 	
