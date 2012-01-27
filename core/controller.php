@@ -47,7 +47,13 @@ class Core_Controller extends BLController {
 
 	function editAction($id, $redirect, $formatters=array()) {
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){
-			$x=$this->model->set($_POST);
+			if ($this->model->methodReplacements["set"]){
+				$setter=$this->model->methodReplacements["set"];
+				$res=$this->model->$setter($_POST);
+			} else {
+				// Standard method
+				$x=$this->model->set($_POST);
+			}
 			$this->redirect($redirect);
 		}
 
