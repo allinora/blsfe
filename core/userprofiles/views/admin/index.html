@@ -1,0 +1,17 @@
+<table class="tablesorter">
+<thead>
+	<th>ID</th>
+	<th>Name</th>
+	<th>&nbsp;</th>
+</thead>
+	
+<{foreach from=$aData item=profile}>
+<tr>
+	<td><{$profile.user_id}></td>
+	<td><{$profile.firstname}> <{$profile.lastname}></td>
+	<td><a href="/<{$lang}>/core/userprofiles/admin/edit/<{$profile.user_id}>">Edit</a></td>
+</tr>
+
+<{/foreach}>
+
+</table>

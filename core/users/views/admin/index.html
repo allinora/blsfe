@@ -3,6 +3,7 @@
 <tr>
 	<th>ID</th>
 	<th>Email</th>
+	<th>&nbsp;</th>
 	<th><a href='/<{$lang}>/core/users/admin/add'>Add</a></th>
 	
 </tr>
@@ -13,6 +14,7 @@
 	<td><{$user.id}></td>
 	<td><{$user.email}></td>
 	<td><a href="/<{$lang}>/core/users/admin/edit/<{$user.id}>">Edit</a></td>
+	<td><a href="/<{$lang}>/core/userprofiles/admin/edit/<{$user.id}>">Profile</a></td>
 </tr>
 
 <{/foreach}>

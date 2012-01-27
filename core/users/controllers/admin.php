@@ -9,6 +9,8 @@ class Core_Users_AdminController extends Admin_Controller {
 		
 		// Define standard method replacements
 		$this->model->methodReplacements["get"]="getUser";
+
+		$this->model->methodReplacements["set"]="updateUser";
 	}
 
 	function indexAction() {
