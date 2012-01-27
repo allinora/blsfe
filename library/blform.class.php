@@ -94,6 +94,9 @@ class BLForm extends BLModel {
 		if ($id=="language"){
 			return $this->languageList($id, $field);
 		}
+		if ($id=="gender"){
+			return $this->genderList($id, $field);
+		}
 		
 		if ($field["formtype"]){
 			switch($field["formtype"]){
@@ -198,6 +201,18 @@ class BLForm extends BLModel {
 			$ret[$c["isocode"]]["id"]=$c["isocode"];
 			$ret[$c["isocode"]]["value"]=$c["name"];
 		}
+		return $this->selectbox($id, $field, $ret);
+	}
+	
+	function genderList($id, $field){
+		$ret=array();
+
+		$ret['f']["id"]='f';
+		$ret['f']["value"]='female';
+
+		$ret['m']["id"]='m';
+		$ret['m']["value"]='male';
+
 		return $this->selectbox($id, $field, $ret);
 	}
 	
