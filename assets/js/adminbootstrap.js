@@ -16,7 +16,10 @@ $(function() {
   	$('.tablesorter tr:even').addClass("even");
     
 	$( "input.date" ).datepicker({
-		'dateFormat' : 'yy-mm-dd'
+		'dateFormat' : 'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		yearRange: 'c-50:c+50'
 	});
 
 });
