@@ -62,3 +62,11 @@ define('TEMPLATE_BACKEND', "Smarty");
 define('MEDIA_JS_PREFIX', "/staticmedia");
 define('MEDIA_CSS_PREFIX', "/staticmedia");
 define('ROBOTS', false);
+
+// Google Maps key
+// define('GOOGLE_MAPS_KEY', '');
+
+// Facebook stuff
+// define ("FB_APP_ID", "");
+// define("FB_APP_SECRET", "");
+
