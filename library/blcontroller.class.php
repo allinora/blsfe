@@ -27,6 +27,9 @@ class BLController {
 		$this->_template =  Template::factory();
 		$this->_template->init($controller,$action);
 		
+		$this->set("controller", $controller);
+		$this->set("action", $action);
+		
 		$this->helper = new BLHelper();
 		$this->logger = new BLLog();
 
