@@ -1,0 +1,22 @@
+<table class="tablesorter">
+<thead>
+<tr>
+	<th>ID</th>
+	<th>Name</th>
+	<th><a href='/<{$lang}>/core/spaces/admin/add'>Add</a></th>
+	<th>&nbsp;</th>
+	
+</tr>
+</thead>
+	
+<{foreach from=$aData item=page}>
+<tr>
+	<td><{$page.id}></td>
+	<td><{$page.name}></td>
+	<td><a href="/<{$lang}>/core/spaces/admin/edit/<{$page.id}>">Edit</a></td>
+	<td><a href="/<{$lang}>/core/spaces/admin/categories/<{$page.id}>">Categories</a></td>
+</tr>
+
+<{/foreach}>
+
+</table>

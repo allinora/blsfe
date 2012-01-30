@@ -1,0 +1,13 @@
+<form method="post">
+<h1 class="fbinfobox">Which categories belong to this space [ <b><{$space.name}></b> ]</h1>
+<div class="fbbluebox" align=right><input class="button" type="submit" value="<po>Save</po>"></div>
+<ul class="categoriesContainer">
+	<{foreach from=$aCategories item=category}>
+	<li class="category" category_id="<{$category.id}>">
+		<input type=checkbox name="categories[]" class="categoriesAssignmentCheckbox"  id="category_<{$category.id}>" value="<{$category.id}>"
+		<{if $aSpace2CategoryLinks[$category.id]}>	checked="checked" <{/if}>>
+		<{$category.name}>
+	</li>
+	<{/foreach}>
+</ul>
+</form>
