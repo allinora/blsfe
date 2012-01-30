@@ -1,18 +1,25 @@
 <?php
+include_once(dirname(__FILE__) . "/cmsImageUrl.php");
+function blsfe_helper_cmsImage($id, $x=0, $y=0, $params){
+	$image_url=blsfe_helper_cmsImageUrl($id, $x, $y);
 
-function blsfe_helper_cmsImage($id, $x=0, $y=0){
-	$model=new BLModel("/sys/image", "id");
-	$image=$model->get($id);
+	$border=$params["border"];
+	$class=$params["class"];
+	$style=$params["style"];
 	
-	if (is_array($image) && $image["name"]){
-		
-		if (!$x){
-			$x=0;
+	if ($image_url){
+		$image_string= "<img src='$image_url' ";
+		if($border){
+			$image_string.=	"border='$border'";
 		}
-		if (!$y){
-			$y=0;
+		if($class){
+			$image_string.=	"class='$class'";
 		}
-		return "<img src='/core/images/cms/system/$id/$x/$y/" . $image["name"] . "'>";
+		if($style){
+			$image_string.=	"style='$style'";
+		}
+		$image_string.=">";
+		return $image_string;
 	}
 	return "<img src='/fwassets/images/1x1.png' width='$x' height='$y'>";
 	
