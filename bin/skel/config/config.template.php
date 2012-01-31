@@ -35,6 +35,11 @@ define('DATE_FORMAT_DE', "j/n/Y, H:i:s");
 // Images directory
 define('CMS_IMAGES_DIRECTORY', $_SERVER["DOCUMENT_ROOT"] . "/uploads/cms/images");
 
+// Directory to store User-Profile-Picture
+define('USER_AVATARS_DIRECTORY', $_SERVER["DOCUMENT_ROOT"] . "/uploads/users/avatars");
+
+
+
 define('TEMPLATE_BACKEND', "Smarty");
 
 
