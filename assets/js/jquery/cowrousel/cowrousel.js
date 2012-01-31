@@ -19,6 +19,12 @@
 		elementWidth: 100,
 		autoInterval: 2000,
 		spacing: 15,
+		
+		navWidth: 50,
+		navHeight: 170,
+		prevTexture: "/images/left.png",
+		nextTexture: "/images/right.png",
+		
 		slideCallback: function(x) { console.log("SlideCallback"); }
 	});
  */
@@ -42,6 +48,13 @@ $.fn.Cowrousel = function (Args) {
 	Args.width = Args.numElementsVisible * (Args.elementWidth + Args.spacing) - Args.spacing;
 	
 	$content.height(Args.height).width(Args.width);
+	
+	$left.width(Args.navWidth).height(Args.navHeight);
+	$right.width(Args.navWidth).height(Args.navHeight);
+	
+	$left.css("background", "transparent url("+Args.prevTexture+") no-repeat left center");
+	$right.css("background", "transparent url("+Args.nextTexture+") no-repeat right center");
+	
 	$left.css("marginTop", (Args.height-$left.outerHeight())/2);
 	$right.css("marginTop", (Args.height-$right.outerHeight())/2);
 	
