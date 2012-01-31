@@ -1,4 +1,5 @@
 <div id="topmenu">
+	<div class="menu">
 	<a class="<{if $tab=="adminhome"}> active<{/if}> topmenuleft fbtab" href="/core/admin/"><{$smarty.const.APP_NAME}></a> 
 	<{foreach from=$coremodules key=module item=moduleData}>
 		<a class="<{if $tab==$module}> active<{/if}> fbtab" href="/core/<{$module}>/"><{$moduleData.label}></a> 
@@ -7,7 +8,4 @@
 		<a class="<{if $tab==$module}> active<{/if}> fbtab" href="/modules/<{$module}>/admin/"><{$moduleData.label}></a> 
 	<{/foreach}>
 </div>
-
-
-
-
+</div>

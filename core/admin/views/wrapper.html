@@ -10,6 +10,10 @@
 <link rel="stylesheet" type="text/css" href="/fwassets/css/default.css" />
 <link rel="stylesheet" type="text/css" href="/fwassets/css/fb.css" />
 
+<link rel="stylesheet/less" type="text/css" href="/less/admin.less">
+<script type="text/javascript" src="/fwassets/js/less/less-1.1.5.min.js"></script>
+
+
 <script type="text/javascript" src="/fwassets/js/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="/fwassets/js/jquery/cookie.js"></script>
 <script type="text/javascript" src="/fwassets/js/jquery/ui/1.8.16/jquery-ui.min.js"></script>
@@ -34,5 +38,7 @@
 <{if ! $noMenu}>
 <{ include file="$blsfe_template_dir/menu.html" }>
 <{/if}>
+<div id="content">
 <{$content}>
+</div>
 </body>
