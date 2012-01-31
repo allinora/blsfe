@@ -15,12 +15,15 @@ class App_Controller extends BLController {
 	
 	function login(){
         $userModel=new BLModel("sys/auth/user", "id");
+		// Check for the syntax validity of the email and see if the password is provided.
+		
         $auth=$userModel->login($_REQUEST);
 		if ($auth["user_id"]>0){
 			$_SESSION["user"]=$auth;
 			// $this->redirect("/");
 		}  else {
-			$this->set("errorMessage", "Authentication failure");
+			$_SESSION["authfailures"]++;
+			$this->set("errorMessage", "Authentication failure (" . $_SESSION["authfailures"] . ")");
 		}
 		
 	}
