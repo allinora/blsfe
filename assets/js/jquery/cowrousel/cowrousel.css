@@ -2,17 +2,24 @@
   display: block;
 }
 .cowrousel .nav {
-  height: 15px;
-  width: 15px;
-  padding: 10px;
+  /*
+		height: 15px;
+        width: 15px;
+		padding: 10px;
+		*/
+
+  cursor: pointer;
 }
 .cowrousel .nav div {
   display: block;
-  height: 15px;
-  width: 15px;
-  margin: 0;
-  background: transparent url(/images/cowrousel/arrow.png) no-repeat;
-  background-position: -90px 0px;
+  /*
+            height: 15px;
+            width: 15px;
+            margin: 0;
+            background: transparent url(/images/cowrousel/arrow.png) no-repeat;
+            background-position: -90px 0px;
+            */
+
 }
 .cowrousel > * {
   display: block;
@@ -42,21 +49,27 @@
 }
 .cowrousel .right {
   padding-right: 0;
-}
-.cowrousel .right div {
-  background-position: -90px 0px;
-  cursor: pointer;
-}
-.cowrousel .right div:hover {
-  background-position: -90px -15px;
+  /*
+        div {
+            background-position: -90px 0px;
+            cursor:pointer;
+        }
+        
+        div:hover {
+            background-position: -90px -15px;
+        }*/
+
 }
 .cowrousel .left {
   padding-left: 0;
-}
-.cowrousel .left div {
-  background-position: -90px -30px;
-  cursor: pointer;
-}
-.cowrousel .left div:hover {
-  background-position: -90px -45px;
+  /*
+        div {
+            background-position: -90px -30px;
+            cursor:pointer;
+        }
+        
+        div:hover {
+            background-position: -90px -45px;
+        }*/
+
 }

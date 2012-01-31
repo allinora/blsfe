@@ -1,17 +1,23 @@
 .cowrousel {
     display: block;
     .nav {
+		/*
 		height: 15px;
         width: 15px;
 		padding: 10px;
+		*/
         div {
             display: block;
+            /*
             height: 15px;
             width: 15px;
             margin: 0;
             background: transparent url(/images/cowrousel/arrow.png) no-repeat;
             background-position: -90px 0px;
+            */
         }
+        
+        cursor: pointer;
     }
     
     > * {
@@ -45,6 +51,7 @@
     
     .right {
 		padding-right: 0;
+		/*
         div {
             background-position: -90px 0px;
             cursor:pointer;
@@ -52,11 +59,12 @@
         
         div:hover {
             background-position: -90px -15px;
-        }
+        }*/
     }
     
     .left {
 		padding-left: 0;
+		/*
         div {
             background-position: -90px -30px;
             cursor:pointer;
@@ -64,6 +72,6 @@
         
         div:hover {
             background-position: -90px -45px;
-        }
+        }*/
     }
 }
