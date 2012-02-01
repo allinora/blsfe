@@ -132,11 +132,9 @@ $.fn.Cowrousel = function (Args) {
 	
 	//another nice function to fade arrows when they're useless.
 	var magicArrows = function () {
+		var S = 100;
 		if (!Args.loop) {
 			$right.find("*").stop(true, true).animate({ opacity: cowrouselIndex == $ul.find("li").length ? 0.0 : 1.0 }, S);
-			
-			_dx = $ul.find("li:first").offset().left + sdx;
-			_x = $content.offset().left;
 			$left.find("*").stop(true, true).animate({ opacity: cowrouselIndex == 0 ? 0.0 : 1.0 }, S);
 		}
 	};
