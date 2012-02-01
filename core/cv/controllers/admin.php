@@ -11,14 +11,16 @@ class Core_Cv_AdminController extends Admin_Controller {
 	
 	function indexAction() {
 		$res=$this->model->getall(1);
-		print "<pre>" . print_r($res, true) . "</pre>";
+		//print "<pre>" . print_r($res, true) . "</pre>";
 		$this->set("aData", $res);
 	}
 	
 
 	function formatters(){
 		$formatters=array();
+		$formatters["user_id"]["helper"]="blsfe_helper_userList";
 		$formatters["category_id"]["helper"]="categoryList";
+		$formatters["description"]["css"]="width: 400px; height: 100px; background-color: #d4d4d4";
 		$formatters["image"]["formtype"]="system_image";
 
 		$formatters["icon"]["hidden"]="true";
