@@ -9,6 +9,7 @@
 </tr>
 </thead>
 	
+<{if $aData|@count }>
 <{foreach from=$aData item=cvproject}>
 <tr>
 	<td><{$cvproject.id}></td>
@@ -18,5 +19,6 @@
 </tr>
 
 <{/foreach}>
+<{/if}>
 
 </table>
