@@ -21,9 +21,9 @@ class Core_Cv_AdminController extends Admin_Controller {
 		$formatters["user_id"]["helper"]="blsfe_helper_userList";
 		$formatters["category_id"]["helper"]="categoryList";
 		$formatters["description"]["css"]="width: 400px; height: 100px; background-color: #d4d4d4";
-		$formatters["image"]["formtype"]="system_image";
+		//$formatters["image"]["formtype"]="system_image";
+		$formatters["image"]["hidden"]="true";
 
-		$formatters["icon"]["hidden"]="true";
 		return $formatters;
 	}
 
