@@ -1,0 +1,22 @@
+<table class="tablesorter">
+<thead>
+<tr>
+	<th>ID</th>
+	<th>User</th>
+	<th>Name</th>
+	<th><a href='/<{$lang}>/core/cv/admin/add'>Add</a></th>
+	
+</tr>
+</thead>
+	
+<{foreach from=$aData item=cvproject}>
+<tr>
+	<td><{$cvproject.id}></td>
+	<td><{userData field="firstnameLastname" user_id=$cvproject.user_id}></td>
+	<td><{$cvproject.name}></td>
+	<td><a href="/<{$lang}>/core/cv/admin/edit/<{$cvproject.id}>">Edit</a></td>
+</tr>
+
+<{/foreach}>
+
+</table>
