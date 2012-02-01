@@ -28,10 +28,10 @@ class Core_Cv_AdminController extends Admin_Controller {
 	}
 
 	function addAction() {
-		parent::addAction("core/subcategories/admin");
+		parent::addAction("core/cv/admin");
 	}
 	
 	function editAction($id) {
-		parent::editAction($id, "core/subcategories/admin");
+		parent::editAction($id, "core/cv/admin");
 	}
 }
