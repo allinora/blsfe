@@ -18,11 +18,12 @@ class Core_Zlmlistings_AdminController extends Admin_Controller {
 		$formatters=array();
 		$formatters["user_id"]["helper"]="blsfe_helper_userList";
 		$formatters["active"]["formtype"]="yesno_radio";
-		$formatters["description"]["css"]="width:300px; height: 200px;";
+		$formatters["description"]["css"]="width:300px; height: 100px;";
 		$formatters["space_id"]["helper"]="blsfe_helper_spaceList";
 		$formatters["action_id"]["helper"]="blsfe_helper_actionList";
 		$formatters["sub_category_id"]["helper"]="blsfe_helper_systemCategorySubCategoryList";
 		$formatters["expires"]["class"]="datetimepicker";
+		$formatters["expires"]["css"]="width: 140px";
 		
 		return $formatters;
 	}
