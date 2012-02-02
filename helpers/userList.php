@@ -6,7 +6,7 @@ function blsfe_helper_userList($id){
 	$text="<select name='user_id' id='user_id'>";
 	foreach($users as $user){
 		$text.="<option value='" . $user["user_id"] . "'";
-		if ($id==$user["id"]){
+		if ($id==$user["user_id"]){
 			$text.=" selected ";
 		}
 		$text.=">" . $user["firstname"]  . " " . $user["lastname"]. "</option>";
