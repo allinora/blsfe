@@ -22,6 +22,7 @@ class Core_Zlmlistings_AdminController extends Admin_Controller {
 		$formatters["space_id"]["helper"]="blsfe_helper_spaceList";
 		$formatters["action_id"]["helper"]="blsfe_helper_actionList";
 		$formatters["sub_category_id"]["helper"]="blsfe_helper_systemCategorySubCategoryList";
+		$formatters["expires"]["class"]="datetimepicker";
 		
 		return $formatters;
 	}

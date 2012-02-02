@@ -22,6 +22,11 @@ $(function() {
 		yearRange: 'c-50:c+50'
 	});
 
+	$('input.datetimepicker').datetimepicker({
+		'dateFormat' : 'yy-mm-dd',
+		'timeFormat': 'hh:mm:ss'
+	});
+
 });
 
 function systemImage(lyr,id,url){
