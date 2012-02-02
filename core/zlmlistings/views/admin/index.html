@@ -1,0 +1,22 @@
+<table class="tablesorter">
+<thead>
+<tr>
+	<th>ID</th>
+	<th>User</th>
+	<th>Name</th>
+	<th><a href='/<{$lang}>/core/zlmlistings/admin/add'>Add</a></th>
+	
+</tr>
+</thead>
+	
+<{foreach from=$aData item=listing}>
+<tr>
+	<td><{$listing.id}></td>
+	<td><{userData field="firstnameLastname" user_id=$listing.user_id}></td>
+	<td><{$listing.title}></td>
+	<td><a href="/<{$lang}>/core/zlmlistings/admin/edit/<{$listing.id}>">Edit</a></td>
+</tr>
+
+<{/foreach}>
+
+</table>
