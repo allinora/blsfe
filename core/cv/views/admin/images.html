@@ -1,0 +1,22 @@
+<table class="tablesorter">
+<thead>
+<tr>
+	<th>ID</th>
+	<th>Name</th>
+	<th><a class="fancybox" href="/core/cv/admin/upload/<{$project.id}>">Upload Images</a></th>
+	
+</tr>
+</thead>
+	
+<{if $aData }>
+<{foreach from=$aData item=image}>
+<tr>
+	<td><{$image.id}></td>
+	<td><{$image.name}></td>
+	<td style="display: none;"><a href="/<{$lang}>/core/cv/admin/edit/<{$cvproject.id}>">Edit</a></td>
+</tr>
+
+<{/foreach}>
+<{/if}>
+
+</table>

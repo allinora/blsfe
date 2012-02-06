@@ -89,4 +89,12 @@ class Core_Controller extends BLController {
 	function afterAction(){
 		$this->set("jslibs", $this->jsLibs);
 	}
+	
+	function setTabName($c){
+		$x=split('_', $c);
+		$tab=strtolower($x[1]);
+		$this->set("tab", $tab);
+		return $tab;
+	}
+	
 }
