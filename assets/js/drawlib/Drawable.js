@@ -102,20 +102,47 @@ var Drawable = function() {
 		}
 	});
 	
-	this.transform.onInvalidate = function() {
+	this.transform.onInvalidate(function() {
 		_this.invalidate();
-	};
+	});
 	
 	this._mouse = new Vertex();
 	this.mouseOverDrawable = null;
 	
 	this.name = "Drawable_" + Drawable._count;
 	Drawable._count++;
+	
+	this._cachedMatrix = null;
 };
 
-Drawable.prototype.addChild = function (c) {
+Drawable.prototype.getMatrix = function() {
+	if (this._cachedMatrix == null) {
+		if (this._parent) {
+			this._cachedMatrix = this._parent.getMatrix().multiply(this.transform.matrix);
+		}
+		else {
+			this._cachedMatrix = this.transform.matrix;
+		}
+	}
+	
+	return this._cachedMatrix;
+};
+
+Drawable.prototype.addChild = function (c, drawing) {
 	c._parent = this;
+	
+	c._setDrawing(drawing || this._drawing, true);
+	
 	this._children.push(c);
+};
+
+Drawable.prototype._setDrawing = function (drawing, deep) {
+	this._drawing = drawing;
+	if (deep) {
+		for (var i=0; i<this._children.length; i++) {
+			this._children[i] && this._children[i]._setDrawing(drawing, true);
+		}
+	}
 };
 
 Drawable.Deselect = function () {
@@ -141,8 +168,15 @@ Drawable.prototype._getChildUnderMouse = function() {
 
 Drawable.Selected = null;
 
-Drawable.prototype.invalidate = function() {
+Drawable.prototype.invalidate = function(deep) {
+	//console.log(this.name, "CALL", "invalidate", deep);
 	this.transform.invalidate(true);
+	this._cachedMatrix = null;
+	if (deep) {
+		for (var i=0; i<this._children.length; i++) {
+			this._children[i] && this._children[i].invalidate(true);
+		}
+	}
 };
 
 Drawable.prototype.applyTransform = function () {
@@ -218,11 +252,7 @@ Drawable.prototype.render = function (ctx) {
 		var ymin = Infinity;
 		var ymax = -Infinity;
 		
-		var T = null;
-		if (this._parent)
-			T = this._parent.transform.matrix.multiply(this.transform.matrix);
-		else
-			T = this.transform.matrix;
+		var T = this.getMatrix();
 		
 		this.averageCenter.x = 0;
 		this.averageCenter.y = 0;

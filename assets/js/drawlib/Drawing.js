@@ -24,6 +24,9 @@ var Drawing = function(w,h, mouseShiftVertex) {
 		rw: Infinity,
 		rh: Infinity
 	};
+	
+	this.camera = new Camera(this);
+	this._drawing = this;
 };
 Drawing.prototype = new Drawable();
 
@@ -125,6 +128,10 @@ Drawing.prototype._render = function (ctx, style) {
 			}
 		}
 	}
+};
+
+Drawing.prototype.getMatrix = function() {
+	return this.camera.transform.matrix;
 };
 
 Drawing.prototype.loadAsset = function (url, callback) {

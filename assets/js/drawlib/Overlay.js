@@ -24,13 +24,14 @@ Overlay.prototype._beforeRender = function() {
 	var _superRender = Overlay.prototype._render;
 	Overlay.prototype._render = function (ctx, style) {
 		var image = this._drawing.assets[this.asset];
-		var transform = this.transform.decompose();
+		var T = this.getMatrix();
+		var transform = T.decompose();
 		
 		//rotate stuff
 		ctx.save();
 		
 		//for some odd reasons, seems the canvas rotation is going on the wrong logical way...
-		var M = this.transform.matrix.clone().multiply(Matrix.CreateRotation(-2*transform.rotation));
+		var M = T.multiply(Matrix.CreateRotation(-2*transform.rotation));
 		
 		ctx.setTransform(
 			M.data[0],

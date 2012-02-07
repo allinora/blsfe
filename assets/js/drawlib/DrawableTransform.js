@@ -67,7 +67,29 @@ DrawableTransform.prototype.multiply = function (vertex) {
 };
 
 DrawableTransform.prototype.decompose = function() {
-	var res = this.matrix.decomposeQR();
+	return this.matrix.decompose();
+};
+
+DrawableTransform.prototype.interpolateTo = function (that, duration, easing, stepCallback) {
+	var that = that.matrix ? that.matrix : that;
+	var _this=this;
+	this.matrix.interpolateTo(that, duration, easing, function() {
+		_this.invalidate();
+	});
+};
+
+var Matrix = function(a11, a12, a13, a21, a22, a23, a31, a32, a33) {
+	this.data = [
+		a11 || 1, a12 || 0, a13 || 0,
+		a21 || 0, a22 || 1, a23 || 0,
+		a31 || 0, a32 || 0, a33 || 1
+	];
+	
+	this.interpolationTimer = null;
+};
+
+Matrix.prototype.decompose = function() {
+	var res = this.decomposeQR();
 	var Q = res.Q;
 	var R = res.R;
 	
@@ -87,14 +109,6 @@ DrawableTransform.prototype.decompose = function() {
 		translation: { x:tx, y:ty },
 		scale: { x:sx, y:sy }
 	};
-};
-
-var Matrix = function(a11, a12, a13, a21, a22, a23, a31, a32, a33) {
-	this.data = [
-		a11 || 1, a12 || 0, a13 || 0,
-		a21 || 0, a22 || 1, a23 || 0,
-		a31 || 0, a32 || 0, a33 || 1
-	];
 };
 
 Matrix.prototype.toString = function() {
@@ -204,6 +218,60 @@ Matrix.prototype.clone = function () {
 	for (var i=0; i<9; i++)
 		m.data[i] = this.data[i];
 	return m;
+};
+
+Matrix.prototype.stopInterpolate = function () {
+	if (this.interpolationTimer) {
+		clearInterval(this.interpolationTimer);
+		this.interpolationTimer = null;
+	}
+};
+
+Matrix.prototype.add = function (that) {
+	for (var i=0; i<this.data.length; i++)
+		this.data[i] += that.data[i];
+	return this;
+};
+Matrix.prototype.subtract = function (that) {
+	for (var i=0; i<this.data.length; i++)
+		this.data[i] -= that.data[i];
+	return this;
+};
+Matrix.prototype.interpolate = function (that, percent, easing) {
+	for (var i=0; i<this.data.length; i++) {
+		if (typeof easing != "function")
+			this.data[i] = this.data[i] * (1-percent) + that.data[i] * percent;
+		else
+			this.data[i] = easing(this.data[i], that.data[i], percent);
+	}
+	return this;
+};
+
+Matrix.prototype.interpolateTo = function (that, duration, easing, stepCallback) {
+	this.stopInterpolate();
+	
+	var a0 = this.clone();
+	
+	if (duration <= 0) {
+		this.data = that.clone().data;
+		if (typeof stepCallback == "function")
+			stepCallback();
+	}
+	else {
+		var t0 = new Date().getTime();
+		var _this = this;
+		this.interpolationTimer = setInterval(function() {
+			var dt = new Date().getTime() - t0;
+			var pct = Math.min(dt/duration, 1.0);
+			var aN = a0.clone().interpolate(that, pct, easing);
+			_this.data = aN.data;
+			if (typeof stepCallback == "function")
+				stepCallback();
+			
+			if (pct == 1)
+				_this.stopInterpolate();
+		}, 10);
+	}
 };
 
 Matrix.prototype.multiply = function (right) {
