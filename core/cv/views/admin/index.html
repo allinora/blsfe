@@ -4,6 +4,7 @@
 	<th>ID</th>
 	<th>User</th>
 	<th>Name</th>
+	<th>Title</th>
 	<th><a href='/<{$lang}>/core/cv/admin/add'>Add</a></th>
 	
 </tr>
@@ -15,7 +16,9 @@
 	<td><{$cvproject.id}></td>
 	<td><{userData field="firstnameLastname" user_id=$cvproject.user_id}></td>
 	<td><{$cvproject.name}></td>
+	<td><{$cvproject.title}></td>
 	<td><a href="/<{$lang}>/core/cv/admin/edit/<{$cvproject.id}>">Edit</a></td>
+	<td><a href="/<{$lang}>/core/cv/admin/images/<{$cvproject.id}>">Images</a></td>
 </tr>
 
 <{/foreach}>
