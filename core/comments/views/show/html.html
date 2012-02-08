@@ -10,7 +10,7 @@
 		<span class="comment-user-comment"><{$comment.comment|nl2br}></span>
 		<div class="comment-createtime"><abbr class="commenttimeago" title="<{$comment.createtime}>"><{$comment.createtime}></abbr></div>
 		<{if $comment.user_id eq $smarty.session.user.user_id}>
-		<div class="comment-delete"><a href="javascript:void(handleCommentDelete(<{$comment.id}>, '<{$smarty.request.object_type}>', <{$smarty.request.object_id}>, 'commentBox-<{$smarty.request.object_id}>' ))">Delete</a></div>
+		<div class="comment-delete"><a href="javascript:void()" onclick="handleCommentDelete(<{$comment.id}>, '<{$smarty.request.object_type}>', <{$smarty.request.object_id}>, 'commentBox-<{$smarty.request.object_id}>' )">Delete</a></div>
 		<{/if}>
 	</td>
 	<tr>
