@@ -24,12 +24,16 @@
 .comment-user-comment {
 	padding-top: 5px;
 	padding-bottom: 10px;
+	padding-right: 10px;
 }
 
 .comment-createtime {
 	text-align:right;
 	opacity: 0.333;
 	
+}
+.comment-delete {
+	text-align:right;
 }
 
 

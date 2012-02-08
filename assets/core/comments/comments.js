@@ -23,3 +23,15 @@ function handleCommentAdd(f,lyr){
 }
 
 	
+function handleCommentDelete(id, object_type, object_id,  lyr){
+	_url="/core/comments/del/?id="+id;
+	$.get(_url, function(){
+		_url="/core/comments/show/html?object_type="+object_type+"&object_id="+object_id;
+		$('#'+lyr).load(_url, function(){
+			jQuery("abbr.commenttimeago").timeago();
+		});
+	});
+	return false;
+}
+
+	
