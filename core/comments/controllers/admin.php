@@ -1,17 +1,15 @@
 <?php
 
-class Core_Translations_AdminController extends Admin_Controller {
+class Core_Comments_AdminController extends Admin_Controller {
 
 	function beforeAction(){
 		parent::beforeAction();
-		$this->set("tab", "translations");
+		$this->set("tab", "comments");
+		$this->model=new BLModel("sys/user/comment", "id");
 	}
 	function indexAction() {
-        blsfe_load_class("BLTranslate");
-        $po=new BLTranslate();
-        $data=$po->handle();
-        $this->set("po", $data);
-		
+		$comments=$this->model->getComments4Admin();
+		$this->set("aComments", $comments);
 	}
 	
 }

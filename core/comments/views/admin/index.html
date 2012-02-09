@@ -1,0 +1,22 @@
+<table border=1>
+	<tr>
+		<th>Id</th>
+		<th>User</th>
+		<th>Object</th>
+		<th>Ref</th>
+		<th>Active</th>
+		<th>Private</th>
+		<th>Comment</th>
+	</tr>
+<{foreach from=$aComments item=comment}>
+<tr>
+	<td><{$comment.id}></td>
+	<td><{userData user_id=$comment.user_id field="firstname"}></td>
+	<td><{$comment.object_type}></td>
+	<td><{$comment.object_id}></td>
+	<td><{if $comment.is_active}>yes<{else}>no<{/if}></td>
+	<td><{if $comment.is_private}>yes<{else}>no<{/if}></td>
+	<td><{$comment.comment}></td>
+</tr>
+<{/foreach}>
+</table>
