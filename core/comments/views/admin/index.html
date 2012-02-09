@@ -16,7 +16,7 @@
 	<td><{$comment.object_id}></td>
 	<td><{if $comment.is_active}>yes<{else}>no<{/if}></td>
 	<td><{if $comment.is_private}>yes<{else}>no<{/if}></td>
-	<td><{$comment.comment}></td>
+	<td><{$comment.comment|strip_tags}></td>
 </tr>
 <{/foreach}>
 </table>
