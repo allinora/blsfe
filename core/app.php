@@ -54,7 +54,7 @@ class App_Controller extends BLController {
 
 		//print "<pre>" . print_r($userAccountParams, true) . "</pre>";
         $userModel=new BLModel("sys/auth/user", "id");
-        $user=$userModel->facebooklogin($userAccountParams);
+        $user=$userModel->facebooklogin($userAccountParams, "POST");
 		if ($user["user_id"]){
 			$_SESSION["user"]=$user;
 		} else {
