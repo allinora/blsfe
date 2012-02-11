@@ -4,7 +4,8 @@
 
 <table class="comment-entry" border=1>
 	<tr>
-	<td class="comment-avatar-col"><img src="/avatars/<{$comment.avatar}>" style="width:25px"></td>
+	<td class="comment-avatar-col"><{userAvatar user_id=$comment.user_id width=25}>
+</td>
 	<td class="comment-title-col">
 		<span class="comment-user-name"><{$comment.firstname}></span> &nbsp;
 		<span class="comment-user-comment"><{$comment.comment|nl2br}></span>
