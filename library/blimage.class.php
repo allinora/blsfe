@@ -7,6 +7,8 @@ class BLImage {
 	}
 	
 	public function resizeFile($f, $x=0, $y=0){
+		$x=round($x);
+		$y=round($y);
 		if (($x || $y) && class_exists("Imagick")) {
 			$imagick = new Imagick($f);
 			$imagick->thumbnailImage($x,$y);
@@ -18,6 +20,8 @@ class BLImage {
 	}
 
 	public function resizeBlob($b,  $x=0, $y=0){
+		$x=round($x);
+		$y=round($y);
 		if (($x || $y) && class_exists("Imagick")) {
 			$imagick = new Imagick();
 			$imagick->readImageBlob($b);
