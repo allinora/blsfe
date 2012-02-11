@@ -57,6 +57,8 @@ class App_Controller extends BLController {
         $user=$userModel->facebooklogin($userAccountParams);
 		if ($user["user_id"]){
 			$_SESSION["user"]=$user;
+		} else {
+			print "<pre>" . print_r($user, true) . "</pre>";exit;
 		}
 		
 	}
