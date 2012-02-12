@@ -123,6 +123,7 @@ class Core_Images_CompanyController extends Core_Controller {
 		$_params=array();
 		$_params["name"]=$filename;
 		$_params["image_category_id"]=$category_id;
+		$_params["company_id"]=$this->company_id;
 		$x=$this->model->add($_params);
 		if ($x){
 			$file_directory=$this->dest_directory . "/$x";
