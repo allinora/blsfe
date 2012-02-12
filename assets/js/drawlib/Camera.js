@@ -57,3 +57,11 @@ Camera.prototype.rotateTo = function(a, duration) {
 	this._rotation = a;
 	this.transform.interpolateTo(this.getMatrix(), duration);
 };
+
+Camera.prototype.reset = function (duration) {
+	this._zoom=1;
+	this._center = new Vertex(this._viewport.w/2, this._viewport.h/2);
+	this._rotation = 0;
+	
+	this.transform.interpolateTo(this.getMatrix(), duration);
+};
