@@ -140,6 +140,7 @@ Drawing.prototype.loadAsset = function (url, callback) {
 	var image = new Image();
 	var _this = this;
 	image.onload = function() {
+		console.warn("Drawing loaded asset: "+url)
 		_this.render();
 		if (typeof callback == 'function')
 			callback();
