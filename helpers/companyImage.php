@@ -1,7 +1,8 @@
 <?php
 include_once(dirname(__FILE__) . "/companyImageUrl.php");
 function blsfe_helper_companyImage($id, $x=0, $y=0, $params){
-	$image_url=blsfe_helper_companyImageUrl($id, $x, $y);
+	$cached=$params["cached"];
+	$image_url=blsfe_helper_companyImageUrl($id, $x, $y, $cached);
 
 	$border=$params["border"];
 	$class=$params["class"];

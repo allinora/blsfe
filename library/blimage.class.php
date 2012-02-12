@@ -12,12 +12,17 @@ class BLImage {
 	public function resizeFile($f, $x=0, $y=0){
 		$x=round($x);
 		$y=round($y);
+		$caching=0;
+		
+		
 		
 		if (defined("CMS_CACHE_DIRECTORY")){
-			$cache_f=$f;
-			$cache_f=preg_replace('@^' .  $_SERVER["DOCUMENT_ROOT"] . '@', "", $f);
-			$cache_file=CMS_CACHE_DIRECTORY . "/images/" . $cache_f . "/$x/$y/" . basename($f);
-			$cache_dir=dirname($cache_file);
+			if (in_array(substr($_SERVER["REQUEST_URI"], -3), array("png","jpg","gif"))){
+				$caching=1;
+				$cache_file=CMS_CACHE_DIRECTORY . $_SERVER["REQUEST_URI"];
+				$cache_dir=dirname($cache_file);
+			}
+			
 		}
 		
 		//print "$cache_file"; 
@@ -31,7 +36,7 @@ class BLImage {
 			$data=file_get_contents($f);
 		}
 		
-		if (defined("CMS_CACHE_DIRECTORY")){
+		if ($caching){
 			if(!is_dir($cache_dir)){
 				mkdir(dirname($cache_file) , 0777, true);
 			}

@@ -16,15 +16,8 @@ class Core_Companies_ImageController extends Core_Controller {
 			die("Not found");
 		}
 	
-		blsfe_load_class("BLFileinfo");
-		$fileInfo=new BLFileinfo();
-
-		$mimetype=$fileInfo->ext2mimetype($name);
-		header("Content-type: $mimetype");
-	
 		blsfe_load_class("BLImage");
 		$blimage=new BLImage();
-		$data=$blimage->resizeFile($dest_file, $x, $y);
-		die($data);
+		$blimage->displayImage($dest_file, $x, $y);
 	}
 }
