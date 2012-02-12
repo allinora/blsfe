@@ -1,5 +1,6 @@
 <?php
 
+include_once(dirname(__FILE__) . "/blfileinfo.class.php");
 class BLImage {
 	
 	public function _construct(){
@@ -33,6 +34,13 @@ class BLImage {
 		}
 	}
 	
+	public function displayImage($f, $x=0, $y=0){
+		$fileInfo=new BLFileinfo();
+		$mimetype=$fileInfo->ext2mimetype($f);
+		header("Content-type: $mimetype");
+		$data = $this->resizeFile($f, $x, $y);
+		echo $data;
+	}
 	
 	public function log($str){
 		if (is_string($str)){
