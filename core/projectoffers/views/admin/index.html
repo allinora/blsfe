@@ -4,8 +4,8 @@
 <tr>
 	<th>ID</th>
 	<th>Name</th>
+	<th>&nbsp;</th>
 	<th><a href='/<{$lang}>/core/<{$tab}>/admin/add'>Add</a></th>
-	
 </tr>
 </thead>
 	
@@ -16,6 +16,7 @@
 	<td><{$row.id}></td>
 	<td><{$row.name}></td>
 	<td><a href="/<{$lang}>/core/<{$tab}>/admin/edit/<{$row.id}>">Edit</a></td>
+	<td><a href="/<{$lang}>/core/projectofferentries/admin/index/<{$row.id}>">Entries</a></td>
 </tr>
 <{/if}>
 <{/foreach}>
