@@ -18,6 +18,7 @@ class Core_Subcategories_AdminController extends Admin_Controller {
 		$formatters["category_id"]["helper"]="blsfe_helper_systemCategoryList";
 		//$formatters["icon"]["formtype"]="system_image";
 		$formatters["icon"]["hidden"]="true";
+                $formatters["active"]["formtype"]="yesno_radio";
 		return $formatters;
 	}
 

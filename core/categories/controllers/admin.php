@@ -15,6 +15,7 @@ class Core_Categories_AdminController extends Admin_Controller {
 	function formatters(){
 		$formatters=array();
 		$formatters["icon"]["formtype"]="system_image";
+		$formatters["active"]["formtype"]="yesno_radio";
 		return $formatters;
 	}
 
