@@ -18,6 +18,8 @@ class Core_Projectoffers_AdminController extends Admin_Controller {
 		$formatters=array();
 		$formatters["company_id"]["helper"]="blsfe_helper_companyList";
 		$formatters["description"]["css"]="width:600px; height: 400px;";
+		$formatters["conditions"]["css"]="width:600px; height: 100px;";
+		$formatters["footnotes"]["css"]="width:600px; height: 100px;";
 		return $formatters;
 	}
 
