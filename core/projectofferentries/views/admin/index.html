@@ -1,0 +1,24 @@
+
+<table class="tablesorter">
+<thead>
+<tr>
+	<th>ID</th>
+	<th>Name</th>
+	<th><a href='/<{$lang}>/core/<{$tab}>/admin/add'>Add</a></th>
+	
+</tr>
+</thead>
+	
+	
+<{foreach from=$aData item=row}>
+<{if $row.id}>
+<tr>
+	<td><{$row.id}></td>
+	<td><{$row.name}></td>
+	<td><{$row.price}></td>
+	<td><a href="/<{$lang}>/core/<{$tab}>/admin/edit/<{$row.id}>">Edit</a></td>
+</tr>
+<{/if}>
+<{/foreach}>
+
+</table>
