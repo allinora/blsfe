@@ -350,6 +350,7 @@ session_start();
 // Special handling for "cache"; 
 if (substr($url, 1, 5)=="cache"){
 	$url=substr($url, 6);
+	$_SERVER["REQUEST_URI"]=$url;
 }
 setReporting();
 removeMagicQuotes();
