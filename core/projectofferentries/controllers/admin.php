@@ -8,8 +8,8 @@ class Core_Projectofferentries_AdminController extends Admin_Controller {
 		//$this->set("tab", $this->tab);
 		$this->model=new BLModel("sys/pm/project/offer/entry", "id", "offer_id");
 	}
-	function indexAction() {
-		$res=$this->model->getall(1);
+	function indexAction($id) {
+		$res=$this->model->getall($id);
 		$this->set("aData", $res);
 	}
 	
