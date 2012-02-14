@@ -46,21 +46,36 @@ var Drawable = function() {
 			this._mouse = m;
 		
 		if (this.settings.canSelect) {
-			var before = this.mouseOverDrawable;
-			this.mouseOverDrawable = this._getChildUnderMouse();
-			
-			if (before != this.mouseOverDrawable) {
-				if (before) {
-					before.trigger("mouseout");
+			if (!this.settings.clickThrough) {
+				var before = this.mouseOverDrawable;
+				this.mouseOverDrawable = this._getChildUnderMouse();
+				
+				if (before != this.mouseOverDrawable) {
+					if (before) {
+						before.trigger("mouseout");
+					}
+					if (this.mouseOverDrawable) {
+						var t = this.transform.decompose();
+						this.mouseOverDrawable.trigger("mouseover", this._mouse.subtract(new Vertex(t.translation.x, t.translation.y)));
+					}
 				}
-				if (this.mouseOverDrawable) {
-					var t = this.transform.decompose();
-					this.mouseOverDrawable.trigger("mouseover", this._mouse.subtract(new Vertex(t.translation.x, t.translation.y)));
+				
+				if (!this.mouseOverDrawable && this.state == "default") {
+					this.state = "hover";
 				}
 			}
-			
-			if (!this.mouseOverDrawable && this.state == "default") {
-				this.state = "hover";
+			else {
+				for (var i=0; i<this._children.length; i++) {
+					var c = this._children[i];
+					if (c._hitTest(this._mouse)) {
+						this.mouseOverDrawable = c;
+						c.trigger("mouseover", m);
+					}
+					else if (c == this.mouseOverDrawable) {
+						this.mouseOverDrawable.trigger("mouseout");
+						this.mouseOverDrawable = null;
+					}
+				}
 			}
 		}
 	}).bind("mouseout", function() {
