@@ -29,6 +29,7 @@ class BLImage {
 
 		if (($x || $y) && class_exists("Imagick")) {
 			$imagick = new Imagick($f);
+			$imagick->setCompressionQuality(90);
 			$imagick->thumbnailImage($x,$y);
 			$imagick->cropImage($x,$y,0,0);
 			$data=$imagick->getimageblob();
