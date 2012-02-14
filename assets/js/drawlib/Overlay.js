@@ -12,6 +12,13 @@ var Overlay = function(drawing, asset) {
 
 Overlay.prototype = new Rectangle(0,0);
 
+Overlay.prototype.ensureLoaded = function () {
+	var loading = this._drawing.assets[this.asset];
+	if (!loading) {
+		this._drawing.loadAsset(this.asset);
+	}
+};
+
 Overlay.prototype._beforeRender = function() {
 	var image = this._drawing.assets[this.asset];
 	
