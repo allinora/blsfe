@@ -1,7 +1,12 @@
-var Overlay = function(drawing, asset) {
+var Overlay = function(asset, NOT_USED) {
 	Overlay.prototype.constructor.call(this);
-	this.asset = asset;
-	this._drawing = drawing;
+	
+	//compatibility issue...
+	if (NOT_USED) {
+		this.asset = NOT_USED;
+	}
+	else
+		this.asset = asset;
 	
 	for (var i in this.styles) {
 		this.styles[i].fillColor = "transparent";
@@ -15,12 +20,14 @@ Overlay.prototype = new Rectangle(0,0);
 Overlay.prototype.ensureLoaded = function () {
 	var loading = this._drawing.assets[this.asset];
 	if (!loading) {
+		console.log("Overlay autoload: "+this.asset);
 		this._drawing.loadAsset(this.asset);
 	}
 };
 
 Overlay.prototype._beforeRender = function() {
 	var image = this._drawing.assets[this.asset];
+	if (!image) return;
 	
 	if (this._width != image.width || this._height != image.height) {
 		this.resize(image.width, image.height);
@@ -30,6 +37,7 @@ Overlay.prototype._beforeRender = function() {
 (function() {
 	var _superRender = Overlay.prototype._render;
 	Overlay.prototype._render = function (ctx, style) {
+		this.ensureLoaded();
 		var image = this._drawing.assets[this.asset];
 		var T = this.getMatrix();
 		var transform = T.decompose();

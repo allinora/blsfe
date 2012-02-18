@@ -79,3 +79,10 @@ BoundingBox.prototype.render = function (ctx, thickness, color) {
 	ctx.lineWidth = thickness;
 	ctx.stroke();
 };
+
+BoundingBox.prototype.visible = function(drawing) {
+	return !(
+		this.br.x < 0 || this.br.y < 0 ||
+		this.tl.x >= drawing._w || this.tl.y >= drawing._h
+	);
+};

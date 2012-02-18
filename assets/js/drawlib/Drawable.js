@@ -9,6 +9,7 @@ var Drawable = function() {
 		canMove: true,
 		canRotate: true,
 		canRender: true,
+		canRenderChildren: true,
 		canSendEvents: true,
 		
 		closePath: true,
@@ -239,92 +240,104 @@ Drawable.State = {
 };
 
 Drawable.prototype.render = function (ctx) {
-	if (!this.settings.canRender)
+	var renderSelf = this.settings.canRender;
+	
+	if (!renderSelf && !this.settings.canRenderChildren)
 		return;
 	
-	var style = this.styles[this.state];
-	if (!style)
-		return;
-	
-	if (!ctx)
-		return;
-	
-	//init right before rendering
-	if (this.init) {
-		this.invalidate();
-		this.init = false;
+	if (!renderSelf && this.settings.canRenderChildren) {
+		for (var i=0; i<this._children.length; i++)
+			this._children[i].render(ctx);
 	}
-	
-	if (typeof this._beforeRender == "function") {
-		this._beforeRender();
-	}
-	
-	//apply transform on vertices and compute bbox
-	if (this.transform._validatedVertices == null) {
-		this.transform._validatedVertices = [];
-		var xmin = Infinity;
-		var xmax = -Infinity;
-		var ymin = Infinity;
-		var ymax = -Infinity;
+	else {
+		var style = this.styles[this.state];
+		if (!style)
+			return;
 		
-		var T = this.getMatrix();
+		if (!ctx)
+			return;
 		
-		this.averageCenter.x = 0;
-		this.averageCenter.y = 0;
-		var count=0;
-		for (var i=0; i<this.vertices.length; i++) {
-			if (this.vertices[i]) {
-				var v = T.multiplyVertex(this.vertices[i]);
-				this.transform._validatedVertices.push(v);
-				if (v.x < xmin) xmin = v.x;
-				if (v.x > xmax) xmax = v.x;
-				if (v.y < ymin) ymin = v.y;
-				if (v.y > ymax) ymax = v.y;
-				
-				this.averageCenter.x += this.vertices[i].x;
-				this.averageCenter.y += this.vertices[i].y;
-				count++;
-			}
+		//init right before rendering
+		if (this.init) {
+			this.invalidate();
+			this.init = false;
 		}
-		this.averageCenter.x /= count;
-		this.averageCenter.y /= count;
-		this.boundingBox.resize(xmin, ymin, xmax-xmin, ymax-ymin);
-	}
-	
-	//temporarily swap vertices with transformed vertices
-	var _v = this.vertices;
-	this.vertices = this.transform._validatedVertices;
-	
-	//shadow pass
-	if (style.shadow.x != 0 || style.shadow.y != 0) {
-		ctx.shadowOffsetX = style.shadow.x;
-		ctx.shadowOffsetY = style.shadow.y;
-		ctx.shadowBlur = style.shadow.blur;
-		ctx.shadowColor = style.shadow.color;
 		
-		this._render(ctx, style);
+		if (typeof this._beforeRender == "function") {
+			this._beforeRender();
+		}
 		
-		ctx.shadowOffsetX = 0;
-		ctx.shadowOffsetY = 0;
-		ctx.shadowBlur = 0;
-		ctx.shadowColor = "transparent black";
+		//apply transform on vertices and compute bbox
+		if (this.transform._validatedVertices == null) {
+			this.transform._validatedVertices = [];
+			var xmin = Infinity;
+			var xmax = -Infinity;
+			var ymin = Infinity;
+			var ymax = -Infinity;
+			
+			var T = this.getMatrix();
+			
+			this.averageCenter.x = 0;
+			this.averageCenter.y = 0;
+			var count=0;
+			for (var i=0; i<this.vertices.length; i++) {
+				if (this.vertices[i]) {
+					var v = T.multiplyVertex(this.vertices[i]);
+					this.transform._validatedVertices.push(v);
+					if (v.x < xmin) xmin = v.x;
+					if (v.x > xmax) xmax = v.x;
+					if (v.y < ymin) ymin = v.y;
+					if (v.y > ymax) ymax = v.y;
+					
+					this.averageCenter.x += this.vertices[i].x;
+					this.averageCenter.y += this.vertices[i].y;
+					count++;
+				}
+			}
+			this.averageCenter.x /= count;
+			this.averageCenter.y /= count;
+			this.boundingBox.resize(xmin, ymin, xmax-xmin, ymax-ymin);
+		}
+		
+		if (this === this._drawing || this.boundingBox.visible(this._drawing)) {
+			//temporarily swap vertices with transformed vertices
+			var _v = this.vertices;
+			this.vertices = this.transform._validatedVertices;
+			
+			//shadow pass
+			if (style.shadow.x != 0 || style.shadow.y != 0) {
+				ctx.shadowOffsetX = style.shadow.x;
+				ctx.shadowOffsetY = style.shadow.y;
+				ctx.shadowBlur = style.shadow.blur;
+				ctx.shadowColor = style.shadow.color;
+				
+				this._render(ctx, style);
+				
+				ctx.shadowOffsetX = 0;
+				ctx.shadowOffsetY = 0;
+				ctx.shadowBlur = 0;
+				ctx.shadowColor = "transparent black";
+			}
+			
+			//normal pass
+			this._render(ctx, style);
+			
+			//swap vertices back
+			this.vertices = _v;
+			_v = null;
+		}
+		
+		//render bounds
+		if (Drawable.RENDER_BOUNDINGBOXES) {
+			this.boundingBox.render(ctx, 1, "#000");
+		}
+		
+		//then render children
+		if (this.settings.canRenderChildren) {
+			for (var i=0; i<this._children.length; i++)
+				this._children[i].render(ctx);
+		}
 	}
-	
-	//normal pass
-	this._render(ctx, style);
-	
-	//swap vertices back
-	this.vertices = _v;
-	_v = null;
-	
-	//render bounds
-	if (Drawable.RENDER_BOUNDINGBOXES) {
-		this.boundingBox.render(ctx, 1, "#000");
-	}
-	
-	//then render children
-	for (var i=0; i<this._children.length; i++)
-		this._children[i].render(ctx);
 };
 
 Drawable.prototype._hitTest = function (vertex) {
