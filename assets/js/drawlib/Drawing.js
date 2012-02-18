@@ -10,6 +10,8 @@ var Drawing = function(w,h, mouseShiftVertex) {
 	this.settings.canRender = true;
 	this.settings.clickThrough = true;
 	
+	this.events["afterrender"] =  [];
+	
 	this._mouseShiftVertex = mouseShiftVertex;
 	this._w=w;
 	this._h=h;
@@ -151,5 +153,11 @@ Drawing.prototype.loadAsset = function (url, callback) {
 
 Drawing._superRender = Drawing.prototype.render;
 Drawing.prototype.render = function() {
+	this._renderedCount = 0;
 	Drawing._superRender.call(this, this.ctx);
+	this.trigger("afterRender");
+};
+
+Drawing.prototype.getNumRendered = function() {
+	return this._renderedCount;
 };

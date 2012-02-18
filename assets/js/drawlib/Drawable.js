@@ -321,6 +321,7 @@ Drawable.prototype.render = function (ctx) {
 			
 			//normal pass
 			this._render(ctx, style);
+			this._drawing._renderedCount++;
 			
 			//swap vertices back
 			this.vertices = _v;
