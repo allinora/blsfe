@@ -6,6 +6,9 @@ var Shape = function() {
 	this.settings.canScale = true;
 	this.settings.canMove = true;
 	this.settings.canRender = true;
+	
+	this.settings.fill = true;
+	this.settings.stroke = true;
 };
 Shape.prototype = new Drawable();
 
@@ -15,7 +18,7 @@ Shape.prototype._render = function (ctx, style) {
 	var firstVertex = null;
 	
 	//first pass - fill
-	if (this.settings.fillShape) {
+	if (this.settings.fill) {
 		moved = false;
 		ctx.beginPath();
 		for (var j in this.vertices) {
@@ -39,52 +42,54 @@ Shape.prototype._render = function (ctx, style) {
 	}
 	
 	//2nd pass - stroke
-	moved = false;
-	ctx.beginPath();
-	for (var j in this.vertices) {
-		if (!this.vertices[j])
-			continue;
-		
-		if (!moved) {
-			ctx.moveTo(this.vertices[j].x, this.vertices[j].y);
-			moved = true;
+	if (this.settings.stroke) {
+		moved = false;
+		ctx.beginPath();
+		for (var j in this.vertices) {
+			if (!this.vertices[j])
+				continue;
+			
+			if (!moved) {
+				ctx.moveTo(this.vertices[j].x, this.vertices[j].y);
+				moved = true;
+				lastVertex = this.vertices[j];
+				firstVertex = this.vertices[j];
+				continue;
+			}
+			
+			switch (style.linestyle) {
+				case DrawableStyle.Linestyle.Dot:
+					ctx.dashedLine(
+						lastVertex.x, lastVertex.y,
+						this.vertices[j].x, this.vertices[j].y
+					);
+					break;
+				
+				case DrawableStyle.Linestyle.Simple:
+					ctx.lineTo(this.vertices[j].x, this.vertices[j].y);
+					break;
+			}
+			
 			lastVertex = this.vertices[j];
-			firstVertex = this.vertices[j];
-			continue;
+		}
+		if (this.settings.closePath) {
+			switch (style.linestyle) {
+				case DrawableStyle.Linestyle.Dot:
+					ctx.dashedLine(
+						lastVertex.x, lastVertex.y,
+						firstVertex.x, firstVertex.y
+					);
+					break;
+				
+				case DrawableStyle.Linestyle.Simple:
+					ctx.lineTo(firstVertex.x, firstVertex.y);
+					break;
+			}
+			ctx.closePath();
 		}
 		
-		switch (style.linestyle) {
-			case DrawableStyle.Linestyle.Dot:
-				ctx.dashedLine(
-					lastVertex.x, lastVertex.y,
-					this.vertices[j].x, this.vertices[j].y
-				);
-				break;
-			
-			case DrawableStyle.Linestyle.Simple:
-				ctx.lineTo(this.vertices[j].x, this.vertices[j].y);
-				break;
-		}
-		
-		lastVertex = this.vertices[j];
+		ctx.strokeStyle = style.lineColor;
+		ctx.lineWidth = style.thickness;
+		ctx.stroke();
 	}
-	if (this.settings.closePath) {
-		switch (style.linestyle) {
-			case DrawableStyle.Linestyle.Dot:
-				ctx.dashedLine(
-					lastVertex.x, lastVertex.y,
-					firstVertex.x, firstVertex.y
-				);
-				break;
-			
-			case DrawableStyle.Linestyle.Simple:
-				ctx.lineTo(firstVertex.x, firstVertex.y);
-				break;
-		}
-		ctx.closePath();
-	}
-	
-	ctx.strokeStyle = style.lineColor;
-	ctx.lineWidth = style.thickness;
-	ctx.stroke();
 };

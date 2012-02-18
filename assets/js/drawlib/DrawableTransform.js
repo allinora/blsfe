@@ -265,11 +265,13 @@ Matrix.prototype.interpolateTo = function (that, duration, easing, stepCallback)
 			var pct = Math.min(dt/duration, 1.0);
 			var aN = a0.clone().interpolate(that, pct, easing);
 			_this.data = aN.data;
+			
+			if (pct == 1) {
+				_this.stopInterpolate();
+			}
+			
 			if (typeof stepCallback == "function")
 				stepCallback();
-			
-			if (pct == 1)
-				_this.stopInterpolate();
 		}, 10);
 	}
 };

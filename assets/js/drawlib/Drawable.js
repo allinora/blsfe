@@ -330,7 +330,7 @@ Drawable.prototype.render = function (ctx) {
 		
 		//render bounds
 		if (Drawable.RENDER_BOUNDINGBOXES) {
-			this.boundingBox.render(ctx, 1, "#000");
+			this.boundingBox.render(ctx, 1, "red");
 		}
 		
 		//then render children
