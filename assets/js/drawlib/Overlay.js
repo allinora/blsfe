@@ -12,6 +12,8 @@ var Overlay = function(asset, NOT_USED) {
 		this.styles[i].fillColor = "transparent";
 	}
 	
+	this.events["assetloaded"] = [];
+	
 	this.resize(0,0);
 };
 
@@ -21,7 +23,10 @@ Overlay.prototype.ensureLoaded = function () {
 	var loading = this._drawing.assets[this.asset];
 	if (!loading) {
 		console.log("Overlay autoload: "+this.asset);
-		this._drawing.loadAsset(this.asset);
+		var that=this;
+		this._drawing.loadAsset(this.asset, function() {
+			that.trigger("assetLoaded");
+		});
 	}
 };
 

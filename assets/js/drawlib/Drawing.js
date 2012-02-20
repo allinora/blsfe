@@ -137,12 +137,12 @@ Drawing.prototype.getMatrix = function() {
 };
 
 Drawing.prototype.loadAsset = function (url, callback) {
-	console.log(this.name+".loadAsset("+url+")");
+	//console.log(this.name+".loadAsset("+url+")");
 	
 	var image = new Image();
 	var _this = this;
 	image.onload = function() {
-		console.warn("Drawing loaded asset: "+url)
+		console.log("Drawing loaded asset: "+url)
 		_this.render();
 		if (typeof callback == 'function')
 			callback();

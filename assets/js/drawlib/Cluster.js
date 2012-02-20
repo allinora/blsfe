@@ -9,9 +9,8 @@ var Cluster = function(clusterBasePath, ExportSettings, level, uParent, vParent,
 	for (var i=0; i<debug; i++)
 		tabz += "   ";
 	
-	for (var i in this.styles) {
-		this.styles[i].fillColor = "transparent";
-	}
+	this.settings.fill = false;
+	this.settings.stroke = false;
 	
 	this.resize(ExportSettings.WIDTH, ExportSettings.HEIGHT);
 	
@@ -45,12 +44,30 @@ var Cluster = function(clusterBasePath, ExportSettings, level, uParent, vParent,
 		this.settings.canRender = false;
 	}
 	
+	this.events["assetloaded"] = [];
+	var assetsLoaded = 0;
+	var numAssets = numClustersX * numClustersY;
+	var baseCluster = this;
+	this._assetsLoaded = false;
+	
 	for (var u=u0; u<u0+numClustersX; u++) {
 		for (var v=v0; v<v0+numClustersY; v++) {
 			var overlay = new Overlay( this._getClusterUrl(level, u, v) );
+			overlay.resize(ExportSettings.CLUSTER_WIDTH, ExportSettings.CLUSTER_HEIGHT);
 			overlay.transform.scaleBy(1/scale);
 			overlay.transform.translateBy((u-u0)*ExportSettings.CLUSTER_WIDTH, (v-v0)*ExportSettings.CLUSTER_HEIGHT);
 			this.addChild(overlay);
+			
+			overlay.bind("assetLoaded", function() {
+				console.log("overlay.assetLoaded", assetsLoaded+1, numAssets)
+				if (++assetsLoaded == numAssets) {
+					baseCluster._assetsLoaded = true;
+					baseCluster.trigger("assetLoaded");
+				}
+			});
+			
+			overlay.settings.fill = false;
+			overlay.settings.stroke = false;
 			
 			//add another cluster on top of it...
 			if (level > 0) {
@@ -83,15 +100,21 @@ Cluster.prototype.setZoomLevel = function (x) {
 				//overlay.ensureLoaded();
 			}
 			else {
-				overlay.settings.canRender = false;
 				overlay.settings.canRenderChildren = true;
+				
+				var childrenClustersLoaded = true;
 				
 				//render children clusters
 				for (var j=0; j<overlay._children.length; j++) {
 					var subCluster = overlay._children[j];
 					subCluster.canRender = true;
+					childrenClustersLoaded = childrenClustersLoaded && subCluster._assetsLoaded;
 					loop.call(subCluster, depth-1);
 				}
+				
+				//display parent overlay if children are not ready yet
+				console.log("children clusters ready: ", childrenClustersLoaded)
+				overlay.settings.canRender = !childrenClustersLoaded;
 			}
 		}
 	};
@@ -104,7 +127,6 @@ Cluster.prototype.autoZoomLevel = function() {
 	//find the deepest visible overlay...
 	var overlay = this._children[0];
 	var depth = this.ExportSettings.ZOOM_MAX-this.level;
-	console.log("XXX DEPTH = "+depth);
 	for (var i=0; i<depth; i++) {
 		var subCluster = overlay._children[0];
 		overlay = subCluster._children[0];
@@ -112,12 +134,12 @@ Cluster.prototype.autoZoomLevel = function() {
 	
 	var transform = overlay.getMatrix().decompose();
 	
-	if (transform.scale.x > 1.0) {
+	if (transform.scale.x >= Math.pow(2, this.ExportSettings.ZOOM_STEP)) {
 		console.log("autoZoom: ++");
 		this.setZoomLevel(this.level-1);
 		return true;
 	}
-	else if (transform.scale.x <= 1/Math.pow(2, this.ExportSettings.ZOOM_STEP)) {
+	else if (transform.scale.x < 1) {
 		console.log("autoZoom: --");
 		this.setZoomLevel(this.level+1);
 		return true;
