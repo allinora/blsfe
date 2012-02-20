@@ -11,6 +11,7 @@ class BLController {
 	protected $_action;
 	protected $_template;
 	protected $helper;
+	protected $pacakges=array();
 
 	public $doNotRenderHeader;
 	public $render;
@@ -125,6 +126,7 @@ class BLController {
 	}
 
 	function afterAction(){
+		$this->set("packages", $this->packages);
 	}
 	
 	function formatters(){
@@ -163,6 +165,27 @@ class BLController {
 			if ($f["hidden"]){
 				$form->hideFromTray($id);
 			}
+		}
+	}
+	function addPackage($name){
+		global $packagesConfig;
+		if ($this->packages[$name]){
+			return;
+		}
+		if (!is_array($packagesConfig)){
+			$blsfePackageConfigFile=BLSFE_ROOT . "/library/packages.php";
+			if (file_exists($blsfePackageConfigFile)){
+				include_once($blsfePackageConfigFile);
+			}
+
+			// Allow overridding packages in appspace
+			$packageConfigFile=ROOT . "/config/packages.php";
+			if (file_exists($packageConfigFile)){
+				include_once($packageConfigFile);
+			}
+		}
+		if($packagesConfig[$name]){
+			$this->packages[$name]=$packagesConfig[$name];
 		}
 	}
 
