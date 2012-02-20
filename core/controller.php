@@ -87,6 +87,7 @@ class Core_Controller extends BLController {
 	}
 
 	function afterAction(){
+		parent::afterAction();
 		$this->set("jslibs", $this->jsLibs);
 	}
 	
