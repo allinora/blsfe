@@ -12,29 +12,21 @@ var Shape = function() {
 };
 Shape.prototype = new Drawable();
 
-Shape.prototype._render = function (ctx, style) {
+Shape.prototype._render = function (vertexBuffer, ctx, style) {
 	var moved = false;
-	var lastVertex = null;
-	var firstVertex = null;
 	
 	//first pass - fill
 	if (this.settings.fill) {
 		moved = false;
 		ctx.beginPath();
-		for (var j in this.vertices) {
-			if (!this.vertices[j])
-				continue;
-			
+		for (var j=0; j<vertexBuffer.length; j+=2) {
 			if (!moved) {
-				ctx.moveTo(this.vertices[j].x, this.vertices[j].y);
+				ctx.moveTo(vertexBuffer[j], vertexBuffer[j+1]);
 				moved = true;
-				lastVertex = this.vertices[j];
-				firstVertex = this.vertices[j];
 				continue;
 			}
 			
-			ctx.lineTo(this.vertices[j].x, this.vertices[j].y);
-			lastVertex = this.vertices[j];
+			ctx.lineTo(vertexBuffer[j], vertexBuffer[j+1]);
 		}
 		ctx.closePath();
 		ctx.fillStyle = style.fillColor;
@@ -45,44 +37,37 @@ Shape.prototype._render = function (ctx, style) {
 	if (this.settings.stroke) {
 		moved = false;
 		ctx.beginPath();
-		for (var j in this.vertices) {
-			if (!this.vertices[j])
-				continue;
-			
+		for (var j=0; j<vertexBuffer.length; j+=2) {
 			if (!moved) {
-				ctx.moveTo(this.vertices[j].x, this.vertices[j].y);
+				ctx.moveTo(vertexBuffer[j], vertexBuffer[j+1]);
 				moved = true;
-				lastVertex = this.vertices[j];
-				firstVertex = this.vertices[j];
 				continue;
 			}
 			
 			switch (style.linestyle) {
 				case DrawableStyle.Linestyle.Dot:
 					ctx.dashedLine(
-						lastVertex.x, lastVertex.y,
-						this.vertices[j].x, this.vertices[j].y
+						vertexBuffer[j-2], vertexBuffer[j-1],
+						vertexBuffer[j], vertexBuffer[j+1]
 					);
 					break;
 				
 				case DrawableStyle.Linestyle.Simple:
-					ctx.lineTo(this.vertices[j].x, this.vertices[j].y);
+					ctx.lineTo(vertexBuffer[j], vertexBuffer[j+1]);
 					break;
 			}
-			
-			lastVertex = this.vertices[j];
 		}
 		if (this.settings.closePath) {
 			switch (style.linestyle) {
 				case DrawableStyle.Linestyle.Dot:
 					ctx.dashedLine(
-						lastVertex.x, lastVertex.y,
-						firstVertex.x, firstVertex.y
+						vertexBuffer[vertexBuffer.length-2], vertexBuffer[vertexBuffer.length-1],
+						vertexBuffer[0], vertexBuffer[1]
 					);
 					break;
 				
 				case DrawableStyle.Linestyle.Simple:
-					ctx.lineTo(firstVertex.x, firstVertex.y);
+					ctx.lineTo(vertexBuffer[0], vertexBuffer[1]);
 					break;
 			}
 			ctx.closePath();

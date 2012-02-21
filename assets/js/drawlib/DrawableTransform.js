@@ -1,6 +1,6 @@
 var DrawableTransform = function(m) {
 	this.matrix = m || new Matrix();
-	this._validatedVertices = null;
+	this._vertexBuffer = null;
 	
 	this._invalidated = [];
 };
@@ -10,7 +10,7 @@ DrawableTransform.prototype.onInvalidate = function (cb) {
 };
 
 DrawableTransform.prototype.invalidate = function(skipEvent) {
-	this._validatedVertices = null;
+	this._vertexBuffer = null;
 	if (!skipEvent) {
 		for (var i=0; i<this._invalidated.length; i++)
 			this._invalidated[i]();
@@ -22,48 +22,47 @@ DrawableTransform.prototype.scaleTo = function (sx, sy) {
 		sy = sx;
 	
 	var dec = this.decompose();
-	this.matrix = this.matrix.
-		multiply(Matrix.CreateScale(1/dec.scale.x, 1/dec.scale.y)).
-		multiply(Matrix.CreateScale(sx, sy));
+	this.matrix.
+		multiplySelf(Matrix.CreateScale(1/dec.scale.x, 1/dec.scale.y)).
+		multiplySelf(Matrix.CreateScale(sx, sy));
 	this.invalidate();
 };
 
 DrawableTransform.prototype.rotateTo = function (r) {
 	var dec = this.decompose();
-	this.matrix = this.matrix.
-		multiply(Matrix.CreateRotation(-dec.rotation)).
-		multiply(Matrix.CreateRotation(r));
+	this.matrix.
+		multiplySelf(Matrix.CreateRotation(-dec.rotation)).
+		multiplySelf(Matrix.CreateRotation(r));
 	this.invalidate();
 };
 
 DrawableTransform.prototype.translateTo = function (tx, ty) {
 	var dec = this.decompose();
-	this.matrix = this.matrix.
-		multiply(Matrix.CreateTranslation(-dec.translation.x, -dec.translation.y)).
-		multiply(Matrix.CreateTranslation(tx, ty));
+	this.matrix.
+		multiplySelf(Matrix.CreateTranslation(-dec.translation.x, -dec.translation.y)).
+		multiplySelf(Matrix.CreateTranslation(tx, ty));
 	this.invalidate();
 };
 
 DrawableTransform.prototype.rotateBy = function (a) {
-	this.matrix = this.matrix.multiply(Matrix.CreateRotation(a));
+	this.matrix.multiplySelf(Matrix.CreateRotation(a));
 	this.invalidate();
 };
 
 DrawableTransform.prototype.translateBy = function (dx,dy) {
-	this.matrix = this.matrix.multiply(Matrix.CreateTranslation(dx,dy));
+	this.matrix.multiplySelf(Matrix.CreateTranslation(dx,dy));
 	this.invalidate();
 };
 
 DrawableTransform.prototype.scaleBy = function (sx,sy) {
 	if (sy === undefined)
 		sy = sx;
-	this.matrix = this.matrix.multiply(Matrix.CreateScale(sx,sy));
+	this.matrix.multiplySelf(Matrix.CreateScale(sx,sy));
 	this.invalidate();
 };
 
 DrawableTransform.prototype.multiply = function (vertex) {
 	return this.matrix.multiplyVertex(vertex);
-	this.invalidate();
 };
 
 DrawableTransform.prototype.decompose = function() {
@@ -203,6 +202,43 @@ Matrix.prototype.multiplyVertex = function (vertex) {
 	return ret;
 };
 
+Matrix.prototype.applyMultiplyVertices = function(vertexBuffer, vertices, computeBox) {
+	if (computeBox) {
+		var xmin=Infinity, xmax=-Infinity, ymin=Infinity, ymax=-Infinity;
+	}
+	
+	for (var i=0; i<vertices.length; i++) {
+		var v = vertices[i];
+		if (!v) continue;
+		//v = v.clone();
+		
+		var x=v.x, y=v.y, w=v.w;
+		
+		var X = vertexBuffer[i*2] = this.data[0] * x +
+				this.data[1] * y +
+				this.data[2] * w;
+		var Y = vertexBuffer[i*2+1] = this.data[3] * x +
+				this.data[4] * y +
+				this.data[5] * w;
+		//var W = vertexBuffer[i*3+2] = this.data[6] * x +
+		//		this.data[7] * y +
+		//		this.data[8] * w;
+		
+		//vertices[i]=v;
+		
+		if (computeBox) {
+			if (X < xmin) xmin = X;
+			if (X > xmax) xmax = X;
+			if (Y < ymin) ymin = Y;
+			if (Y > ymax) ymax = Y;
+		}
+	}
+	
+	if (computeBox) {
+		return { xmin:xmin, xmax:xmax, ymin:ymin, ymax:ymax };
+	}
+};
+
 Matrix.prototype.getRow = function (i) {
 	return new Vertex(
 		this.data[3*i + 0],
@@ -276,7 +312,7 @@ Matrix.prototype.clone = function () {
 	
 	//for (var i=0; i<9; i++)
 	//	m.data[i] = this.data[i];
-	m.data = this.data.slice(0, this.data.length);
+	m.data = this.data.slice(0, 9);
 	
 	return m;
 };
@@ -341,7 +377,7 @@ Matrix.prototype.interpolateTo = function (that, duration, easing, stepCallback)
 };
 
 Matrix.prototype.multiply = function (right) {
-	var m = this.clone();
+	var data = this.data.slice(0,9);
 	
 	for (var u=0; u<3; u++) {
 		for (var v=0; v<3; v++) {
@@ -349,11 +385,28 @@ Matrix.prototype.multiply = function (right) {
 			for (var k=0; k<3; k++) {
 				r += this.data[u*3+k] * right.data[3*k+v];
 			}
-			m.data[u*3+v] = r;
+			data[u*3+v] = r;
 		}
 	}
 	
+	var m = new Matrix();
+	m.data=data;
 	return m;
+};
+
+Matrix.prototype.multiplySelf = function (right) {
+	var data = this.data.slice(0,9);
+	
+	for (var u=0; u<3; u++) {
+		for (var v=0; v<3; v++) {
+			var r = 0.0;
+			for (var k=0; k<3; k++) {
+				r += this.data[u*3+k] * right.data[3*k+v];
+			}
+			data[u*3+v] = r;
+		}
+	}
+	this.data=data;
 };
 
 Matrix.CreateRotation = function (r) {

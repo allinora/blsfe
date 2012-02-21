@@ -115,7 +115,7 @@ Drawing.prototype._createCanvas = function () {
 	});
 };
 
-Drawing.prototype._render = function (ctx, style) {
+Drawing.prototype._render = function (vertexBuffer, ctx, style) {
 	if (this.settings.clearBeforeRender) {
 		//clear context
 		ctx.fillStyle = "#FFFFFF";

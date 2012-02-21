@@ -41,7 +41,7 @@ Overlay.prototype._beforeRender = function() {
 
 (function() {
 	var _superRender = Overlay.prototype._render;
-	Overlay.prototype._render = function (ctx, style) {
+	Overlay.prototype._render = function (vertexBuffer, ctx, style) {
 		this.ensureLoaded();
 		var image = this._drawing.assets[this.asset];
 		var T = this.getMatrix();

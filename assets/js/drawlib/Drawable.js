@@ -268,8 +268,9 @@ Drawable.prototype.render = function (ctx) {
 		}
 		
 		//apply transform on vertices and compute bbox
-		if (this.transform._validatedVertices == null) {
-			this.transform._validatedVertices = [];
+		if (this.transform._vertexBuffer == null) {
+			/*this.transform._validatedVertices = [];
+			
 			var xmin = Infinity;
 			var xmax = -Infinity;
 			var ymin = Infinity;
@@ -280,6 +281,7 @@ Drawable.prototype.render = function (ctx) {
 			this.averageCenter.x = 0;
 			this.averageCenter.y = 0;
 			var count=0;
+			
 			for (var i=0; i<this.vertices.length; i++) {
 				if (this.vertices[i]) {
 					var v = T.multiplyVertex(this.vertices[i]);
@@ -296,14 +298,18 @@ Drawable.prototype.render = function (ctx) {
 			}
 			this.averageCenter.x /= count;
 			this.averageCenter.y /= count;
-			this.boundingBox.resize(xmin, ymin, xmax-xmin, ymax-ymin);
+			this.boundingBox.resize(xmin, ymin, xmax-xmin, ymax-ymin);*/
+			
+			var T = this.getMatrix();
+			
+			this.transform._vertexBuffer = new Array(this.vertices.length*2);
+			var bounds = T.applyMultiplyVertices(this.transform._vertexBuffer, this.vertices, true);
+			this.boundingBox.resize(bounds.xmin, bounds.ymin, bounds.xmax-bounds.xmin, bounds.ymax-bounds.ymin);
+			this.averageCenter.x = bounds.xmin + (bounds.xmax-bounds.xmin)/2;
+			this.averageCenter.y = bounds.ymin + (bounds.ymax-bounds.ymin)/2;
 		}
 		
 		if (this === this._drawing || this.boundingBox.visible(this._drawing)) {
-			//temporarily swap vertices with transformed vertices
-			var _v = this.vertices;
-			this.vertices = this.transform._validatedVertices;
-			
 			//shadow pass
 			if (style.shadow.x != 0 || style.shadow.y != 0) {
 				ctx.shadowOffsetX = style.shadow.x;
@@ -311,7 +317,7 @@ Drawable.prototype.render = function (ctx) {
 				ctx.shadowBlur = style.shadow.blur;
 				ctx.shadowColor = style.shadow.color;
 				
-				this._render(ctx, style);
+				this._render(this.transform._vertexBuffer, ctx, style);
 				
 				ctx.shadowOffsetX = 0;
 				ctx.shadowOffsetY = 0;
@@ -320,12 +326,8 @@ Drawable.prototype.render = function (ctx) {
 			}
 			
 			//normal pass
-			this._render(ctx, style);
+			this._render(this.transform._vertexBuffer, ctx, style);
 			this._drawing._renderedCount++;
-			
-			//swap vertices back
-			this.vertices = _v;
-			_v = null;
 		}
 		
 		//render bounds
@@ -392,6 +394,6 @@ Drawable.prototype._beforeRender = null;
 
 /* abstract methods */
 
-Drawable.prototype._render = function(ctx, style) {
+Drawable.prototype._render = function(vertexBuffer, ctx, style) {
 	throw "Drawable._render must be implemented.";
 };

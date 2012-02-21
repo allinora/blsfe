@@ -12,8 +12,8 @@
 	if (!compatMode) {
 		Vertex = function(x,y,w) {
 			this._data = new dataClass(3);
-			this._data[0] = x === undefined ? 0 : x;
-			this._data[1] = y === undefined ? 0 : y;
+			this._data[0] = x;
+			this._data[1] = y;
 			this._data[2] = w === undefined ? 1 : w;
 		};
 		
@@ -27,8 +27,8 @@
 	}
 	else {
 		Vertex = function(x,y,w) {
-			this.x = x ===undefined ? 0 : x;
-			this.y = y ===undefined ? 0 : y;
+			this.x = x;
+			this.y = y;
 			this.w = w ===undefined ? 1 : w;
 		};
 	}
@@ -46,8 +46,7 @@ Vertex.resetDebug();
 
 Vertex.prototype.clone = function () {
 	if (Vertex.DEBUG)
-		Vertex.debug.add++;
-	
+		Vertex.debug.clone++;
 	return new Vertex(this.x, this.y, this.w);
 };
 
@@ -93,8 +92,12 @@ Vertex.prototype.distance = function (that) {
 Vertex.prototype.add = function (that) {
 	if (Vertex.DEBUG)
 		Vertex.debug.add++;
-	
 	return new Vertex(this.x+that.x, this.y+that.y, this.w+that.w);
+};
+Vertex.prototype.addFast = function (that) {
+	this.x = this.x + that.x;
+	this.y = this.y + that.y;
+	this.w = this.w + that.w;
 };
 Vertex.prototype.subtract = function (that) {
 	return new Vertex(this.x-that.x, this.y-that.y, this.w-that.w);
@@ -107,6 +110,11 @@ Vertex.prototype.scaleBy = function (u,v,w) {
 		w = u;
 	}
 	return new Vertex(this.x * u, this.y * v, this.w * w);
+};
+Vertex.prototype.scaleByFast = function (u,v,w) {
+	this.x *= u;
+	this.y *= v;
+	this.w *= w;
 };
 
 Vertex.prototype.json = function() {
