@@ -7,9 +7,9 @@ class Core_Images_AdminController extends Admin_Controller {
 		$this->set("tab", "images");
 		$this->model=new BLModel("sys/image", "id", "image_category_id");
 		$this->model->cache(false); // Do not cache the result of this model
-		$this->jsLibs["pluploader"]=1;
 		$this->set("noMenu", true);
 		$this->set("imageManagerRole", "admin");
+		$this->addPackage("plupload");
 		
 	}
 	function indexAction() {
@@ -103,7 +103,6 @@ class Core_Images_AdminController extends Admin_Controller {
 
 	function uploadAction($category_id=1) {
         $this->doNotRenderHeader=0;
-		$this->jsLibs["pluploader"]=1;
 		$this->set("noMenu", true);
 		$this->set("category_id", $category_id);
 	}
