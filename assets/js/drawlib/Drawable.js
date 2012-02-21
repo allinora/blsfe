@@ -25,7 +25,9 @@ var Drawable = function() {
 	
 	this.transform = new DrawableTransform();
 	this.averageCenter = new Vertex(0,0);
-	this.vertices = [];
+	this._vertices = [];
+	this._vertexBuffer = new VertexBuffer();
+	this._transformedVertexBuffer = new VertexBuffer();
 	this.boundingBox = new BoundingBox();
 	
 	this._parent = null;
@@ -187,6 +189,8 @@ Drawable.Selected = null;
 Drawable.prototype.invalidate = function(deep) {
 	//console.log(this.name, "CALL", "invalidate", deep);
 	this.transform.invalidate(true);
+	this.boundingBox = null;
+	this._transformedVertexBuffer.empty();
 	this._cachedMatrix = null;
 	if (deep) {
 		for (var i=0; i<this._children.length; i++) {
@@ -268,45 +272,31 @@ Drawable.prototype.render = function (ctx) {
 		}
 		
 		//apply transform on vertices and compute bbox
-		if (this.transform._vertexBuffer == null) {
-			/*this.transform._validatedVertices = [];
-			
-			var xmin = Infinity;
-			var xmax = -Infinity;
-			var ymin = Infinity;
-			var ymax = -Infinity;
-			
+		if (this._transformedVertexBuffer.length() == 0) {
 			var T = this.getMatrix();
-			
-			this.averageCenter.x = 0;
-			this.averageCenter.y = 0;
-			var count=0;
-			
-			for (var i=0; i<this.vertices.length; i++) {
-				if (this.vertices[i]) {
-					var v = T.multiplyVertex(this.vertices[i]);
-					this.transform._validatedVertices.push(v);
-					if (v.x < xmin) xmin = v.x;
-					if (v.x > xmax) xmax = v.x;
-					if (v.y < ymin) ymin = v.y;
-					if (v.y > ymax) ymax = v.y;
-					
-					this.averageCenter.x += this.vertices[i].x;
-					this.averageCenter.y += this.vertices[i].y;
-					count++;
-				}
-			}
-			this.averageCenter.x /= count;
-			this.averageCenter.y /= count;
-			this.boundingBox.resize(xmin, ymin, xmax-xmin, ymax-ymin);*/
-			
-			var T = this.getMatrix();
-			
-			this.transform._vertexBuffer = new Array(this.vertices.length*2);
-			var bounds = T.applyMultiplyVertices(this.transform._vertexBuffer, this.vertices, true);
+			var bounds = T.applyMultiplyVertices(this._transformedVertexBuffer, this._vertexBuffer, true);
+			if (!this.boundingBox)
+				this.boundingBox = new BoundingBox();
 			this.boundingBox.resize(bounds.xmin, bounds.ymin, bounds.xmax-bounds.xmin, bounds.ymax-bounds.ymin);
 			this.averageCenter.x = bounds.xmin + (bounds.xmax-bounds.xmin)/2;
 			this.averageCenter.y = bounds.ymin + (bounds.ymax-bounds.ymin)/2;
+		}
+		
+		if (this.boundingBox == null) {
+			//compute bbox
+			this.boundingBox = new BoundingBox();
+			var L = this._vertices.length;
+			var xmin=Infinity, xmax=-Infinity, ymin=Infinity, ymax=-Infinity;
+			for (var i=0; i<L; i++) {
+				var X = this._transformedVertexBuffer.data[i*3];
+				var Y = this._transformedVertexBuffer.data[i*3+1];
+				
+				if (X < xmin) xmin = X;
+				if (X > xmax) xmax = X;
+				if (Y < ymin) ymin = Y;
+				if (Y > ymax) ymax = Y;
+			}
+			this.boundingBox.resize(xmin, ymin, xmax-xmin, ymax-ymin);
 		}
 		
 		if (this === this._drawing || this.boundingBox.visible(this._drawing)) {
@@ -317,7 +307,7 @@ Drawable.prototype.render = function (ctx) {
 				ctx.shadowBlur = style.shadow.blur;
 				ctx.shadowColor = style.shadow.color;
 				
-				this._render(this.transform._vertexBuffer, ctx, style);
+				this._render(this._transformedVertexBuffer.data, ctx, style);
 				
 				ctx.shadowOffsetX = 0;
 				ctx.shadowOffsetY = 0;
@@ -326,7 +316,7 @@ Drawable.prototype.render = function (ctx) {
 			}
 			
 			//normal pass
-			this._render(this.transform._vertexBuffer, ctx, style);
+			this._render(this._transformedVertexBuffer.data, ctx, style);
 			this._drawing._renderedCount++;
 		}
 		
@@ -391,6 +381,36 @@ Drawable.prototype.deleteChild = function (child) {
 Drawable.RENDER_BOUNDINGBOXES = false;
 
 Drawable.prototype._beforeRender = null;
+
+Drawable.prototype.addVertex = function (v) {
+	this._vertices.push(v);
+	this._vertexBuffer.add(v);
+	this._transformedVertexBuffer.empty();
+};
+Drawable.prototype.removeVertexAt = function (j) {
+	var tmp = [];
+	var tmp2 = new VertexBuffer._class((this._vertices.length-1)*3);
+	
+	var k=0;
+	for (var i=0; i<this._vertices.length; i++) {
+		if (i !== j) {
+			tmp.push(this._vertices[i]);
+			tmp2[k++] = this._vertexBuffer.data[i*3];
+			tmp2[k++] = this._vertexBuffer.data[i*3+1];
+			tmp2[k++] = this._vertexBuffer.data[i*3+2];
+		}
+	}
+	
+	this._vertices = tmp;
+	this._vertexBuffer.data = tmp2;
+	this._vertexBuffer._head = k;
+	this._transformedVertexBuffer.empty();
+};
+Drawable.prototype.clearVertices = function() {
+	this._vertices = [];
+	this._vertexBuffer.empty();
+	this._transformedVertexBuffer.empty();
+};
 
 /* abstract methods */
 

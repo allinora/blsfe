@@ -1,6 +1,5 @@
 var DrawableTransform = function(m) {
 	this.matrix = m || new Matrix();
-	this._vertexBuffer = null;
 	
 	this._invalidated = [];
 };
@@ -10,7 +9,6 @@ DrawableTransform.prototype.onInvalidate = function (cb) {
 };
 
 DrawableTransform.prototype.invalidate = function(skipEvent) {
-	this._vertexBuffer = null;
 	if (!skipEvent) {
 		for (var i=0; i<this._invalidated.length; i++)
 			this._invalidated[i]();
@@ -202,29 +200,29 @@ Matrix.prototype.multiplyVertex = function (vertex) {
 	return ret;
 };
 
-Matrix.prototype.applyMultiplyVertices = function(vertexBuffer, vertices, computeBox) {
+Matrix.prototype.applyMultiplyVertices = function(transformedVertexBuffer, vertexBuffer, computeBox) {
 	if (computeBox) {
 		var xmin=Infinity, xmax=-Infinity, ymin=Infinity, ymax=-Infinity;
 	}
 	
-	for (var i=0; i<vertices.length; i++) {
-		var v = vertices[i];
-		if (!v) continue;
-		//v = v.clone();
+	transformedVertexBuffer.empty(vertexBuffer.length());
+	transformedVertexBuffer._head = transformedVertexBuffer.length();
+	
+	var numVertices = vertexBuffer.length();
+	for (var i=0; i<numVertices; i+=3) {
+		var x = vertexBuffer.data[i];
+		var y = vertexBuffer.data[i+1];
+		var w = vertexBuffer.data[i+2];
 		
-		var x=v.x, y=v.y, w=v.w;
-		
-		var X = vertexBuffer[i*2] = this.data[0] * x +
+		var X = transformedVertexBuffer.data[i] = this.data[0] * x +
 				this.data[1] * y +
 				this.data[2] * w;
-		var Y = vertexBuffer[i*2+1] = this.data[3] * x +
+		var Y = transformedVertexBuffer.data[i+1] = this.data[3] * x +
 				this.data[4] * y +
 				this.data[5] * w;
 		//var W = vertexBuffer[i*3+2] = this.data[6] * x +
 		//		this.data[7] * y +
 		//		this.data[8] * w;
-		
-		//vertices[i]=v;
 		
 		if (computeBox) {
 			if (X < xmin) xmin = X;

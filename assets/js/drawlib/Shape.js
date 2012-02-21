@@ -19,7 +19,7 @@ Shape.prototype._render = function (vertexBuffer, ctx, style) {
 	if (this.settings.fill) {
 		moved = false;
 		ctx.beginPath();
-		for (var j=0; j<vertexBuffer.length; j+=2) {
+		for (var j=0; j<vertexBuffer.length; j+=3) {
 			if (!moved) {
 				ctx.moveTo(vertexBuffer[j], vertexBuffer[j+1]);
 				moved = true;
@@ -37,7 +37,7 @@ Shape.prototype._render = function (vertexBuffer, ctx, style) {
 	if (this.settings.stroke) {
 		moved = false;
 		ctx.beginPath();
-		for (var j=0; j<vertexBuffer.length; j+=2) {
+		for (var j=0; j<vertexBuffer.length; j+=3) {
 			if (!moved) {
 				ctx.moveTo(vertexBuffer[j], vertexBuffer[j+1]);
 				moved = true;
@@ -47,7 +47,7 @@ Shape.prototype._render = function (vertexBuffer, ctx, style) {
 			switch (style.linestyle) {
 				case DrawableStyle.Linestyle.Dot:
 					ctx.dashedLine(
-						vertexBuffer[j-2], vertexBuffer[j-1],
+						vertexBuffer[j-3], vertexBuffer[j-2],
 						vertexBuffer[j], vertexBuffer[j+1]
 					);
 					break;
@@ -61,7 +61,7 @@ Shape.prototype._render = function (vertexBuffer, ctx, style) {
 			switch (style.linestyle) {
 				case DrawableStyle.Linestyle.Dot:
 					ctx.dashedLine(
-						vertexBuffer[vertexBuffer.length-2], vertexBuffer[vertexBuffer.length-1],
+						vertexBuffer[vertexBuffer.length-3], vertexBuffer[vertexBuffer.length-2],
 						vertexBuffer[0], vertexBuffer[1]
 					);
 					break;

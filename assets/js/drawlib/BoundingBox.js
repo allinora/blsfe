@@ -48,32 +48,8 @@ BoundingBox.prototype.applyTransform = function (drawableTransform) {
 };
 
 BoundingBox.prototype.render = function (ctx, thickness, color) {
-	var moved = false;
-	var lastVertex = null;
-	var firstVertex = null;
-	
-	var vertices = [
-		new Vertex(this.tl.x, this.tl.y),
-		new Vertex(this.br.x, this.tl.y),
-		new Vertex(this.br.x, this.br.y),
-		new Vertex(this.tl.x, this.br.y)
-	];
-	
 	ctx.beginPath();
-	for (var j in vertices) {
-		if (!moved) {
-			ctx.moveTo(vertices[j].x, vertices[j].y);
-			moved = true;
-			lastVertex = vertices[j];
-			firstVertex = vertices[j];
-			continue;
-		}
-		
-		ctx.lineTo(vertices[j].x, vertices[j].y);
-		
-		lastVertex = vertices[j];
-	}
-	ctx.lineTo(firstVertex.x, firstVertex.y);
+	ctx.rect(this.tl.x, this.tl.y, this.br.x-this.tl.x, this.br.y-this.tl.y);
 	
 	ctx.strokeStyle = color;
 	ctx.lineWidth = thickness;
