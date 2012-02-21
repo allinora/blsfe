@@ -71,7 +71,8 @@ var Drawable = function() {
 					var c = this._children[i];
 					if (c._hitTest(this._mouse)) {
 						this.mouseOverDrawable = c;
-						c.trigger("mouseover", m);
+						var t = this.transform.decompose();
+						this.mouseOverDrawable.trigger("mouseover", this._mouse.subtract(new Vertex(t.translation.x, t.translation.y)));
 					}
 					else if (c.state == "hover") {
 						c.trigger("mouseout");
@@ -196,7 +197,7 @@ Drawable.Deselect = function () {
 Drawable.prototype._getChildUnderMouse = function() {
 	for (var i=this._children.length-1; i>=0; i--) {
 		var c = this._children[i];
-		if (c.settings.canSelect && 
+		if (c.settings.canSelect && !c.settings.clickThrough &&
 			(c.state == "default" || c.state == "hover" || c.state == "selected") && 
 			c._hitTest(this._mouse)) {
 				return c;
