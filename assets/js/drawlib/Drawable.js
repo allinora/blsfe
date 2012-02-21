@@ -81,10 +81,32 @@ var Drawable = function() {
 				}
 			}
 		}
+		
+		if (this._parent) {
+			for (var i=0; i<this._parent._children.length; i++) {
+				var c = this._parent._children[i];
+				if (c !== this) {
+					c.trigger("mouseout");
+					if (c === this._parent.mouseOverDrawable)
+						this._parent.mouseOverDrawable = null;
+				}
+			}
+		}
+		
+		
 	}).bind("mouseout", function() {
 		if (this.state == "hover")
 			this.state = "default";
 		//this._mouse = null;
+		
+		for (var i=0; i<this._children.length; i++) {
+			var c = this._children[i];
+			if (c.state == "hover" && !c._hitTest(this._mouse)) {
+				c.trigger("mouseout");
+				if (c === this.mouseOverDrawable)
+					this.mouseOverDrawable = null;
+			}
+		}
 		
 		if (this.mouseOverDrawable != null) {
 			this.mouseOverDrawable.trigger("mouseout");
