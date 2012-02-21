@@ -24,7 +24,6 @@ var Drawable = function() {
 	}
 	
 	this.transform = new DrawableTransform();
-	this.averageCenter = new Vertex(0,0);
 	this._vertices = [];
 	this._vertexBuffer = new VertexBuffer();
 	this._transformedVertexBuffer = new VertexBuffer();
@@ -278,8 +277,6 @@ Drawable.prototype.render = function (ctx) {
 			if (!this.boundingBox)
 				this.boundingBox = new BoundingBox();
 			this.boundingBox.resize(bounds.xmin, bounds.ymin, bounds.xmax-bounds.xmin, bounds.ymax-bounds.ymin);
-			this.averageCenter.x = bounds.xmin + (bounds.xmax-bounds.xmin)/2;
-			this.averageCenter.y = bounds.ymin + (bounds.ymax-bounds.ymin)/2;
 		}
 		
 		if (this.boundingBox == null) {
@@ -408,6 +405,17 @@ Drawable.prototype.clearVertices = function() {
 	this._vertices = [];
 	this._vertexBuffer.empty();
 	this._transformedVertexBuffer.empty();
+};
+
+Drawable.prototype.getAverageCenter = function() {
+	var v = new Vertex(0,0);
+	for (var i=0; i<this._vertices.length; i++) {
+		v.x += this._vertices[i].x;
+		v.y += this._vertices[i].y;
+	}
+	v.x /= this._vertices.length;
+	v.y /= this._vertices.length;
+	return v;
 };
 
 /* abstract methods */
