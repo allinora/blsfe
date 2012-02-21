@@ -3,7 +3,7 @@ var VertexBuffer = function() {
 	this._head=0;
 };
 VertexBuffer._class = window.Float64Array || window.Float32Array || Array;
-//VertexBuffer._class = Array;
+VertexBuffer._class = Array;
 
 VertexBuffer.prototype.add = function(v) {
 	if (this._head+3 > this.data.length) {

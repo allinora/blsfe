@@ -39,7 +39,7 @@ SingleDoubleTapGesture.prototype.last = function(ctx) {
 			if (dt < this.maxDelay) {
 				//yay.
 				this.taps = 0;
-				this.triggerCallback();
+				this.triggerCallback(touch.pagePos.x, touch.pagePos.y);
 			}
 			else {
 				//invalid

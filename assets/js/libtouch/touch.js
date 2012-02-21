@@ -66,10 +66,11 @@ TouchContext.prototype.debug = function(label) {
 	}
 };
 
-var TouchGesture = function(callback, progressCallback, abortCallback) {
+var TouchGesture = function(callback, progressCallback, abortCallback, startCallback) {
 	this.triggerCallback = callback || function(){};
 	this.progressCallback = progressCallback || function(){};
 	this.abortCallback = abortCallback || function(){};
+	this.startCallback = startCallback || function(){};
 };
 
 TouchGesture.prototype.register = function(ctx) {

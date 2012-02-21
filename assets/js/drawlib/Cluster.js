@@ -118,7 +118,7 @@ Cluster.prototype.setZoomLevel = function (x) {
 				}
 				
 				//display parent overlay if children are not ready yet
-				console.log("children clusters ready: ", childrenClustersLoaded)
+				//console.log("children clusters ready: ", childrenClustersLoaded)
 				overlay.settings.canRender = !childrenClustersLoaded;
 			}
 		}

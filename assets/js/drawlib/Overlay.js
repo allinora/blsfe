@@ -47,7 +47,7 @@ Overlay.prototype._beforeRender = function() {
 		var T = this.getMatrix();
 		var transform = T.decompose();
 		
-		if (true || transform.rotation !== 0.0) {
+		if (transform.rotation !== 0.0) {
 			//rotate stuff
 			ctx.save();
 			
@@ -69,7 +69,13 @@ Overlay.prototype._beforeRender = function() {
 			ctx.restore();
 		}
 		else {
-			ctx.drawImage(image, transform.translation.x, transform.translation.y, transform.scale.x*image.width, transform.scale.y*image.height);
+			if (image.width && image.height && transform.scale.x != 0 && transform.scale.y != 0) {
+				var x0 = this.fastRound(transform.translation.x);
+				var y0 = this.fastRound(transform.translation.y);
+				var w = this.fastRound(transform.scale.x * image.width);
+				var h = this.fastRound(transform.scale.y * image.height);
+				ctx.drawImage(image, x0,y0, w,h);
+			}
 		}
 		
 		_superRender.call(this, vertexBuffer, ctx, style);

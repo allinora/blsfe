@@ -118,8 +118,9 @@ Drawing.prototype._createCanvas = function () {
 Drawing.prototype._render = function (vertexBuffer, ctx, style) {
 	if (this.settings.clearBeforeRender) {
 		//clear context
-		ctx.fillStyle = "#FFFFFF";
-		ctx.fillRect(0,0, this.canvas.width, this.canvas.height);
+		//ctx.fillStyle = "#FFFFFF";
+		//ctx.fillRect(0,0, this.canvas.width, this.canvas.height);
+		ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
 		
 		//then paint background
 		if (this._background.type == "color") {

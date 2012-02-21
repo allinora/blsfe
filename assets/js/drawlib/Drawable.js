@@ -446,6 +446,16 @@ Drawable.prototype.getAverageCenter = function() {
 	return v;
 };
 
+Drawable.prototype.fastRound = function(somenum) {
+	// With a bitwise or.
+	var rounded = (0.5 + somenum) | 0;
+	// A double bitwise not.
+	rounded = ~~ (0.5 + somenum);
+	// Finally, a left bitwise shift.
+	rounded = (0.5 + somenum) << 0;
+	return rounded;
+};
+
 /* abstract methods */
 
 Drawable.prototype._render = function(vertexBuffer, ctx, style) {
