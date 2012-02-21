@@ -72,7 +72,7 @@ Overlay.prototype._beforeRender = function() {
 			ctx.drawImage(image, transform.translation.x, transform.translation.y, transform.scale.x*image.width, transform.scale.y*image.height);
 		}
 		
-		_superRender.call(this, ctx, style);
+		_superRender.call(this, vertexBuffer, ctx, style);
 	};
 })();
 
