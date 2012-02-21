@@ -407,6 +407,7 @@ Matrix.prototype.multiplySelf = function (right) {
 		}
 	}
 	this.data=data;
+	return this;
 };
 
 Matrix.CreateRotation = function (r) {
