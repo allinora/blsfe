@@ -23,6 +23,17 @@ class Core_Controller extends BLController {
 		
 		$this->set("coremodules", $default["modules"]["sys"]);
 		$this->set("appmodules", $default["modules"]["app"]);
+		
+		
+		$this->addPackage("core");
+		$this->addPackage("jquery");
+		$this->addPackage("jquery-cookie");
+		$this->addPackage("jquery-ui");
+		$this->addPackage("jquery-ui-timepicker");
+		$this->addPackage("fancybox");
+		$this->addPackage("table-sorter");
+		$this->addPackage("admin");
+		
 	}
 	
 	
@@ -88,7 +99,6 @@ class Core_Controller extends BLController {
 
 	function afterAction(){
 		parent::afterAction();
-		$this->set("jslibs", $this->jsLibs);
 	}
 	
 	function setTabName($c){
