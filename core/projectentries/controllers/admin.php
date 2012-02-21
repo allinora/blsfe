@@ -12,6 +12,11 @@ class Core_Projectentries_AdminController extends Admin_Controller {
 		$res=$this->model->getAllEntries();
 		$this->set("aData", $res);
 	}
+
+	function listAction($id) {
+		$res=$this->model->getall($id);
+		$this->set("aData", $res);
+	}
 	
 
 	function formatters(){

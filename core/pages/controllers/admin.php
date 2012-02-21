@@ -6,6 +6,7 @@ class Core_Pages_AdminController extends Admin_Controller {
 		parent::beforeAction();
 		$this->set("tab", "pages");
 		$this->model=new BLModel("sys/page", "id");
+		$this->addPackage("ckeditor");
 	}
 	function indexAction() {
 		$pages=$this->model->getall(1);

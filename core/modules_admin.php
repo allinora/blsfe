@@ -17,9 +17,4 @@ class Modules_Admin_Controller extends Core_Controller {
 			$this->redirect("core", "login");
 		}
 	}
-	
-	
-	function afterAction(){
-		$this->set("jslibs", $this->jsLibs);
-	}
 }

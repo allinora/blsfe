@@ -11,7 +11,9 @@ class Core_Projectofferentries_AdminController extends Admin_Controller {
 	function indexAction($id) {
 		$res=$this->model->getall($id);
 		$this->set("aData", $res);
+		$this->set("offer_id", $id);
 	}
+	
 	
 
 	function formatters(){
