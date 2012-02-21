@@ -74,9 +74,10 @@ var Drawable = function() {
 						this.mouseOverDrawable = c;
 						c.trigger("mouseover", m);
 					}
-					else if (c == this.mouseOverDrawable) {
-						this.mouseOverDrawable.trigger("mouseout");
-						this.mouseOverDrawable = null;
+					else if (c.state == "hover") {
+						c.trigger("mouseout");
+						if (c === this.mouseOverDrawable)
+							this.mouseOverDrawable = null;
 					}
 				}
 			}
@@ -84,7 +85,6 @@ var Drawable = function() {
 	}).bind("mouseout", function() {
 		if (this.state == "hover")
 			this.state = "default";
-		
 		//this._mouse = null;
 		
 		if (this.mouseOverDrawable != null) {
@@ -341,19 +341,17 @@ Drawable.prototype._hitTest = function (vertex) {
 	}
 	
 	//polygon check
-	if (this.transform._validatedVertices) {
+	if (this._transformedVertexBuffer.length() > 0) {
 		var i=0;
 		var j=0;
 		var c=false;
-		var nvert = this.transform._validatedVertices.length;
+		var nvert = this._transformedVertexBuffer.length() /3;
 		var testx = vertex.x;
 		var testy = vertex.y;
 		for (i = 0, j = nvert-1; i < nvert; j = i++) {
-			if (this.transform._validatedVertices[i] && this.transform._validatedVertices[j]) {
-				if ( ((this.transform._validatedVertices[i].y>testy) != (this.transform._validatedVertices[j].y>testy)) &&
-					(testx < (this.transform._validatedVertices[j].x-this.transform._validatedVertices[i].x) * (testy-this.transform._validatedVertices[i].y) / (this.transform._validatedVertices[j].y-this.transform._validatedVertices[i].y) + this.transform._validatedVertices[i].x) )
-					c = !c;
-			}
+			if ( ((this._transformedVertexBuffer.data[3*i+1]>testy) != (this._transformedVertexBuffer.data[3*j+1]>testy)) &&
+				(testx < (this._transformedVertexBuffer.data[3*j]-this._transformedVertexBuffer.data[3*i]) * (testy-this._transformedVertexBuffer.data[3*i+1]) / (this._transformedVertexBuffer.data[3*j+1]-this._transformedVertexBuffer.data[3*i+1]) + this._transformedVertexBuffer.data[3*i]) )
+				c = !c;
 		}
 		return c;
 	}

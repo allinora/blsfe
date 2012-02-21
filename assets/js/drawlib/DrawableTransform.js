@@ -206,7 +206,7 @@ Matrix.prototype.applyMultiplyVertices = function(transformedVertexBuffer, verte
 	}
 	
 	transformedVertexBuffer.empty(vertexBuffer.length());
-	transformedVertexBuffer._head = transformedVertexBuffer.length();
+	transformedVertexBuffer._head = vertexBuffer.length();
 	
 	var numVertices = vertexBuffer.length();
 	for (var i=0; i<numVertices; i+=3) {
