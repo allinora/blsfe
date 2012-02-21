@@ -47,25 +47,30 @@ Overlay.prototype._beforeRender = function() {
 		var T = this.getMatrix();
 		var transform = T.decompose();
 		
-		//rotate stuff
-		ctx.save();
-		
-		//for some odd reasons, seems the canvas rotation is going on the wrong logical way...
-		var M = T.multiply(Matrix.CreateRotation(-2*transform.rotation));
-		
-		ctx.setTransform(
-			M.data[0],
-			M.data[1],
-			M.data[3],
-			M.data[4],
-			M.data[2],
-			M.data[5]
-		);
-		
-		ctx.drawImage(image, 0,0);
-		
-		//unrotate stuff
-		ctx.restore();
+		if (true || transform.rotation !== 0.0) {
+			//rotate stuff
+			ctx.save();
+			
+			//for some odd reasons, seems the canvas rotation is going on the wrong logical way...
+			var M = T.multiply(Matrix.CreateRotation(-2*transform.rotation));
+			
+			ctx.setTransform(
+				M.data[0],
+				M.data[1],
+				M.data[3],
+				M.data[4],
+				M.data[2],
+				M.data[5]
+			);
+			
+			ctx.drawImage(image, 0,0);
+			
+			//unrotate stuff
+			ctx.restore();
+		}
+		else {
+			ctx.drawImage(image, transform.translation.x, transform.translation.y, transform.scale.x*image.width, transform.scale.y*image.height);
+		}
 		
 		_superRender.call(this, ctx, style);
 	};

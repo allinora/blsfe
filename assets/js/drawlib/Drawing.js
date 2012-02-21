@@ -10,6 +10,8 @@ var Drawing = function(w,h, mouseShiftVertex) {
 	this.settings.canRender = true;
 	this.settings.clickThrough = true;
 	
+	this.settings.clearBeforeRender = true;
+	
 	this.events["afterrender"] =  [];
 	
 	this._mouseShiftVertex = mouseShiftVertex;
@@ -114,19 +116,21 @@ Drawing.prototype._createCanvas = function () {
 };
 
 Drawing.prototype._render = function (ctx, style) {
-	//clear context
-	ctx.fillStyle = "#FFFFFF";
-	ctx.fillRect(0,0, this.canvas.width, this.canvas.height);
-	
-	//then paint background
-	if (this._background.type == "color") {
-		ctx.fillStyle = this._background.val;
+	if (this.settings.clearBeforeRender) {
+		//clear context
+		ctx.fillStyle = "#FFFFFF";
 		ctx.fillRect(0,0, this.canvas.width, this.canvas.height);
-	}
-	else if (this._background.type == "asset") {
-		for (var u=0; u<this.canvas.width+this._background.rw; u+=this._background.rw) {
-			for (var v=0; v<this.canvas.height+this._background.rh; v+=this._background.rh) {
-				ctx.drawImage(this._background.val, u, v);
+		
+		//then paint background
+		if (this._background.type == "color") {
+			ctx.fillStyle = this._background.val;
+			ctx.fillRect(0,0, this.canvas.width, this.canvas.height);
+		}
+		else if (this._background.type == "asset") {
+			for (var u=0; u<this.canvas.width+this._background.rw; u+=this._background.rw) {
+				for (var v=0; v<this.canvas.height+this._background.rh; v+=this._background.rh) {
+					ctx.drawImage(this._background.val, u, v);
+				}
 			}
 		}
 	}
@@ -153,11 +157,24 @@ Drawing.prototype.loadAsset = function (url, callback) {
 
 Drawing._superRender = Drawing.prototype.render;
 Drawing.prototype.render = function() {
+	if (Matrix.DEBUG)
+		Matrix.resetDebug();
+	if (Vertex.DEBUG)
+		Vertex.resetDebug();
 	this._renderedCount = 0;
+	var t = new Date().getTime();
 	Drawing._superRender.call(this, this.ctx);
+	this._renderTime = new Date().getTime() - t;
 	this.trigger("afterRender");
 };
 
-Drawing.prototype.getNumRendered = function() {
-	return this._renderedCount;
+Drawing.prototype.getDebugInfo = function() {
+	return {
+		Matrix: Matrix.debug,
+		Vertex: Vertex.debug,
+		Drawable: {
+			renderedItemCount: this._renderedCount,
+			renderTime: this._renderTime
+		}
+	};
 };

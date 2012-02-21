@@ -50,8 +50,13 @@ var Cluster = function(clusterBasePath, ExportSettings, level, uParent, vParent,
 	var baseCluster = this;
 	this._assetsLoaded = false;
 	
-	for (var u=u0; u<u0+numClustersX; u++) {
-		for (var v=v0; v<v0+numClustersY; v++) {
+	var scaledWidth = Math.round(ExportSettings.WIDTH / Math.pow(2, level)); 
+	var scaledHeight = Math.round(ExportSettings.HEIGHT / Math.pow(2, level)); 
+	var totalClustersX = Math.ceil(scaledWidth / ExportSettings.CLUSTER_WIDTH);
+	var totalClustersY = Math.ceil(scaledHeight / ExportSettings.CLUSTER_HEIGHT);
+	
+	for (var u=u0; u<Math.min(u0+numClustersX, totalClustersX); u++) {
+		for (var v=v0; v<Math.min(v0+numClustersY, totalClustersY); v++) {
 			var overlay = new Overlay( this._getClusterUrl(level, u, v) );
 			overlay.resize(ExportSettings.CLUSTER_WIDTH, ExportSettings.CLUSTER_HEIGHT);
 			overlay.transform.scaleBy(1/scale);

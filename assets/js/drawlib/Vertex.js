@@ -1,10 +1,53 @@
-var Vertex = function(x,y,w) {
-	this.x = x ===undefined ? 0 : x;
-	this.y = y ===undefined ? 0 : y;
-	this.w = w ===undefined ? 1 : w;
+(function() {
+	var useGetSet = window.__defineGetter__ && window.Float32Array;
+	var dataClass = null;
+	/*if (window.Float64Array)
+		dataClass = Float64Array;
+	else */if (window.Float32Array)
+		dataClass = Float32Array;
+	var compatMode = !useGetSet || !dataClass;
+	
+	compatMode = true;
+	
+	if (!compatMode) {
+		Vertex = function(x,y,w) {
+			this._data = new dataClass(3);
+			this._data[0] = x === undefined ? 0 : x;
+			this._data[1] = y === undefined ? 0 : y;
+			this._data[2] = w === undefined ? 1 : w;
+		};
+		
+		Vertex.prototype.__defineGetter__("x", function(){ return this._data[0]; });
+		Vertex.prototype.__defineGetter__("y", function(){ return this._data[1]; });
+		Vertex.prototype.__defineGetter__("w", function(){ return this._data[2]; });
+		
+		Vertex.prototype.__defineSetter__("x", function(val){ this._data[0] = val; });
+		Vertex.prototype.__defineSetter__("y", function(val){ this._data[1] = val; });
+		Vertex.prototype.__defineSetter__("w", function(val){ this._data[2] = val; });
+	}
+	else {
+		Vertex = function(x,y,w) {
+			this.x = x ===undefined ? 0 : x;
+			this.y = y ===undefined ? 0 : y;
+			this.w = w ===undefined ? 1 : w;
+		};
+	}
+})();
+
+Vertex.DEBUG = false;
+Vertex.resetDebug = function() {
+	Vertex.debug = {
+		add: 0,
+		clone: 0,
+		multiply: 0
+	};
 };
+Vertex.resetDebug();
 
 Vertex.prototype.clone = function () {
+	if (Vertex.DEBUG)
+		Vertex.debug.add++;
+	
 	return new Vertex(this.x, this.y, this.w);
 };
 
@@ -15,6 +58,9 @@ Vertex.prototype.distance2 = function (that) {
 };
 
 Vertex.prototype.multiply = function (vertex) {
+	if (Vertex.DEBUG)
+		Vertex.debug.add++;
+	
 	return new Vertex(this.x*vertex.x, this.y*vertex.y, this.w*vertex.w);
 };
 
@@ -45,6 +91,9 @@ Vertex.prototype.distance = function (that) {
 };
 
 Vertex.prototype.add = function (that) {
+	if (Vertex.DEBUG)
+		Vertex.debug.add++;
+	
 	return new Vertex(this.x+that.x, this.y+that.y, this.w+that.w);
 };
 Vertex.prototype.subtract = function (that) {

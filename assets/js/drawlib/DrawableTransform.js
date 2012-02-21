@@ -78,17 +78,69 @@ DrawableTransform.prototype.interpolateTo = function (that, duration, easing, st
 	});
 };
 
-var Matrix = function(a11, a12, a13, a21, a22, a23, a31, a32, a33) {
-	this.data = [
-		a11 || 1, a12 || 0, a13 || 0,
-		a21 || 0, a22 || 1, a23 || 0,
-		a31 || 0, a32 || 0, a33 || 1
-	];
+(function() {
+	var dataClass = Array;
+	if (window.Float64Array)
+		dataClass = Float64Array;
+	else if (window.Float32Array)
+		dataClass = Float32Array;
 	
-	this.interpolationTimer = null;
+	dataClass = Array;
+	
+	if (dataClass !== Array) {
+		Matrix = function(a11, a12, a13, a21, a22, a23, a31, a32, a33) {
+			this.data = new dataClass(9);
+			if (arguments.length == 0) {
+				this.data[0] = 1;
+				this.data[4] = 1;
+				this.data[8] = 1;
+			}
+			else {
+				this.data[0] = a11;
+				this.data[1] = a12;
+				this.data[2] = a13;
+				
+				this.data[3] = a21;
+				this.data[4] = a22;
+				this.data[5] = a23;
+				
+				this.data[6] = a31;
+				this.data[7] = a32;
+				this.data[8] = a33;
+			}
+			
+			this.interpolationTimer=null;
+		};
+	}
+	else {
+		Matrix = function(a11, a12, a13, a21, a22, a23, a31, a32, a33) {
+			this.data = [
+				a11 || 1, a12 || 0, a13 || 0,
+				a21 || 0, a22 || 1, a23 || 0,
+				a31 || 0, a32 || 0, a33 || 1
+			];
+			
+			this.interpolationTimer=null;
+		};
+	}
+})();
+
+Matrix.DEBUG = false;
+Matrix.resetDebug = function() {
+	Matrix.debug = {
+		decompose: 0,
+		add: 0,
+		clone: 0,
+		multiply: 0,
+		multiplyVertex: 0
+	};
 };
+Matrix.resetDebug();
 
 Matrix.prototype.decompose = function() {
+	if (Matrix.DEBUG)
+		Matrix.debug.decompose++;
+	
 	var res = this.decomposeQR();
 	var Q = res.Q;
 	var R = res.R;
@@ -134,16 +186,19 @@ Matrix.prototype.toString = function() {
 };
 
 Matrix.prototype.multiplyVertex = function (vertex) {
+	if (Matrix.DEBUG)
+		Matrix.debug.multiplyVertex++;
+	
 	var ret = new Vertex(0,0,0);
-	ret.x = this.data[3*0 + 0] * vertex.x +
-			this.data[3*0 + 1] * vertex.y +
-			this.data[3*0 + 2] * vertex.w;
-	ret.y = this.data[3*1 + 0] * vertex.x +
-			this.data[3*1 + 1] * vertex.y +
-			this.data[3*1 + 2] * vertex.w;
-	ret.w = this.data[3*2 + 0] * vertex.x +
-			this.data[3*2 + 1] * vertex.y +
-			this.data[3*2 + 2] * vertex.w;
+	ret.x = this.data[0] * vertex.x +
+			this.data[1] * vertex.y +
+			this.data[2] * vertex.w;
+	ret.y = this.data[3] * vertex.x +
+			this.data[4] * vertex.y +
+			this.data[5] * vertex.w;
+	ret.w = this.data[6] * vertex.x +
+			this.data[7] * vertex.y +
+			this.data[8] * vertex.w;
 	
 	return ret;
 };
@@ -214,9 +269,15 @@ Matrix.prototype.decomposeQR = function() {
 };
 
 Matrix.prototype.clone = function () {
+	if (Matrix.DEBUG)
+		Matrix.debug.clone++;
+	
 	var m = new Matrix();
-	for (var i=0; i<9; i++)
-		m.data[i] = this.data[i];
+	
+	//for (var i=0; i<9; i++)
+	//	m.data[i] = this.data[i];
+	m.data = this.data.slice(0, this.data.length);
+	
 	return m;
 };
 
@@ -228,6 +289,9 @@ Matrix.prototype.stopInterpolate = function () {
 };
 
 Matrix.prototype.add = function (that) {
+	if (Matrix.DEBUG)
+		Matrix.debug.add++;
+	
 	for (var i=0; i<this.data.length; i++)
 		this.data[i] += that.data[i];
 	return this;
@@ -295,21 +359,24 @@ Matrix.prototype.multiply = function (right) {
 Matrix.CreateRotation = function (r) {
 	return new Matrix(
 		Math.cos(r), -Math.sin(r), 0,
-		Math.sin(r), Math.cos(r), 0
+		Math.sin(r), Math.cos(r), 0,
+		0, 0, 1
 	);
 };
 
 Matrix.CreateScale = function (sx, sy) {
 	return new Matrix(
 		sx, 0, 0,
-		0, sy, 0
+		0, sy, 0,
+		0, 0, 1
 	);
 };
 
 Matrix.CreateTranslation = function (dx, dy) {
 	return new Matrix(
 		1, 0, dx,
-		0, 1, dy
+		0, 1, dy,
+		0, 0, 1
 	);
 };
 
