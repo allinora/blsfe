@@ -19,6 +19,4 @@ Ellipsis.prototype.setSize = function (dw, dh) {
 		var y = (Math.sin(alpha) + 1)/2 * dh;
 		this.addVertex(new Vertex(x,y));
 	}
-	
-	this.invalidate();
 };

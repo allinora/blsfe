@@ -13,16 +13,12 @@ var Shape = function() {
 Shape.prototype = new Drawable();
 
 Shape.prototype._render = function (vertexBuffer, ctx, style) {
-	var moved = false;
-	
 	//first pass - fill
 	if (this.settings.fill) {
-		moved = false;
 		ctx.beginPath();
-		for (var j=0; j<vertexBuffer.length; j+=3) {
-			if (!moved) {
+		for (var j=0; j<this._vertices.length*3; j+=3) {
+			if (j==0) {
 				ctx.moveTo(vertexBuffer[j], vertexBuffer[j+1]);
-				moved = true;
 				continue;
 			}
 			
@@ -35,12 +31,10 @@ Shape.prototype._render = function (vertexBuffer, ctx, style) {
 	
 	//2nd pass - stroke
 	if (this.settings.stroke) {
-		moved = false;
 		ctx.beginPath();
-		for (var j=0; j<vertexBuffer.length; j+=3) {
-			if (!moved) {
+		for (var j=0; j<this._vertices.length*3; j+=3) {
+			if (j==0) {
 				ctx.moveTo(vertexBuffer[j], vertexBuffer[j+1]);
-				moved = true;
 				continue;
 			}
 			
@@ -61,7 +55,7 @@ Shape.prototype._render = function (vertexBuffer, ctx, style) {
 			switch (style.linestyle) {
 				case DrawableStyle.Linestyle.Dot:
 					ctx.dashedLine(
-						vertexBuffer[vertexBuffer.length-3], vertexBuffer[vertexBuffer.length-2],
+						vertexBuffer[this._vertices.length*3-3], vertexBuffer[this._vertices.length*3-2],
 						vertexBuffer[0], vertexBuffer[1]
 					);
 					break;
@@ -70,7 +64,7 @@ Shape.prototype._render = function (vertexBuffer, ctx, style) {
 					ctx.lineTo(vertexBuffer[0], vertexBuffer[1]);
 					break;
 			}
-			ctx.closePath();
+			//ctx.closePath();
 		}
 		
 		ctx.strokeStyle = style.lineColor;

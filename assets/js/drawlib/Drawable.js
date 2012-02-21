@@ -199,12 +199,17 @@ Drawable.prototype.invalidate = function(deep) {
 };
 
 Drawable.prototype.applyTransform = function () {
-	for (var i=0; i<this.vertices.length; i++) {
-		if (this.vertices[i])
-			this.vertices[i] = this.transform.multiply(this.vertices[i]);
+	var tmp = [];
+	for (var i=0; i<this._vertices.length; i++) {
+		tmp[i] = this.transform.matrix.multiplyVertex(this._vertices[i]);
 	}
-	this.transform = new DrawableTransform();
-	this.invalidate();
+	
+	this.clearVertices();
+	for (var i=0; i<tmp.length; i++)
+		this.addVertex(tmp[i]);
+	
+	this.transform.matrix.data = new Matrix().data;
+	this.transform.invalidate();
 };
 
 Drawable.prototype.bind = function (event, callback) {

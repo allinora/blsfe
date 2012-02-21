@@ -25,7 +25,7 @@ VertexBuffer.prototype.addUnsafe = function(v) {
 VertexBuffer.prototype.length = function() { return this._head; };
 
 VertexBuffer.prototype.empty = function(n) {
-	if (n && n > this.length())
+	if (n && n > this.data.length)
 		this.data = new VertexBuffer._class(n);
 	this._head=0;
 };
