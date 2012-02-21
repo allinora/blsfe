@@ -20,6 +20,7 @@ class Core_Faqs_AdminController extends Admin_Controller {
 	}
 	
 	function editAction($id) {
+		$this->addPackage("ckeditor"); // Load the ckeditor libraries
 		$faqData=$this->model->getFaqWithTranslations(array("id"=>$id));
 		$faq=array();
 		$faq["id"]=$faqData["id"];

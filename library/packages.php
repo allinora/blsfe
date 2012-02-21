@@ -65,7 +65,13 @@ $packagesConfig["plupload"]=array(
 			),
 	'head' => array()
 );
-
+$packagesConfig["ckeditor"]=array(
+	'js' => array(
+			"/fwassets/js/ckeditor/ckeditor.js", 
+			"/fwassets/js/ckeditor/adapters/jquery.js"
+			),
+	'head' => array()
+);
 
 
 $packagesConfig["960-gs"]=array(
