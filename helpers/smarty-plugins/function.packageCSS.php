@@ -13,7 +13,14 @@ function smarty_function_packageCSS($params, &$smarty){
 					continue;
 				}
 				$seen[$css]++;
-				$html.='<link rel="stylesheet" type="text/css" href="'.$css.'" />' . "\n";
+				
+				if(substr($css, -3)=="less"){
+					$html.='<link rel="stylesheet/less" type="text/css" href="'.$css.'" />' . "\n";
+					
+				}else {
+					$html.='<link rel="stylesheet" type="text/css" href="'.$css.'" />' . "\n";
+				};
+				
 				
 			}
 		}
