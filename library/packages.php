@@ -43,6 +43,28 @@ $packagesConfig["jquery-cookie"]=array(
 );
 
 
+$packagesConfig["fancybox"]=array(
+	'css' => array('/fwassets/js/fancybox/2.0.4/source/jquery.fancybox.css'),
+	'js' => array("/fwassets/js/fancybox/2.0.4/source/jquery.fancybox.js"),
+	'head' => array()
+);
+
+
+$packagesConfig["admin"]=array(
+	'css' => array('/fwassets/css/default.css', '/fwassets/css/fb.css', '/lesscss/admin.less'),
+	'js' => array("/fwassets/js/lesscss/less-1.1.5.min.js", "/fwassets/js/json2.js", "/fwassets/js/adminbootstrap.js"),
+	'head' => array()
+);
+
+$packagesConfig["plupload"]=array(
+	'js' => array("/fwassets/js/plupload/js/plupload.js", 
+			"/fwassets/js/plupload/js/plupload.silverlight.js", 
+			"/fwassets/js/plupload/js/plupload.flash.js",
+			"/fwassets/js/plupload/js/plupload.html4.js",
+			"/fwassets/js/plupload/js/plupload.html5.js"
+			),
+	'head' => array()
+);
 
 
 
