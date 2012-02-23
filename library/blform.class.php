@@ -337,7 +337,7 @@ class BLForm extends BLModel {
 				$data.=" style='display: none;'";
 			}
 			$data.=">";
-			$data.= "<th align='right' valign='top'>" . $f["label"];
+			$data.= "<th align='right' valign='top'><label for='" . $f["field"] . "'>" . $f["label"] . "</label>";
 			if ($f["required"]){
 				$data.= " * ";
 			}
