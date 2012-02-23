@@ -50,6 +50,11 @@ $packagesConfig["fancybox"]=array(
 );
 
 
+
+$packagesConfig["jquery-validate"]=array(
+	'js' => array('/fwassets/js/jquery/validation/1.9.0/jquery.validate.min.js')
+);
+
 $packagesConfig["admin"]=array(
 	'css' => array('/fwassets/css/default.css', '/fwassets/css/fb.css', '/lesscss/admin.less'),
 	'js' => array("/fwassets/js/lesscss/less-1.1.5.min.js", "/fwassets/js/json2.js", "/fwassets/js/adminbootstrap.js"),

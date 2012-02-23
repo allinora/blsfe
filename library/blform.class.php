@@ -124,6 +124,7 @@ class BLForm extends BLModel {
 			}
 			
 		}
+		
 		switch($field["data_type"]){
 			case OBJ_DTYPE_STRING:	
 			
@@ -296,6 +297,11 @@ class BLForm extends BLModel {
 		if ($f["css"]){
 			$text.=" style='" . $f["css"] . "'";
 		}
+
+		if ($f["required"]){
+			$f["class"]="required" . " " . $f["class"];
+		}
+
 		if ($f["class"]){
 			$text.=" class='" . $f["class"] . "'";
 		}
@@ -327,8 +333,12 @@ class BLForm extends BLModel {
 		$this->hideFromTray("id"); // This should be always hidden if not removed completely.
 		
 		$formData=$this->tray;
-		$data="<form method='POST'><table class='blsfeformtable' border=1>";
+		
+		
+		
+		$data='<script>$(document).ready(function(){$(".blsfeform").validate();});</script>' . "<form method='POST' class='blsfeform'><table class='blsfeformtable' border=1>";
 		foreach($formData as $id=>$f){
+			
 			$data.= "\n<tr";
 			if ($f["class"]){
 				$data.=" class='" . $f["class"] . "'";
@@ -337,7 +347,7 @@ class BLForm extends BLModel {
 				$data.=" style='display: none;'";
 			}
 			$data.=">";
-			$data.= "<th align='right' valign='top'><label for='" . $f["field"] . "'>" . $f["label"] . "</label>";
+			$data.= "<th align='right' valign='top'>\n<label for='" . $id . "'>" . $f["label"] . "</label>";
 			if ($f["required"]){
 				$data.= " * ";
 			}

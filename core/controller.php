@@ -28,6 +28,7 @@ class Core_Controller extends BLController {
 		$this->addPackage("core");
 		$this->addPackage("jquery");
 		$this->addPackage("jquery-cookie");
+		$this->addPackage("jquery-validate");
 		$this->addPackage("jquery-ui");
 		$this->addPackage("jquery-ui-timepicker");
 		$this->addPackage("fancybox");
