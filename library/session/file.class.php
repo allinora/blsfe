@@ -51,6 +51,10 @@ class Session_File extends Session {
     }
 
     public function gc($maxlifetime) {
+		// Dont so garbage collection.
+		// This session store is used only in development and beta.
+		return;
+	
 		$sess_save_path=$this->session_directory;
 	  foreach (glob("$sess_save_path/*") as $filename) {
 	    if (filemtime($filename) + $maxlifetime < time()) {
