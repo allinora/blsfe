@@ -139,7 +139,7 @@ class BLForm extends BLModel {
 				return $this->textbox($id, $field);
 			break;
 			case OBJ_DTYPE_DATE:
-				$this->setClass($id, "date");
+				$this->setClass($id, "dateISO");
 				$field=$this->vars[$id];
 				return $this->textbox($id, $field);
 			break;
