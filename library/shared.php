@@ -105,8 +105,15 @@ function i18nURL(&$url){
 	if (!defined('LANGUAGES')){
 		return;
 	}
+	if (isset($lang)){
+		return;
+	}
 	// Get the language from the url
+	//print "URL:" . __LINE__ . " " . $url .  "<br>";
+	
 	cleanURL($url);
+	//print "URL:" . __LINE__ . " " . $url .  "<br>";
+
 	if (preg_match("@^(" . LANGUAGES . ")$@", $url, $x)){
 		$lang=$x[1];
 	} elseif (preg_match("@^(" . LANGUAGES . ")/@", $url, $x)){
