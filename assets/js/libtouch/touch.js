@@ -14,7 +14,7 @@ var TouchState = function(t, ctx) {
 }
 
 TouchState.prototype.update = function(t) {
-	this.pagePos = new Vertex(t.pageX, t.pageY);
+	this.pagePos = new Vector(t.pageX, t.pageY);
 	this.updateTime = new Date().getTime();
 };
 
@@ -42,6 +42,12 @@ TouchContext.prototype.handle = function(t, hold) {
 };
 
 TouchContext.prototype.handleGestures = function(event) {
+	this.hold = 0;
+	for (var i=0; i<this.touches.length; i++) {
+		if (this.touches[i].hold)
+			this.hold++;
+	}
+	
 	for (var i=0; i<this.gestures.length; i++) {
 		if (event == "first")
 			this.gestures[i].first(this);

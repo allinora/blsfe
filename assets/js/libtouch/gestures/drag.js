@@ -11,7 +11,7 @@ DragGesture.prototype.first = function(ctx) {
 		break;
 	}
 	this.v0 = touch.pagePos;
-	this.v = new Vertex();
+	this.v = new Vector(0,0);
 	
 	if (this.valid)
 		this.startCallback();
