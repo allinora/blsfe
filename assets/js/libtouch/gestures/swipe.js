@@ -1,7 +1,7 @@
-var SwipeGesture = function(direction, callback, progress, abort) {
+var SwipeGesture = function(direction, minDistance, callback, progress, abort) {
 	SwipeGesture.prototype.constructor.call(this, callback, progress, abort);
 	
-	this.minDistance = 50;
+	this.minDistance = minDistance;
 	this.direction = direction; //right, left, up, down
 };
 SwipeGesture.prototype = new TouchGesture();
