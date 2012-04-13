@@ -5,6 +5,7 @@
 	<th>ID</th>
 	<th>Name</th>
 	<th>Status</th>
+	<th>Date</th>
 	<th><a href='/<{$lang}>/core/<{$tab}>/admin/add'>Add</a></th>
 	
 </tr>
@@ -17,6 +18,7 @@
 	<td><{$row.id}></td>
 	<td><{$row.name}></td>
 	<td><{$row.status}></td>
+	<td><{$row.start_time|date_format}></td>
 	<td><a href="/<{$lang}>/core/<{$tab}>/admin/edit/<{$row.id}>">Edit</a></td>
 </tr>
 <{/if}>
