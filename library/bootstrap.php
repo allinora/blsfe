@@ -66,6 +66,17 @@ function blsfe_load_class($className) {
 }
 
 
+if (!function_exists("base36_encode")) {
+	function base36_encode($base10){
+    	return base_convert($base10,10,36);
+	}
+}
+
+if (!function_exists("base36_decode")) {
+	function base36_decode($base36){
+	    return base_convert($base36,36,10);
+	}
+}
 
 // Require the rest of the bootstrap logic
 require_once (dirname(__FILE__)  . DS .  'shared.php');
