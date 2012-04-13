@@ -1,7 +1,7 @@
 var SingleDoubleTapGesture = function(callback) {
 	SingleDoubleTapGesture.prototype.constructor.call(this, callback);
 	
-	this.maxDelay = 1000;
+	this.maxDelay = 400;
 	this.maxDistance = 40;
 	
 	this.taps = 0;
