@@ -149,7 +149,7 @@
 	width: 100%;
 	float: right;
 	padding: 9px 0 10px 0;
-	background: #F3F4F4 url('../images/L3-ul-top.png') center top no-repeat;
+	background: transparent url('../images/L3-ul-top.png') center top no-repeat;
 }
 #primaryNav li li li {
 	background: url('../images/L3-center.png') left center no-repeat;
