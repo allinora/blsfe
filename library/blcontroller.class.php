@@ -68,7 +68,7 @@ class BLController {
 		}
 	}
 	
-	function redirect($controller, $action, $params=array()){
+	function redirect($controller, $action=null, $params=array()){
 		$url="/" . LANG . "/$controller/$action";
 		if (is_array($params) && count($params)){
 			$url.="/?" . http_build_query($params);
