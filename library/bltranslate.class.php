@@ -15,9 +15,18 @@ class BLTranslate extends BLTransport{
 	    if (is_array($translation) && isset($translation["msgstr"])) {
 			return $translation["msgstr"];
 	    }
-	    return "X:" . $string[1];
+	    return $string[1];
 	}
-	
+	public function debugTranslate($string){
+		$translation=$this->translate($string);
+		
+	    if ($translation==trim($string[1])) {
+			return "X:" . $translation;
+		}
+		
+		return $translation;
+		
+	}
 	public function getProjects(){
 	    $projects=$this->callBusinessLogicService("/sys/po/string/getProjects");
 		return $projects;
