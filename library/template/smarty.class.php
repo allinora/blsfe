@@ -130,7 +130,7 @@ class Template_Smarty extends Template {
 			$this->smarty->caching = 0;
 			$this->smarty->compile_check = true;
 		} else {
-			$this->smarty->caching = 1;
+			$this->smarty->caching = 0;
 			$this->smarty->compile_check = false;
 
 		}		
