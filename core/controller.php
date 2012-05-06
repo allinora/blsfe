@@ -34,6 +34,7 @@ class Core_Controller extends BLController {
 		$this->addPackage("fancybox");
 		$this->addPackage("table-sorter");
 		$this->addPackage("admin");
+		$this->addPackage("imagemanager");
 		
 	}
 	
