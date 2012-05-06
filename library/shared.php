@@ -213,7 +213,8 @@ function callHook() {
 	
 	//print "URL is $url<br>";
 	if(empty($url)){
-		$url=$_SERVER["SCRIPT_NAME"];
+		// $url=$_SERVER["SCRIPT_NAME"]; // This causes problem with language switching
+		$url="/";
 	}
 	
 	//print "URL is $url<br>";
