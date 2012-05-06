@@ -77,6 +77,12 @@ $packagesConfig["ckeditor"]=array(
 			),
 	'head' => array()
 );
+$packagesConfig["imagemanager"]=array(
+	'js' => array(
+			"/fwassets/js/imagemanager.js"
+			),
+	'head' => array()
+);
 
 
 $packagesConfig["960-gs"]=array(
