@@ -31,12 +31,17 @@ class App_Controller extends BLController {
 		if (!$_SESSION["user"]["user_id"]>0){
 			return;
 		}
+		if ($_SESSION["user"]["notifications"][$notif_name][$notif_value]==1){
+			return;
+		}
+		
 		$model=new BLModel("sys/user/notification", "id", "user_id");
 		$data=array();
 		$data["notif_name"]=$notif_name;
 		$data["notif_value"]=$notif_value;
 		$data["user_id"]=$_SESSION["user"]["user_id"];
 		$x=$model->add($data);
+		//print "<pre>" . print_r($x, true) . "</pre>";
 		$this->updateUserNotifications();
 	}
 	
