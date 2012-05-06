@@ -161,7 +161,7 @@ class BLForm extends BLModel {
 			$image_url="/core/images/company/show/" . $f["value"] . "/100";
 			$data.="<img src='$image_url'>";
 		} else {
-			$data.= "<button>choose image</button>";
+			$data.= "<button><po>choose image</po></button>";
 		}
 		$data.="</div></a>";
 		return $data;
@@ -175,7 +175,7 @@ class BLForm extends BLModel {
 			$image_url="/core/images/admin/show/" . $f["value"] . "/100";
 			$data.="<img src='$image_url'>";
 		} else {
-			$data.= "<button>choose image</button>";
+			$data.= "<button><po>choose image</po></button>";
 		}
 		$data.="</div></a>";
 		return $data;
@@ -347,7 +347,7 @@ class BLForm extends BLModel {
 				$data.=" style='display: none;'";
 			}
 			$data.=">";
-			$data.= "<th align='right' valign='top'>\n<label for='" . $id . "'>" . $f["label"] . "</label>";
+			$data.= "<th align='right' valign='top'>\n<label for='" . $id . "'><po>" . $f["label"] . "</po></label>";
 			if ($f["required"]){
 				$data.= " * ";
 			}
