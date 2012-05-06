@@ -12,6 +12,35 @@ class App_Controller extends BLController {
 		}
 	}
 	
+	function updateUserNotifications(){
+		if (!$_SESSION["user"]["user_id"]>0){
+			return;
+		}
+		$model=new BLModel("sys/user/notification", "id", "user_id");
+		$subscriptions=$model->getall($_SESSION["user"]["user_id"]);
+		$notification=array();
+		foreach($subscriptions as $s){
+			$notifications[$s["notif_name"]][$s["notif_value"]]=1;
+		}
+		$_SESSION["user"]["notifications"]=$notifications;
+		
+		//print "<pre>" . print_r($_SESSION["user"], true) . "</pre>";
+	}
+	
+	function addUserNotification($notif_name, $notif_value){
+		if (!$_SESSION["user"]["user_id"]>0){
+			return;
+		}
+		$model=new BLModel("sys/user/notification", "id", "user_id");
+		$data=array();
+		$data["notif_name"]=$notif_name;
+		$data["notif_value"]=$notif_value;
+		$data["user_id"]=$_SESSION["user"]["user_id"];
+		$x=$model->add($data);
+		$this->updateUserNotifications();
+	}
+	
+	
 	
 	function login(){
         $userModel=new BLModel("sys/auth/user", "id");
@@ -20,6 +49,7 @@ class App_Controller extends BLController {
         $auth=$userModel->login($_REQUEST);
 		if ($auth["user_id"]>0){
 			$_SESSION["user"]=$auth;
+			$this->updateUserNotifications();
 			// $this->redirect("/");
 		}  else {
 			$_SESSION["authfailures"]++;
@@ -57,6 +87,7 @@ class App_Controller extends BLController {
         $user=$userModel->facebooklogin($userAccountParams, "POST");
 		if ($user["user_id"]){
 			$_SESSION["user"]=$user;
+			$this->updateUserNotifications();
 		} else {
 			print "<pre>" . print_r($user, true) . "</pre>";exit;
 		}
