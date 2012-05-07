@@ -14,6 +14,12 @@ class Cache_File extends Cache {
 			// Do not read cache in dev
 			return;
 		}
+
+		if (defined("CACHE_DISABLED") && CACHE_DISABLED){
+			// Do not read cache in certain backend environments such as extranet / admin tools
+			return;
+		}
+
 		$cache_path=CACHE_PATH . DS .  $key;
 		if (file_exists($cache_path)){
 			$this->logger->log("Cache:read:$key");
@@ -23,6 +29,10 @@ class Cache_File extends Cache {
 	
 	function write($key, $value){
 		if (!defined("CACHE_PATH")){
+			return;
+		}
+		if (defined("CACHE_DISABLED") && CACHE_DISABLED){
+			// Do not read cache in certain backend environments such as extranet / admin tools
 			return;
 		}
 		$cache_path=CACHE_PATH . DS .  $key;
