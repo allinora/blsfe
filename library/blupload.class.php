@@ -24,7 +24,7 @@ class BLUpload {
 		$this->target_directory=$_dir;
 	}
 	function setFileName($n){
-		$this->target_filename=$n;
+		$this->target_filename=$this->cleanFileName($n);
 	}
 	function getFileName(){
 		return $this->target_filename;
@@ -32,6 +32,7 @@ class BLUpload {
 	
 	function cleanFileName($fileName){
 		$fileName = preg_replace('/[^\w\._]+/', '', $fileName);
+		$fileName = preg_replace('/[^a-z0-9\._-]+/i', '', $fileName);
 		return $fileName;
 	}
 	
