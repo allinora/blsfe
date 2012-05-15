@@ -112,7 +112,7 @@ class BLTranslate extends BLTransport{
 			$data.="\n<form>";
 			$data.="\n<input type='hidden' name='op' value='edit'>";
 			$data.="\n<input type='hidden' name='id' value='" . $r["id"]. "'>";
-			$data.="\n<table border=1>";
+			$data.="\n<table class='potable'>";
 			$data.="\n<tr><th>Project</th><td>"  . $r["project"] . "</td></tr>";
 			$data.="\n<tr><th>Source</th><td>"  . htmlentities($r["msgid"]) . "</td></tr>";
 			foreach($languages as $l){
@@ -124,8 +124,8 @@ class BLTranslate extends BLTransport{
 			$data.="<hr />";
 		}
 		$data.="</div>";
+		// print "<pre>" . print_r($result, true) . "</pre>";
 		return $data;
-		print "<pre>" . print_r($result, true) . "</pre>";
 	}
 	
 	private  function search($string, $project="", $lang=""){
