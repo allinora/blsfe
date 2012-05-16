@@ -1,0 +1,37 @@
+<style>
+	.messageRow {
+		cursor:pointer;
+	}
+</style>
+<script>
+	function showDescription(id){
+		lyr_id="#messageData_"+id;
+		$('.messageData').hide();
+		$('#messageData_'+id).show();
+	}
+
+</script>
+
+
+<h2><po>System Messages</po></h2>
+<table class="tablesorter">
+<thead>
+<tr>
+<th><po>Date</po></th><th><po>Sender</po></th><th><po>Subject</po></th>
+</tr>
+</thead>
+<tbody>
+	<{foreach from=$messages item=message}>
+	<tr class="<{cycle values="odd,even"}> messageRow" id="message_<{$message.id}>" onclick="showDescription(<{$message.id}>)">
+		<td><{$message.createtime}></td>
+		<td><{userData user_id=$message.user_id field=firstnameLastname}></td>
+		<td><{$message.subject}></td>
+	</tr>
+	<tr>
+		<td id="messageData_<{$message.id}>" class="messageData" style="display:none; background-color:lightyellow" colspan=3>
+			<{$message.data}>
+		</td>
+	</tr>
+	<{/foreach}>
+</tbody>
+</table>
