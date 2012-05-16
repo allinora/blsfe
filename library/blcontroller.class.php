@@ -31,7 +31,7 @@ class BLController {
 		$this->set("controller", $controller);
 		$this->set("action", $action);
 		$this->set("BLSFE_ROOT", BLSFE_ROOT);
-		$this->set("BLSFE_TEMPLATES", BLSFE_ROOT . "/TEMPLATES");
+		$this->set("BLSFE_TEMPLATES", BLSFE_ROOT . "/templates");
 		
 		$this->helper = new BLHelper();
 		$this->logger = new BLLog();
