@@ -4,13 +4,12 @@ class Admin_Controller extends Core_Controller {
 
 	function beforeAction(){
 		parent::beforeAction();
-		if (!$_SESSION["authdata"]){
+		//print "<pre>"  . print_r($_SESSION, true) . "</pre>";exit;
+		if (!$_SESSION["user"]){
 			$this->redirect("core", "login");
 		}
-		if (!$_SESSION["authdata"]["admin"]==1){
-			unset($_SESSION["authdata"]);
+		if (!$_SESSION["user"]["admin"]==1){
 			die("ACCESS DENIED: You do not have admin access");
-			
 		}
 	}
 	
