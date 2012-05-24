@@ -35,6 +35,13 @@ $packagesConfig["jquery-1.7.1"]=array(
 	'head' => array()
 );
 
+$packagesConfig["tag-canvas"]=array(
+	'css' => array(),
+	'js' => array("/fwassets/js/tagcanvas/jquery.tagcanvas.min.js"),
+	'head' => array('<!--[if lt IE 9]><script type="text/javascript" src="/fwassets/js/tagcanvas/excanvas.js"></script><![endif]-->')
+);
+
+
 // alias to the latest jquery
 $packagesConfig["jquery"]=$packagesConfig["jquery-1.7.1"];
 
