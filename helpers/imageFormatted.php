@@ -16,6 +16,7 @@ function blsfe_helper_imageFormatted($image_url, $params){
 	$border=$params["border"];
 	$class=$params["class"];
 	$style=$params["style"];
+	$title=$params["title"];
 	
 	if ($image_url){
 		$image_string= "<img src='$image_url' ";
@@ -28,10 +29,13 @@ function blsfe_helper_imageFormatted($image_url, $params){
 		if($style){
 			$image_string.=	"style='$style'";
 		}
+		if($title){
+			$image_string.=	"title='$title'";
+		}
 		$image_string.=">";
 		
 		if ($params["maxwidth"] && $params["maxheight"]){
-			$container="<div style='width: " . $params["maxwidth"] . "px; height: ".$params["maxheight"] . "px; overflow:hidden'>$image_string</div>";
+			$container="<span style='width: " . $params["maxwidth"] . "px; height: ".$params["maxheight"] . "px; overflow:hidden'>$image_string</span>";
 			return $container;
 		}
 		return $image_string;
