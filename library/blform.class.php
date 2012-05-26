@@ -279,7 +279,7 @@ class BLForm extends BLModel {
 		
 	}
 	function textbox($id, $f){
-		$text="<input type='text' name='$id' id='$id' value='"  . $f["value"].  "'";
+		$text="<input type='text' name='$id' id='$id' value=\""  . $f["value"].  "\"";
 		if ($f["maxlength"]){
 			$text.=" maxlength="  . $f["maxlength"];
 		}
