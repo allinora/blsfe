@@ -10,6 +10,7 @@ pull:
 
 push:
 	git push origin master
+	git push assembla master
 
 deploydev:
 	ssh root@tipi.lilarox.com make -C /opt/git/blsfe pull
