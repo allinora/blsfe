@@ -71,10 +71,10 @@ class BLImage {
 		}
 	}
 	
-	public function displayImage($f, $x=0, $y=0){
+	public function displayImage($f, $x=0, $y=0, $empty_ok=0){
 		$fileInfo=new BLFileinfo();
 		$mimetype=$fileInfo->ext2mimetype($f);
-		$data = $this->resizeFile($f, $x, $y);
+		$data = $this->resizeFile($f, $x, $y, $empty_ok);
 		header("Content-type: $mimetype");
 		echo $data;
 	}
