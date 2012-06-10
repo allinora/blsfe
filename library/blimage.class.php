@@ -9,11 +9,22 @@ class BLImage {
 		$this->cache=$cache;
 	}
 	
-	public function resizeFile($f, $x=0, $y=0){
+	public function resizeFile($f, $x=0, $y=0, $empty_ok=0){
 		$x=round($x);
 		$y=round($y);
 		$caching=0;
 		
+		if (!file_exists($f) && $empty_ok){
+			if (in_array(substr($_SERVER["REQUEST_URI"], -3), array("png","jpg","gif"))){
+				$backup_file=BLSFE_ROOT . "/assets/images/1x1." . substr($_SERVER["REQUEST_URI"], -3);
+			} else {
+				$backup_file=BLSFE_ROOT . "/assets/images/1x1.png";
+			}
+			if (file_exists($backup_file)){
+				$data=file_get_contents($backup_file);
+				return  $data;
+			}
+		}
 		
 		
 		if (defined("CMS_CACHE_DIRECTORY")){
