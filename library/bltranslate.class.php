@@ -142,7 +142,11 @@ class BLTranslate extends BLTransport{
 	}
 	
 	public function getLanguages(){
-		$languages = explode("|", LANGUAGES);
+		if (defined('TRANSLATION_LANGUAGES')){
+			$languages = explode("|", TRANSLATION_LANGUAGES);
+		} else {
+			$languages = explode("|", LANGUAGES);
+		}
 		return $languages;
 	}
 	
