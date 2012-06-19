@@ -33,6 +33,23 @@ class BLTransport{
 		$context["env"]["REQUEST_METHOD"]="GET";
 		$context["env"]["REQUEST_URI"]=$service;
 		$context["env"]["REMOTE_ADDR"]=$_SERVER["REMOTE_ADDR"];
+
+		if ($_SESSION["user"]){
+			$context["env"]["HTTP_X_CALLER_UNAME"]="U:" . $_SESSION["user"]["email"];
+			$context["env"]["HTTP_X_CALLER_UID"]="U:" . $_SESSION["user"]["user_id"];
+		} else {
+			if ($_SESSION["companyData"]){
+				$context["env"]["HTTP_X_CALLER_UNAME"]="C:" . $_SESSION["companyData"]["email"];
+				$context["env"]["HTTP_X_CALLER_UID"]="C:" . $_SESSION["companyData"]["id"];
+			}
+			
+		}
+		
+		//print "<pre>" . print_r($_SESSION, true) . "</pre>";exit;
+
+
+
+
 		$context["_GET"]=$request_params;
 		$app = new BLS_Router();
 		$res=$app($context);
@@ -54,6 +71,17 @@ class BLTransport{
 		if (defined("BLSERVER_SHARED_KEY")){
 	        $params["headers"]["X-SHARED-KEY"]=BLSERVER_SHARED_KEY;
 		}
+		if ($_SESSION["user"]){
+	        $params["headers"]["X-CALLER-UNAME"]="U:" . $_SESSION["user"]["email"];
+	        $params["headers"]["X-CALLER-UID"]="U:" . $_SESSION["user"]["user_id"];
+		} else {
+			if ($_SESSION["companyData"]){ // Extranet
+		        $params["headers"]["X-CALLER-UNAME"]="C:" . $_SESSION["companyData"]["email"];
+		        $params["headers"]["X-CALLER-UID"]="C:" . $_SESSION["companyData"]["id"];
+			}
+		}
+		
+		
 		//print "<p>Calling $action_url</p><pre>" . print_r($request_params, true) . "</pre>";
    
        if ($method=="POST") {
