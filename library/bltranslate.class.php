@@ -110,11 +110,12 @@ class BLTranslate extends BLTransport{
 			$data.="\n<input type='hidden' name='op' value='edit'>";
 			$data.="\n<input type='hidden' name='id' value='" . $r["id"]. "'>";
 			$data.="\n<table class='potable'>";
-			$data.="\n<tr class='odd' ><th>Project</th><td>"  . $r["project"] . "</td></tr>";
-			$data.="\n<tr class='even' ><th>Source</th><td>"  . htmlentities($r["msgid"]) . "</td></tr>";
+			$data.="\n<tr class='odd' ><th>Project</th><td><i>"  . $r["project"] . "</i></td></tr>";
+			$data.="\n<tr class='even' ><th>Source</th><td><b>"  . htmlentities($r["msgid"]) . "</b></td></tr>";
 			$class="odd";
 			foreach($languages as $l){
-				$data.="\n<tr class='$class'><th>Translation :: $l</th><td>"  . htmlentities($r["translations"][$l]["msgstr"]) . "</td></tr>";
+				$trclass=($r["translations"][$l]["msgstr"])?'filled':'empty';
+				$data.="\n<tr class='$class'><th>Translation :: $l</th><td class='$trclass'>"  . htmlentities($r["translations"][$l]["msgstr"]) . "</td></tr>";
 				if ($class=="odd"){
 					$class="even";
 				} else {
