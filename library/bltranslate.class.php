@@ -68,15 +68,12 @@ class BLTranslate extends BLTransport{
 	}
 	
 	private function updatePO($id, $po){
-		print "Updating $id";
+		//print "Updating $id";
 		$_params["id"]=$id;
 		$_params["po"]=$po;
-		print "<pre>" . print_r($_params, true) . "</pre>";
-		
+		//print "<pre>" . print_r($_params, true) . "</pre>";
 	    $result=$this->callBusinessLogicService("/sys/po/string/updateTranslations", $_params);
-		print "<pre>" . print_r($result, true) . "</pre>";
-		
-		
+		//print "<pre>" . print_r($result, true) . "</pre>";
 	}
 	
 	private function editForm($id){
@@ -113,15 +110,21 @@ class BLTranslate extends BLTransport{
 			$data.="\n<input type='hidden' name='op' value='edit'>";
 			$data.="\n<input type='hidden' name='id' value='" . $r["id"]. "'>";
 			$data.="\n<table class='potable'>";
-			$data.="\n<tr><th>Project</th><td>"  . $r["project"] . "</td></tr>";
-			$data.="\n<tr><th>Source</th><td>"  . htmlentities($r["msgid"]) . "</td></tr>";
+			$data.="\n<tr class='odd' ><th>Project</th><td>"  . $r["project"] . "</td></tr>";
+			$data.="\n<tr class='even' ><th>Source</th><td>"  . htmlentities($r["msgid"]) . "</td></tr>";
+			$class="odd";
 			foreach($languages as $l){
-				$data.="\n<tr><th>$l</th><td>"  . htmlentities($r["translations"][$l]["msgstr"]) . "</td></tr>";
+				$data.="\n<tr class='$class'><th>$l</th><td>"  . htmlentities($r["translations"][$l]["msgstr"]) . "</td></tr>";
+				if ($class=="odd"){
+					$class="even";
+				} else {
+					$class="odd";
+				}
 			}
+			$data.="\n<tr><td colspan=2 align=right><div align=right><input type='submit' class='potable-edit'  value='edit this string' onclick='this.form.submit()'></div></td></tr>";
 			$data.="\n</table>";
-			$data.="\n<input type='submit' value='edit' onclick='this.form.submit()'>";
 			$data.="\n</form>";
-			$data.="<hr />";
+			$data.="<hr class='potable-spacer'/>";
 		}
 		$data.="</div>";
 		// print "<pre>" . print_r($result, true) . "</pre>";
