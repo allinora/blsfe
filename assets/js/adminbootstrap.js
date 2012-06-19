@@ -26,5 +26,8 @@ $(function() {
 		'dateFormat' : 'yy-mm-dd',
 		'timeFormat': 'hh:mm:ss'
 	});
+	$('#logout').click(function(){
+		self.location="/core/admin/?op=logout";
+	});
 
 });
