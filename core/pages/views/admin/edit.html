@@ -49,15 +49,15 @@ jQuery(document).ready(function() {
 			<td><{$l.ts}></td>
 		</tr>
 		<tr class="odd">
-			<td style="width:130px">Title</td>
+			<td style="width:130px">Title * </td>
 			<td><input type="text" name="title" class="page-title" size=80 value="<{$l.title}>"></td>
 		</tr> 
 		<tr class="even">
-			<td>Meta Description</td>
+			<td>Meta Description * </td>
 			<td><textarea name="description"  class="page-description" cols=50 rows=5><{$l.description}></textarea></td>
 		</tr>
 		<tr class="odd">
-			<td colspan=2>Data
+			<td colspan=2>Data *
 				<br>
 			<textarea name="data" id="data-<{$l.lang}>" class="ckeditor" cols=50 rows=30><{$l.data}></textarea></td>
 		</tr>
@@ -69,6 +69,7 @@ jQuery(document).ready(function() {
 </div>
 <{/foreach}>
 
+<b>* : Required</b>
 
 
 
