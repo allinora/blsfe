@@ -114,7 +114,7 @@ class BLTranslate extends BLTransport{
 			$data.="\n<tr class='even' ><th>Source</th><td>"  . htmlentities($r["msgid"]) . "</td></tr>";
 			$class="odd";
 			foreach($languages as $l){
-				$data.="\n<tr class='$class'><th>$l</th><td>"  . htmlentities($r["translations"][$l]["msgstr"]) . "</td></tr>";
+				$data.="\n<tr class='$class'><th>Translation :: $l</th><td>"  . htmlentities($r["translations"][$l]["msgstr"]) . "</td></tr>";
 				if ($class=="odd"){
 					$class="even";
 				} else {
