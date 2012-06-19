@@ -16,7 +16,7 @@ $(function() {
 	$("a.fancybox").fancybox();
 	
 	$('#newImageCategory').click(function(){
-		if(name=prompt("Name of the Category", "")){
+		if(name=prompt("<po>Name of the Folder</po>", "")){
 			_url="/core/images/<{$imageManagerRole}>/addfolder/"+escape(name) +"?<{$smarty.server.QUERY_STRING}>";
 			self.location=_url;
 		}
