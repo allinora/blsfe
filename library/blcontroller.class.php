@@ -161,6 +161,11 @@ class BLController {
 				$helper=$f["helper"];
 				$form->replaceTray($id, $this->helper->$helper($res[$id]));
 			}
+			
+			if ($f["function"]){
+				$_f=$f["function"];
+				$form->replaceTray($id, $_f());
+			}
 			if ($f["tray_class"]){
 				$form->setTrayClass($id, $f["tray_class"]);
 			}
