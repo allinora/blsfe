@@ -20,3 +20,9 @@ deploydreamhost:
 
 css:
 	lessc assets/js/jquery/cowrousel/cowrousel.less.css assets/js/jquery/cowrousel/cowrousel.css
+
+deployws:
+	rsync -av -e ssh . root@arj-master.worldsoft.ru:/opt/allinora/blsfe
+
+deploywsgenesis:
+	rsync -av -e ssh . root@admin.genesis.worldsoft.ch:/opt/allinora/blsfe
