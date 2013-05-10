@@ -11,7 +11,7 @@ class Template {
 	
 	
 	// Combine factory + Singleton
-	function factory(){
+	public static function factory(){
 		if (!defined("TEMPLATE_BACKEND")){
 			die("TEMPLATE backend is not defined");
 		}
