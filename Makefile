@@ -28,4 +28,4 @@ deploywsgenesis:
 	rsync -av -e ssh . root@admin.genesis.worldsoft.ch:/opt/allinora/blsfe
 
 dist:
-	rsync -av -e ssh . aghaffar@192.168.1.10:www/blefe/
+	rsync -av -e ssh . aghaffar@192.168.1.10:www/blsfe/
