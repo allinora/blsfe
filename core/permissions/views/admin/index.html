@@ -1,0 +1,24 @@
+<table class="tablesorter">
+<thead>
+<tr>
+	<th>ID</th>
+	<th>Package</th>
+	<th>name</th>
+	<th>Description</th>
+	<th><a href='/<{$lang}>/core/permissions/admin/add'>Add</a></th>
+	
+</tr>
+</thead>
+	
+<{foreach from=$aData item=row}>
+<tr>
+	<td><{$row.id}></td>
+	<td><{$row.package}></td>
+	<td><{$row.name}></td>
+	<td><{$row.description}></td>
+	<td><a href="/<{$lang}>/core/permissions/admin/edit/<{$row.id}>">Edit</a></td>
+</tr>
+
+<{/foreach}>
+
+</table>
