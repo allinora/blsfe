@@ -79,10 +79,11 @@ class BLTranslate extends BLTransport{
 	private function editForm($id){
 		$r=$this->getStringWithTranslations($id);
 		//print "<pre>xx" . print_r($r, true) . "</pre>";
-		$data.="\n<form>";
+		
+		$data.="\n<br><br><form>";
 		$data.="\n<input type='hidden' name='op' value='update'>";
 		$data.="\n<input type='hidden' name='id' value='" . $id. "'>";
-		$data.="\n<table border=1>";
+		$data.="\n<table class='potable' style='width:800px'>";
 		$data.="\n<tr><th>Source</th><td>"  . htmlentities($r["msgid"]) . "</td></tr>";
 		foreach($this->getLanguages() as $l){
 			$data.="\n<tr><th>$l</th><td><textarea class='po_textarea' name='po[$l]'>"  . $r["translations"][$l]["msgstr"] . "</textarea></td></tr>";
@@ -172,7 +173,7 @@ class BLTranslate extends BLTransport{
 	private function projectList($options, $selected){
 		$data="<select id='project' name='project'>";
 		$data.="<option value=''>Any</option>";
-		foreach($options as $o){
+		foreach((array)$options as $o){
 			$data.="<option value='$o'";
 			if ($o==$selected){
 				$data.=" selected ";
