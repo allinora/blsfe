@@ -107,6 +107,7 @@ class BLTransport{
 
 
    public function getURL($url, $params=array()){
+		//print "Calling $url<br> with <br><pre>" . print_r($params, true) . "</pre>";
        //syslog(LOG_DEBUG, "getURL: $url");
        require_once("HTTP/Request.php");
        $req =new HTTP_Request($url);
