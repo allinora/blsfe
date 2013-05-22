@@ -23,7 +23,7 @@ class Template_Smarty extends Template {
 	private function coreinit($controller, $action){
 		$this->_controller = $controller;
 		$this->_action = $action;
-		$path_tokens=split("_", strtolower($controller));
+		$path_tokens=explode("_", strtolower($controller));
 		array_shift($path_tokens); // remove the core
 		$module=array_shift($path_tokens); // get the module name
 		$c=array_shift($path_tokens); // get the controller name
