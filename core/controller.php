@@ -23,8 +23,12 @@ class Core_Controller extends BLController {
 			$this->set("languages", $this->backend_languages);
 		}
 		
-		$this->set("coremodules", $default["modules"]["sys"]);
-		$this->set("appmodules", $default["modules"]["app"]);
+		if(isset($default["modules"]["sys"])){
+			$this->set("coremodules", $default["modules"]["sys"]);
+		}
+		if (isset($default["modules"]["app"])){
+			$this->set("appmodules", $default["modules"]["app"]);
+		}
 		
 		
 		$this->addPackage("core");
