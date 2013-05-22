@@ -72,8 +72,12 @@ class BLTransport{
 	        $params["headers"]["X-SHARED-KEY"]=BLSERVER_SHARED_KEY;
 		}
 		if ($_SESSION["user"]){
-	        $params["headers"]["X-CALLER-UNAME"]="U:" . $_SESSION["user"]["email"];
-	        $params["headers"]["X-CALLER-UID"]="U:" . $_SESSION["user"]["user_id"];
+			if (isset($_SESSION["user"]["email"])){
+		        $params["headers"]["X-CALLER-UNAME"]="U:" . $_SESSION["user"]["email"];
+			}
+			if(isset($_SESSION["user"]["user_id"])){
+		        $params["headers"]["X-CALLER-UID"]="U:" . $_SESSION["user"]["user_id"];
+			}
 		} else {
 			if ($_SESSION["companyData"]){ // Extranet
 		        $params["headers"]["X-CALLER-UNAME"]="C:" . $_SESSION["companyData"]["email"];
@@ -121,7 +125,7 @@ class BLTransport{
            }
        }
 
-       if (is_array($params["headers"])) {
+       if (isset($params["headers"]) && is_array($params["headers"])) {
            foreach ($params["headers"] as $var=>$val){
                $req->addHeader($var, $val);
            }
