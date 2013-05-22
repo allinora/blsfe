@@ -167,8 +167,10 @@ function coreHook(&$urlArray){
 	$module = $urlArray[0];
 	array_shift($urlArray);
 
-	$_controller = $urlArray[0]; // controller within module
-	array_shift($urlArray);
+	if (is_array($urlArray) && count($urlArray)){
+		$_controller = $urlArray[0]; // controller within module
+		array_shift($urlArray);
+	}
 	
 
 	// Load the core controller class
@@ -176,9 +178,11 @@ function coreHook(&$urlArray){
 	include_once(BLSFE_ROOT . "/core/admin.php");
 	
 	//print "controller is $controller";
-	$module_controller_file=BLSFE_ROOT . DS . 'core' . DS .  strtolower($module) . DS . "controllers" . DS .  strtolower($_controller) .'.php';
+	if(isset($_controller)){
+		$module_controller_file=BLSFE_ROOT . DS . 'core' . DS .  strtolower($module) . DS . "controllers" . DS .  strtolower($_controller) .'.php';
+	}
 	$module_controller_index=BLSFE_ROOT . DS . 'core' . DS .  strtolower($module) . DS . "controllers" . DS .'index.php';
-	if (file_exists($module_controller_file)){
+	if (isset($module_controller_file) && file_exists($module_controller_file)){
 		include_once($module_controller_file);
 	} else {
 		// Try the catchall/index controller
@@ -188,7 +192,6 @@ function coreHook(&$urlArray){
 			die("Module controller $module_controller_file does not exists<br>The index controller $module_controller_index also does not exists");
 			
 		}
-		
 	}
 	
 	// Create the controller class such as Modules_Gallery_List
