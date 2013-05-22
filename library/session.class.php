@@ -5,7 +5,8 @@ class Session {
 	// Combine factory + Singleton
 	public static function factory(){
 		if (!defined("SESSION_BACKEND")){
-			die("Sessions backend is not defined");
+			// Let the system handle the sessions
+			return;
 		}
 		
         if (isset(self::$instance)) {
