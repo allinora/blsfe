@@ -304,17 +304,21 @@ function _runControllerAction($controller, $action, $queryString){
 
 function __autoload($className) {
 	// echo "autoload: $className<br/>";
-	if (file_exists(BLSFE_ROOT . DS . 'library' . DS . strtolower($className) . '.class.php')) {
-		require_once(BLSFE_ROOT . DS . 'library' . DS . strtolower($className) . '.class.php');
-	} else if (file_exists(ROOT . DS . 'application' . DS . 'controllers' . DS . strtolower($className) . '.php')) {
-		require_once(ROOT . DS . 'application' . DS . 'controllers' . DS . strtolower($className) . '.php');
-	} else if (file_exists(ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.php')) {
-		require_once(ROOT . DS . 'application' . DS . 'models' . DS . strtolower($className) . '.php');
-	} else if (file_exists(ROOT . DS . 'library'  . DS . strtolower($className) . '.php')) {
-		require_once(ROOT . DS . 'library' . DS . strtolower($className) . '.php');
-	} else {
-		/* Error Generation Code Here */
-		//echo("<p><font color=red>Could not autoload class file for \"$className\".</font></p>\n");
+	$classFiles=array();
+	$classFiles[]=BLSFE_ROOT . DS . 'library' . DS . strtolower($className) . '.class.php';
+	$classFiles[]=ROOT . DS . 'application' . DS . 'controllers' . DS . strtolower($className) . '.php';
+	$classFiles[]=ROOT . DS . 'library'  . DS . strtolower($className) . '.php';
+
+	$file_loaded=false;
+	foreach($classFiles as $file){
+		//print "Trying to load $file<br>";
+		if(file_exists($file)){
+			require_once($file);
+			return;
+		}
+	}
+	if (!$file_loaded){
+		echo("<p><font color=red>Could not autoload class file for \"$className\" </font></p>\n");
 		throw new AutoloadClassException($className);
 	}
 }
