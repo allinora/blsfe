@@ -8,7 +8,7 @@ class Admin_Controller extends Core_Controller {
 		if (!$_SESSION["user"]){
 			$this->redirect("core", "login");
 		}
-		if (!$_SESSION["user"]["admin"]==1){
+		if (!$_SESSION["user"]["active"]==1){
 			die("ACCESS DENIED: You do not have admin access");
 		}
 		if ($_REQUEST["op"]=="logout"){
