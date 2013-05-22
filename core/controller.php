@@ -16,10 +16,12 @@ class Core_Controller extends BLController {
 		$language_model=new BLModel("sys/language", "id");
 		$_languages=$language_model->getall(1);
 		$this->backend_languages=array();
-		foreach($_languages as $l){
-			$this->backend_languages[$l["lang"]]=$l;	
+		if (is_array($_languages)){
+			foreach($_languages as $l){
+				$this->backend_languages[$l["lang"]]=$l;	
+			}
+			$this->set("languages", $this->backend_languages);
 		}
-		$this->set("languages", $this->backend_languages);
 		
 		$this->set("coremodules", $default["modules"]["sys"]);
 		$this->set("appmodules", $default["modules"]["app"]);
