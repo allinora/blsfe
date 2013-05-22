@@ -1,0 +1,17 @@
+<table class="tablesorter">
+<thead>
+<tr>
+	<th>Code</th>
+	<th>Name</th>
+</tr>
+</thead>
+	
+<{foreach from=$aData item=language}>
+<tr>
+	<td><{$language.lang}></td>
+	<td><{$language.name}></td>
+</tr>
+
+<{/foreach}>
+
+</table>
