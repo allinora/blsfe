@@ -11,7 +11,7 @@ class Admin_Controller extends Core_Controller {
 		if (!$_SESSION["user"]["active"]==1){
 			die("ACCESS DENIED: You do not have admin access");
 		}
-		if ($_REQUEST["op"]=="logout"){
+		if (isset($_REQUEST["op"]) && $_REQUEST["op"]=="logout"){
 			$this->_logout();
 		}
 	}
