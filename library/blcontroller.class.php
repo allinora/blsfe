@@ -176,7 +176,7 @@ class BLController {
 	}
 	function addPackage($name){
 		global $packagesConfig;
-		if ($this->packages[$name]){
+		if (isset($this->packages[$name]) && $this->packages[$name]){
 			return;
 		}
 		if (!is_array($packagesConfig)){
