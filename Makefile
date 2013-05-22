@@ -12,6 +12,12 @@ push:
 	git push origin master
 	git push assembla master
 
+deploy: deployshowcase
+	@echo all done
+
+deployshowcase:
+	rsync -av --exclude=.git  -e ssh . root@showcase.allinora.com:/opt/allinora/blsfe/
+
 deploydev:
 	ssh root@tipi.lilarox.com make -C /opt/git/blsfe pull
 
