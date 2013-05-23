@@ -20,7 +20,7 @@ $packagesConfig["jquery-ui-timepicker"]=array(
 );
 
 $packagesConfig["lesscss"]=array(
-	'js' => array("/fwassets/js/lesscss/less-1.1.5.min.js")
+	'js' => array("/fwassets/js/lesscss/less-1.3.3.min.js")
 );
 
 $packagesConfig["core"]=array(
