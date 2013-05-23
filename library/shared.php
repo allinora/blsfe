@@ -64,20 +64,6 @@ function unregisterGlobals() {
     }
 }
 
-/** Secondary Call Function **/
-function performAction($controller,$action,$queryString = null,$render = 0) {
-	
-	$controllerName = ucfirst($controller).'Controller';
-	$actionName=$action . "Action"; // This is done to avoid clash with reserved function names like list();
-	$dispatch = new $controllerName($controller,$action);
-	$dispatch->render = $render;
-	$dispatch->$actionName($queryString);
-	
-	if ($dispatch->render >0) {
-			$dispatch->display();
-	}
-	
-}
 
 /** Routing **/
 
