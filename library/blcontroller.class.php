@@ -43,6 +43,9 @@ class BLController {
 	}
 
 	function setWrapperDir($x){
+		if (!is_dir($x)){
+			$x=ROOT . DS . "application" . DS . "views" . DS . $x;
+		}
 		$this->_template->setWrapperDir($x);
 	}
 	
@@ -63,11 +66,39 @@ class BLController {
 		//print $numargs;
 		if ($numargs){
 			if ($numargs>1){
-				performAction(array_shift($arguments), array_shift($arguments), array_shift($arguments), 1);
+				$this->performAction(array_shift($arguments), array_shift($arguments), array_shift($arguments), 1);
 			} else {
-				performAction($this->_controller, array_shift($arguments),array_shift($arguments),10);
+				$this->performAction($this->_controller, array_shift($arguments),array_shift($arguments),10);
 			}
 		}
+	}
+	/** Secondary Call Function **/
+	function performAction($controller,$action,$queryString = null,$render = 0) {
+		$controllerFile=ROOT . "/application/controllers/$controller" . "controller.php";
+		//print "Trying to load $controllerFile<br>";
+		if (file_exists($controllerFile)){
+			//print "File exists<br>";
+			include_once($controllerFile);
+		} else {
+			throw new Exception("Controller file: $controllerFile does not exists");
+		}
+		$controllerName = ucfirst($controller).'Controller';
+		$actionName=$action . "Action"; // This is done to avoid clash with reserved function names like list();
+		if (class_exists($controllerName)){
+			
+		} else {
+			throw new Exception("ControllerClass: $controllerName does not exists");
+		}
+
+		//print "Trying to load $controllerName<br>"; 
+		$dispatch = new $controllerName($controller,$action);
+		$dispatch->render = $render;
+		$dispatch->$actionName($queryString);
+
+		if ($dispatch->render >0) {
+				$dispatch->display();
+		}
+
 	}
 	
 	function redirect($controller, $action=null, $params=array()){
@@ -111,7 +142,9 @@ class BLController {
 	}
 	
 	function display () {
-		$this->_template->render($this->doNotRenderHeader);
+		if ($this->render) {
+			$this->_template->render($this->doNotRenderHeader);
+		}
 	}
 	function getContents() {
 		return $this->_template->getContents($this->doNotRenderHeader);
@@ -195,7 +228,104 @@ class BLController {
 			$this->packages[$name]=$packagesConfig[$name];
 		}
 	}
+	function apiCall($endpoint, $params=array()){
+		if(!defined('API_BASE')){
+			throw new Exception("API_BASE is not defined. Cannot call");
+		}
+		// Parse the url so that we can check all components
+		$base_url_components = parse_url(API_BASE);
 
+		// Concat the base path with the endpoint
+		$path=$base_url_components["path"] . '/' . $endpoint;
+
+		// Remove multiple slashes from the path which now includes the endpoint
+		$path=preg_replace("@/{2,}@", '/', $path);
+		
+		// Rebuild the clean url
+		$url=$base_url_components['scheme'] . '://' . $base_url_components['host'] . ':' . $base_url_components['port'] . $path;
+
+		// print "Calling $url<br>";
+		
+		// Always add token if it exists in the session
+		if ($this->getSession("token")){
+			$params["token"] = $this->getSession("token");
+		}
+		if (isset($params['method']) && $params['method'] == 'POST'){
+			return unserialize(trim($this->http_post_request($url, $params)));
+		} else {
+			return unserialize(trim($this->http_get_request($url, $params)));
+		}
+	}
+
+
+	function http_post_request($url,$params,$http_params=array()) {
+		return $this->http_request($url,'POST', $params, $http_params);
+	}
+
+	function http_get_request($url,$params,$http_params=array()) {
+		return $this->http_request($url,'GET', $params, $http_params);
+	}
+	
+
+	function http_request($url, $method, $params, $http_params=array()) {
+
+		// Http stream options
+		// See http://www.php.net/manual/en/context.http.php
+	    $options = array( 
+	          'http' => array( 
+	            'method' => $method, 
+	            'header' => "Accept-language: en\r\n"
+              ) 
+        ); 
+
+		if (isset($http_params["timeout"])){
+			// This can be used to set a long timeout when called from the CLI based daemon
+			$options["http"]["timeout"] = $http_params["timeout"];
+		}
+
+		$url.='?';
+		foreach($params as $var=>$val){
+			$url.=$var . '=' . urlencode($val) . '&';
+		}
+	    $context = stream_context_create($options); 
+		//print "<pre>" . print_r($url, true) . "</pre>";
+	    $response = file_get_contents($url, false, $context);
+		if (!$response) {
+			return false;
+		}
+		
+		$result = trim($response);
+		return $result;
+	}
+
+	function getSession($key=null){
+		if (!$key){
+			if (isset($_SESSION)){
+				return $_SESSION;
+			}
+		}
+		
+		if (isset($_SESSION)){
+			if(isset($_SESSION[$key])){
+				return $_SESSION[$key];
+			}
+		}
+	}
+	
+	function setSession($key, $val){
+		$_SESSION[$key]=$val;
+	}
+	
+	function clearSession(){
+		(unset)$_SESSION["token"];
+		$_SESSION=array();
+	}
+	
+	function getParam($x){
+		if(isset($_REQUEST[$x])){
+			return $_REQUEST[$x];
+		}
+	}
 	
 		
 }
