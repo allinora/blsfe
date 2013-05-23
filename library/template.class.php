@@ -13,7 +13,7 @@ class Template {
 	// Combine factory + Singleton
 	public static function factory(){
 		if (!defined("TEMPLATE_BACKEND")){
-			die("TEMPLATE backend is not defined");
+			define('TEMPLATE_BACKEND', 'Smarty'); // Default use smarty
 		}
 		
         if (isset(self::$instance)) {
