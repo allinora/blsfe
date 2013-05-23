@@ -253,7 +253,12 @@ function callHook() {
 		}
 		$queryString = $urlArray;
 	}
-	
+	if (!$controller){
+		$controller="index";
+	}
+	if (!$action){
+		$action="index";
+	}
 	$controllerName = ucfirst($controller).'Controller';
 	//print "Controller: $controllerName $action";exit;
 	
