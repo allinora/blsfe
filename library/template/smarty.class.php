@@ -55,6 +55,7 @@ class Template_Smarty extends Template {
 		//automatically load the right template from the app views folder
 		$ctl = ($controller == null || $controller === "") ? "" : ($this->_controller);
 		$_template_file=ROOT . DS . 'application' . DS . 'views' . DS . $ctl . DS . $this->_action . '.html';
+		//print "trying to load $_template_file<br>";
 		if (file_exists($_template_file)){
 			$this->templateFile = $_template_file;
 		} else {
@@ -134,6 +135,10 @@ class Template_Smarty extends Template {
 			$this->smarty->compile_check = false;
 
 		}		
+	}
+	
+	function setTemplateFile($file){
+		$this->templateFile=SMARTY_TEMPLATE_DIR . DS . $file;
 	}
 	
 	public function set ($key, $value) {

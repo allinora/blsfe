@@ -50,6 +50,10 @@ class Template {
 	function setWrapperDir($x){
 		$this->_wrapperDir=$x;
 	}
+	
+	function setTemplateFile($file){
+	}
+	
 	function __call($name, $params){
 		// Make a warning.
 		print "Please do not use \$this->_template->function any more. Use \$this->helper->fuction instead<br><hr>";

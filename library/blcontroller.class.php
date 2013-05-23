@@ -5,6 +5,7 @@ include_once(dirname(__FILE__) . "/blmodel.class.php");
 include_once(dirname(__FILE__) . "/blform.class.php");
 include_once(dirname(__FILE__) . "/blhelper.class.php");
 include_once(dirname(__FILE__) . "/template.class.php");
+include_once(dirname(__FILE__) . "/cache.class.php");
 class BLController {
 	
 	protected $_controller;
@@ -24,6 +25,7 @@ class BLController {
 		$this->doNotRenderHeader = 0;
 		$this->render = 1;
 		
+		$this->cache   = Cache::factory();
 		$templateClass= "Template";
 		$this->_template =  Template::factory();
 		$this->_template->init($controller,$action);
@@ -38,6 +40,9 @@ class BLController {
 
 	}
 	
+	function setTemplateFile($file){
+		$this->_template->setTemplateFile($file);
+	}
 	function setWrapper($x){
 		$this->_template->setWrapper($x);
 	}
