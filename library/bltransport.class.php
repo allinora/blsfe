@@ -89,9 +89,9 @@ class BLTransport{
 		//print "<p>Calling $action_url</p><pre>" . print_r($request_params, true) . "</pre>";
    
        if ($method=="POST") {
-           $response=$this->postURL($action_url, $params);
+           $response=$this->http_post_request($action_url, $params);
        } else {
-           $response=$this->getURL($action_url, $params);
+           $response=$this->http_get_request($action_url, $params);
        }
    
        if (isset($params["no_unserialize"]) && $params["no_unserialize"]) {
@@ -109,8 +109,49 @@ class BLTransport{
        return $aRet;
    }
 
+	function http_post_request($url, $params, $http_params = array()) {
+		return $this->http_request($url,'POST', $params, $http_params);
+	}
 
-   public function getURL($url, $params=array()){
+	function http_get_request($url, $params, $http_params = array()) {
+		return $this->http_request($url,'GET', $params, $http_params);
+	}
+	
+
+	function http_request($url, $method, $params, $http_params=array()) {
+
+		// Http stream options
+		// See http://www.php.net/manual/en/context.http.php
+	    $options = array( 
+	          'http' => array( 
+	            'method' => $method, 
+	            'header' => "Accept-language: en\r\n"
+             ) 
+       ); 
+
+		if (isset($http_params["timeout"])){
+			// This can be used to set a long timeout when called from the CLI based daemon
+			$options["http"]["timeout"] = $http_params["timeout"];
+		}
+
+		$url.='?';
+		foreach($params as $var => $val){
+			$url .= $var . '=' . urlencode($val) . '&';
+		}
+	    $context = stream_context_create($options); 
+	    $response = file_get_contents($url, false, $context);
+		if (!$response) {
+			return false;
+		}
+		
+		$result = trim($response);
+		return $result;
+	}
+
+
+   
+	/*
+	public function getURL($url, $params=array()){
 		//print "Calling $url<br> with <br><pre>" . print_r($params, true) . "</pre>";
        //syslog(LOG_DEBUG, "getURL: $url");
        require_once("HTTP/Request.php");
@@ -171,5 +212,6 @@ class BLTransport{
                return $req->getResponseBody();
            }
    }
+	*/
 
 }
