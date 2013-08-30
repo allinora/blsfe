@@ -113,10 +113,28 @@ class BLTransport{
 
 		// Http stream options
 		// See http://www.php.net/manual/en/context.http.php
+		$headers = array();
+		$headers['Accept-language'] = 'en';
+		
+		if (isset($params["headers"])) {
+			foreach($params["headers"] as $key => $val){
+				$headers[$key] = $val;
+			}
+		}
+		
+		$header_str = "";
+		
+		foreach($headers as $key => $val){
+			$header_str .= $key . ": " . $val . "\r\n";
+		}
+		
+		
+		
+		
 	    $options = array( 
 	          'http' => array( 
 	            'method' => $method, 
-	            'header' => "Accept-language: en\r\n"
+	            'header' => $header_str
              ) 
        ); 
 
