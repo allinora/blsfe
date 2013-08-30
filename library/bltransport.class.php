@@ -6,108 +6,99 @@ class BLTransport{
 	function __construct(){
 	}
 
-    protected function callBusinessLogicService($service, $request_params=array(), $method="GET", $params=array()){
+	protected function callBusinessLogicService($service, $request_params = array(), $method = "GET", $params = array()){
 		if (defined("BLSEBE_TRANSPORT")){
-			if (BLSEBE_TRANSPORT=="local"){
+			if (BLSEBE_TRANSPORT == "local"){
 				return $this->callBusinessLogicServiceLocal($service, $request_params, $method, $params);
 			} else {
 				return $this->callBusinessLogicServiceHttp($service, $request_params, $method, $params);
 			}
-			
 		} else {
 			return $this->callBusinessLogicServiceHttp($service, $request_params, $method, $params);
 		}
-   }
-   	private function callBusinessLogicServiceLocal($service, $request_params=array(), $method="GET", $params=array()){
-        global $_SESSION;
+	}
+	
+	private function callBusinessLogicServiceLocal($service, $request_params=array(), $method="GET", $params=array()){
+		global $_SESSION;
 		if (isset($_SESSION["lang"])){
-        	$request_params["lang"]=$_SESSION["lang"]; // Multilanguage stuff if available
+			$request_params["lang"] = $_SESSION["lang"]; // Multilanguage stuff if available
 		}
-   
-		$_ENV["PROJECT_HOME"]=BLSBE_PROJECT_HOME;
-		$_blsbe_bootstrap_file=BLSBE_BOOTSTRAP_FILE;
+
+		$_ENV["PROJECT_HOME"] = BLSBE_PROJECT_HOME;
+		$_blsbe_bootstrap_file = BLSBE_BOOTSTRAP_FILE;
 		if (file_exists($_blsbe_bootstrap_file)){
 			require_once($_blsbe_bootstrap_file);
 		}
-		$context=array();
-		$context["env"]["REQUEST_METHOD"]="GET";
-		$context["env"]["REQUEST_URI"]=$service;
-		$context["env"]["REMOTE_ADDR"]=$_SERVER["REMOTE_ADDR"];
+		$context = array();
+		$context["env"]["REQUEST_METHOD"] = "GET";
+		$context["env"]["REQUEST_URI"] = $service;
+		$context["env"]["REMOTE_ADDR"] = $_SERVER["REMOTE_ADDR"];
 
 		if ($_SESSION["user"]){
-			$context["env"]["HTTP_X_CALLER_UNAME"]="U:" . $_SESSION["user"]["email"];
-			$context["env"]["HTTP_X_CALLER_UID"]="U:" . $_SESSION["user"]["user_id"];
+			$context["env"]["HTTP_X_CALLER_UNAME"] = "U:" . $_SESSION["user"]["email"];
+			$context["env"]["HTTP_X_CALLER_UID"] = "U:" . $_SESSION["user"]["user_id"];
 		} else {
 			if ($_SESSION["companyData"]){
-				$context["env"]["HTTP_X_CALLER_UNAME"]="C:" . $_SESSION["companyData"]["email"];
-				$context["env"]["HTTP_X_CALLER_UID"]="C:" . $_SESSION["companyData"]["id"];
+				$context["env"]["HTTP_X_CALLER_UNAME"] = "C:" . $_SESSION["companyData"]["email"];
+				$context["env"]["HTTP_X_CALLER_UID"] = "C:" . $_SESSION["companyData"]["id"];
 			}
-			
 		}
-		
-		//print "<pre>" . print_r($_SESSION, true) . "</pre>";exit;
 
-
-
-
-		$context["_GET"]=$request_params;
+		$context["_GET"] = $request_params;
 		$app = new BLS_Router();
-		$res=$app($context);
-		if ($res[0]==200){
+		$res = $app($context);
+		if ($res[0] == 200){
 			return unserialize($res[2]);
 		}
-		
 	}
 
-   private function callBusinessLogicServiceHttp($service, $request_params=array(), $method="GET", $params=array()){
-	//protected function callBusinessLogicService($service, $arguments){
-       global $_SESSION;
+	private function callBusinessLogicServiceHttp($service, $request_params=array(), $method="GET", $params=array()){
+		//protected function callBusinessLogicService($service, $arguments){
+		global $_SESSION;
 		if (isset($_SESSION["lang"])){
-       	$request_params["lang"]=$_SESSION["lang"]; // Multilanguage stuff if available
+			$request_params["lang"] = $_SESSION["lang"]; // Multilanguage stuff if available
 		}
-  
-       $action_url=BLSERVER_URL . "/" . $service;
-       $params["request_data"]=$request_params;
+
+		$action_url = BLSERVER_URL . "/" . $service;
+		$params["request_data"] = $request_params;
 		if (defined("BLSERVER_SHARED_KEY")){
-	        $params["headers"]["X-SHARED-KEY"]=BLSERVER_SHARED_KEY;
+			$params["headers"]["X-SHARED-KEY"] = BLSERVER_SHARED_KEY;
 		}
 		if ($_SESSION["user"]){
 			if (isset($_SESSION["user"]["email"])){
-		        $params["headers"]["X-CALLER-UNAME"]="U:" . $_SESSION["user"]["email"];
+				$params["headers"]["X-CALLER-UNAME"] = "U:" . $_SESSION["user"]["email"];
 			}
 			if(isset($_SESSION["user"]["user_id"])){
-		        $params["headers"]["X-CALLER-UID"]="U:" . $_SESSION["user"]["user_id"];
+				$params["headers"]["X-CALLER-UID"] = "U:" . $_SESSION["user"]["user_id"];
 			}
 		} else {
 			if ($_SESSION["companyData"]){ // Extranet
-		        $params["headers"]["X-CALLER-UNAME"]="C:" . $_SESSION["companyData"]["email"];
-		        $params["headers"]["X-CALLER-UID"]="C:" . $_SESSION["companyData"]["id"];
+				$params["headers"]["X-CALLER-UNAME"] = "C:" . $_SESSION["companyData"]["email"];
+				$params["headers"]["X-CALLER-UID"]   = "C:" . $_SESSION["companyData"]["id"];
 			}
 		}
-		
-		
 		//print "<p>Calling $action_url</p><pre>" . print_r($request_params, true) . "</pre>";
-   
-       if ($method=="POST") {
-           $response=$this->http_post_request($action_url, $params);
-       } else {
-           $response=$this->http_get_request($action_url, $params);
-       }
-   
-       if (isset($params["no_unserialize"]) && $params["no_unserialize"]) {
-           return $response;
-       }
-   
-       $response = trim($response);
-       $aRet=unserialize($response);
-       	 
-       if( ($aRet === false) && ($response !== serialize(false)) ) {
-       	syslog(LOG_DEBUG, "callBusinessLogicService: ERROR: Could not unserialize response: ".$response);
-       	return false;
-       }
 
-       return $aRet;
-   }
+		if ($method == 'POST') {
+			$response = $this->http_post_request($action_url, $params);
+		} else {
+			$response = $this->http_get_request($action_url, $params);
+		}
+
+		if (isset($params["no_unserialize"]) && $params["no_unserialize"]) {
+			return $response;
+		}
+
+		$response = trim($response);
+		$aRet = unserialize($response);
+
+		if( ($aRet === false) && ($response !== serialize(false)) ) {
+		syslog(LOG_DEBUG, "callBusinessLogicService: ERROR: Could not unserialize response: ".$response);
+		return false;
+		}
+
+		return $aRet;
+	}
 
 	function http_post_request($url, $params, $http_params = array()) {
 		return $this->http_request($url,'POST', $params, $http_params);
