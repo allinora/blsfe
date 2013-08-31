@@ -61,9 +61,11 @@ class BLTransport{
 
 		$action_url = BLSERVER_URL . "/" . $service;
 		$params["request_data"] = $request_params;
+
 		if (defined("BLSERVER_SHARED_KEY")){
 			$params["headers"]["X-SHARED-KEY"] = BLSERVER_SHARED_KEY;
 		}
+
 		if ($_SESSION["user"]){
 			if (isset($_SESSION["user"]["email"])){
 				$params["headers"]["X-CALLER-UNAME"] = "U:" . $_SESSION["user"]["email"];
@@ -93,8 +95,8 @@ class BLTransport{
 		$aRet = unserialize($response);
 
 		if( ($aRet === false) && ($response !== serialize(false)) ) {
-		syslog(LOG_DEBUG, "callBusinessLogicService: ERROR: Could not unserialize response: ".$response);
-		return false;
+			syslog(LOG_DEBUG, "callBusinessLogicService: ERROR: Could not unserialize response: " . $response);
+			return false;
 		}
 
 		return $aRet;
@@ -127,10 +129,7 @@ class BLTransport{
 		foreach($headers as $key => $val){
 			$header_str .= $key . ": " . $val . "\r\n";
 		}
-		
-		
-		
-		
+
 	    $options = array( 
 	          'http' => array( 
 	            'method' => $method, 
@@ -144,7 +143,7 @@ class BLTransport{
 		}
 
 		$url.='?';
-		foreach($params as $var => $val){
+		foreach($params['request_date'] as $var => $val){
 			$url .= $var . '=' . urlencode($val) . '&';
 		}
 	    $context = stream_context_create($options); 
