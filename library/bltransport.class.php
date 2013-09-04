@@ -143,7 +143,10 @@ class BLTransport{
 		}
 
 		$url.='?';
-		foreach($params['request_date'] as $var => $val){
+		foreach($params['request_data'] as $var => $val){
+			if (empty($var)) {
+				continue;
+			}
 			$url .= $var . '=' . urlencode($val) . '&';
 		}
 	    $context = stream_context_create($options); 
