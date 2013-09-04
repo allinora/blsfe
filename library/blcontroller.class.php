@@ -39,6 +39,10 @@ class BLController {
 		$this->logger = new BLLog();
 
 	}
+
+	public function useWrapper($b) {
+		$this->doNotRenderHeader = ($b) ? false : true;
+	}
 	
 	function setTemplateFile($file){
 		$this->_template->setTemplateFile($file);
