@@ -353,6 +353,11 @@ $session = Session::factory();
 session_start();
 
 @list($url, $params)=explode('?', $_SERVER["REQUEST_URI"], 2);   // Just get everything before t
+$url = preg_replace("@/+@", "/", $url);
+
+ // Fix the multi slash problem
+list($_SERVER["REQUEST_URI"], $_SERVER["REDIRECT_URL"]) = $url;
+
 // Special handling for "cache"; 
 if (substr($url, 1, 5)=="cache"){
 	$url=substr($url, 6);
