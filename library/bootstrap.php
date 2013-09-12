@@ -78,6 +78,18 @@ if (!function_exists("base36_decode")) {
 	}
 }
 
+if (!function_exists("base16_encode")) {
+	function base16_encode($base10){
+    	return base_convert($base10,10,16);
+	}
+}
+
+if (!function_exists("base16_decode")) {
+	function base16_decode($base16){
+	    return base_convert($base36,16,10);
+	}
+}
+
 // Require the rest of the bootstrap logic
 require_once (dirname(__FILE__)  . DS .  'shared.php');
 
