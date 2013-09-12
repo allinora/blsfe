@@ -45,12 +45,12 @@ class BLQuery extends BLTransport{
 			// Caching reading allowed for this model
 			$result=$this->cache->read($key);
 			if (!empty($result)){
-				return $result;
+				return $result['rows'];
 			}
 		}
         $result=$this->callBusinessLogicService($this->_model . "/getall" , array($this->_searchField => $id) );
 		$this->cache->write($key, $result);
-		return $result;
+		return $result['rows'];
     }
 
 	public function set($params, $method="POST", $extraParams=array()){
