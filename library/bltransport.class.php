@@ -147,8 +147,20 @@ class BLTransport{
 			if (empty($var)) {
 				continue;
 			}
-			$url .= $var . '=' . urlencode($val) . '&';
+			if (is_array($val)) {
+				// print "$var: <pre>" . print_r($val, true) . "</pre>";
+				foreach($val as $_array_key => $_array_value ) {
+					 // print "Setting $var  [$_array_key] to $_array_value<br>";
+					$url .= $var . '[' . $_array_key .  ']=' . urlencode($_array_value) . '&';
+				}
+				
+			} else {
+				// print "Setting $var to $val<br>";
+				$url .= $var . '=' . urlencode($val) . '&';
+				
+			}
 		}
+		// print "url is $url<br>";
 	    $context = stream_context_create($options); 
 	    $response = file_get_contents($url, false, $context);
 		if (!$response) {
