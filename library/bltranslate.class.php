@@ -73,12 +73,19 @@ class BLTranslate extends BLTransport{
 		$_params["po"]=$po;
 		//print "<pre>" . print_r($_params, true) . "</pre>";
 	    $result=$this->callBusinessLogicService("/sys/po/string/updateTranslations", $_params);
-		//print "<pre>" . print_r($result, true) . "</pre>";
+	
+		if (isset($_SESSION["translation_last_search"])){
+			$_url = "/core/translations/admin/?op=search&project=" . $_SESSION["translation_last_search"]["project"] . "&language=" . $_SESSION["translation_last_search"]["language"] . "&q=" . $_SESSION["translation_last_search"]["string"] . "&scrollto=$id";
+			header("Location: $_url");
+		}
 	}
 	
 	private function editForm($id){
 		$r=$this->getStringWithTranslations($id);
 		//print "<pre>xx" . print_r($r, true) . "</pre>";
+		
+		$_SESSION["translation_last_edit"] = $id;
+		// print "<pre>" . print_r($_SESSION, true) . "</pre>";
 		
 		$data.="\n<br><br><form>";
 		$data.="\n<input type='hidden' name='op' value='update'>";
@@ -104,13 +111,18 @@ class BLTranslate extends BLTransport{
 			return $data;
 		}
 
-		$data="<div style='max-width: 600px;'>";
+		$_SESSION["translation_last_search"]["string"] = $string;
+		$_SESSION["translation_last_search"]["project"] = $project;
+		$_SESSION["translation_last_search"]["lang"] = $lang;
+
+		
+		$data="<div style='max-width: 600px;' >";
 		$languages=$this->getLanguages();
 		foreach($result as $r){
 			$data.="\n<form>";
 			$data.="\n<input type='hidden' name='op' value='edit'>";
 			$data.="\n<input type='hidden' name='id' value='" . $r["id"]. "'>";
-			$data.="\n<table class='potable'>";
+			$data.="\n<table class='potable' id='translation-" . $r["id"] . "'>";
 			$data.="\n<tr class='odd' ><th>Project</th><td><i>"  . $r["project"] . "</i></td></tr>";
 			$data.="\n<tr class='even' ><th>Source</th><td><b>"  . htmlentities($r["msgid"]) . "</b></td></tr>";
 			$class="odd";

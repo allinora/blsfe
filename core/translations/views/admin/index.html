@@ -33,4 +33,16 @@ table.potable .empty {
 	background-color: #FFCCCC	;
 }
 </style>
+<{if $smarty.request.scrollto}>
+<script>
+// This smart idea is  from Florian Hinze of Worldsoft
+$(document).ready(function (){
+   //$(this).animate(function(){
+       $('html, body').animate({
+           scrollTop: $("#translation-<{$smarty.request.scrollto}>").offset().top
+       }, 500);
+   //});
+});
+</script>
+<{/if}>
 <{$po}>
