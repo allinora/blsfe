@@ -6,22 +6,22 @@ class BLImage {
 	public function _construct(){
 		global $cache;
 		// Set the reference to cache
-		$this->cache=$cache;
+		$this->cache = $cache;
 	}
 	
-	public function resizeFile($f, $x=0, $y=0, $empty_ok=0){
-		$x=round($x);
-		$y=round($y);
-		$caching=0;
+	public function resizeFile($f, $x = 0, $y = 0, $empty_ok = 0){
+		$x = round($x);
+		$y = round($y);
+		$caching = 0;
 		
 		if (!file_exists($f) && $empty_ok){
 			if (in_array(substr($_SERVER["REQUEST_URI"], -3), array("png","jpg","gif"))){
-				$backup_file=BLSFE_ROOT . "/assets/images/1x1." . substr($_SERVER["REQUEST_URI"], -3);
+				$backup_file = BLSFE_ROOT . "/assets/images/1x1." . substr($_SERVER["REQUEST_URI"], -3);
 			} else {
-				$backup_file=BLSFE_ROOT . "/assets/images/1x1.png";
+				$backup_file = BLSFE_ROOT . "/assets/images/1x1.png";
 			}
 			if (file_exists($backup_file)){
-				$data=file_get_contents($backup_file);
+				$data = file_get_contents($backup_file);
 				return  $data;
 			}
 		}
@@ -29,9 +29,9 @@ class BLImage {
 		
 		if (defined("CMS_CACHE_DIRECTORY")){
 			if (in_array(substr($_SERVER["REQUEST_URI"], -3), array("png","jpg","gif"))){
-				$caching=1;
-				$cache_file=CMS_CACHE_DIRECTORY . $_SERVER["REQUEST_URI"];
-				$cache_dir=dirname($cache_file);
+				$caching = 1;
+				$cache_file = CMS_CACHE_DIRECTORY . $_SERVER["REQUEST_URI"];
+				$cache_dir = dirname($cache_file);
 			}
 			
 		}
@@ -43,9 +43,9 @@ class BLImage {
 			$imagick->setCompressionQuality(90);
 			$imagick->thumbnailImage($x,$y);
 			$imagick->cropImage($x,$y,0,0);
-			$data=$imagick->getimageblob();
+			$data = $imagick->getimageblob();
 		} else {
-			$data=file_get_contents($f);
+			$data = file_get_contents($f);
 		}
 		
 		if ($caching){
@@ -57,9 +57,9 @@ class BLImage {
 		return $data;
 	}
 
-	public function resizeBlob($b,  $x=0, $y=0){
-		$x=round($x);
-		$y=round($y);
+	public function resizeBlob($b,  $x = 0, $y = 0){
+		$x = round($x);
+		$y = round($y);
 		if (($x || $y) && class_exists("Imagick")) {
 			$imagick = new Imagick();
 			$imagick->readImageBlob($b);
@@ -71,9 +71,9 @@ class BLImage {
 		}
 	}
 	
-	public function displayImage($f, $x=0, $y=0, $empty_ok=0){
-		$fileInfo=new BLFileinfo();
-		$mimetype=$fileInfo->ext2mimetype($f);
+	public function displayImage($f, $x = 0, $y = 0, $empty_ok = 0){
+		$fileInfo = new BLFileinfo();
+		$mimetype = $fileInfo->ext2mimetype($f);
 		$data = $this->resizeFile($f, $x, $y, $empty_ok);
 		header("Content-type: $mimetype");
 		echo $data;
