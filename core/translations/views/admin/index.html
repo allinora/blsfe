@@ -37,11 +37,9 @@ table.potable .empty {
 <script>
 // This smart idea is  from Florian Hinze of Worldsoft
 $(document).ready(function (){
-   //$(this).animate(function(){
        $('html, body').animate({
            scrollTop: $("#translation-<{$smarty.request.scrollto}>").offset().top
        }, 500);
-   //});
 });
 </script>
 <{/if}>
