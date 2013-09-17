@@ -31,8 +31,12 @@ class BLUpload {
 	}
 	
 	function cleanFileName($fileName){
+		$fileName = preg_replace("@[^a-zA-Z0-9_\-\.]@", "-", $fileName);
+		
+/*
 		$fileName = preg_replace('/[^\w\._]+/', '', $fileName);
 		$fileName = preg_replace('/[^a-z0-9\._-]+/i', '', $fileName);
+*/
 		return $fileName;
 	}
 	
