@@ -3,7 +3,7 @@ $packagesConfig=array();
 
 $packagesConfig["twitter-bootstrap"]=array(
 	'css' => array("/fwassets/twitter/bootstrap/3.x/css/bootstrap.min.css"),
-	'js' => array("//fwassets/twitter/bootstrap/3.x/js/bootstrap.min.js"),
+	'js' => array("/fwassets/twitter/bootstrap/3.x/js/bootstrap.min.js"),
 	'head' => array()
 );
 
