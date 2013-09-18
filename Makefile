@@ -11,6 +11,7 @@ pull:
 push:
 	git push origin master
 	git push assembla master
+	git push github master
 
 deploy: deployshowcase
 	@echo all done
