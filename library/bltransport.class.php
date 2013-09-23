@@ -142,22 +142,25 @@ class BLTransport{
 			$options["http"]["timeout"] = $http_params["timeout"];
 		}
 
-		$url.='?';
-		foreach($params['request_data'] as $var => $val){
-			if (empty($var)) {
-				continue;
-			}
-			if (is_array($val)) {
-				// print "$var: <pre>" . print_r($val, true) . "</pre>";
-				foreach($val as $_array_key => $_array_value ) {
-					 // print "Setting $var  [$_array_key] to $_array_value<br>";
-					$url .= $var . '[' . $_array_key .  ']=' . urlencode($_array_value) . '&';
+		if (isset($params['request_data'])){
+			$url .= '?';
+			
+			foreach($params['request_data'] as $var => $val){
+				if (empty($var)) {
+					continue;
 				}
-				
-			} else {
-				// print "Setting $var to $val<br>";
-				$url .= $var . '=' . urlencode($val) . '&';
-				
+				if (is_array($val)) {
+					// print "$var: <pre>" . print_r($val, true) . "</pre>";
+					foreach($val as $_array_key => $_array_value ) {
+						 // print "Setting $var  [$_array_key] to $_array_value<br>";
+						$url .= $var . '[' . $_array_key .  ']=' . urlencode($_array_value) . '&';
+					}
+
+				} else {
+					// print "Setting $var to $val<br>";
+					$url .= $var . '=' . urlencode($val) . '&';
+
+				}
 			}
 		}
 		// print "url is $url<br>";
