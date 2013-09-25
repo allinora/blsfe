@@ -7,6 +7,12 @@ $packagesConfig["twitter-bootstrap"]=array(
 	'head' => array()
 );
 
+$packagesConfig["twitter-bootstrap-2.3.2"]=array(
+	'css' => array("/fwassets/twitter/bootstrap/2.3.2/bootstrap/css/bootstrap.min.css"),
+	'js' => array("/fwassets/twitter/bootstrap/2.3.2/bootstrap/js/bootstrap.min.js"),
+	'head' => array()
+);
+
 $packagesConfig["jquery-ui"]=array(
 	'css' => array("/fwassets/css/redmond/jquery-ui-1.8.16.custom.css"),
 	'js' => array("/fwassets/js/jquery/ui/1.8.16/jquery-ui.min.js"),
