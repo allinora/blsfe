@@ -18,9 +18,9 @@ class BLTranslate extends BLTransport{
 	    return $string[1];
 	}
 	public function debugTranslate($string){
-		$translation=$this->translate($string);
+		$translation = $this->translate($string);
 		
-	    if ($translation==trim($string[1])) {
+	    if ($translation == trim($string[1])) {
 			return "X:" . $translation;
 		}
 		
