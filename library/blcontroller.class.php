@@ -330,10 +330,11 @@ class BLController {
 		$_SESSION=array();
 	}
 	
-	function getParam($x){
+	function getParam($x, $default=null){
 		if(isset($_REQUEST[$x])){
 			return $_REQUEST[$x];
 		}
+		return $default;
 	}
 	
 		
