@@ -344,6 +344,7 @@ function gzipOutput() {
 // gzipOutput() || ob_start("ob_gzhandler");
 
 
+include_once(dirname(__FILE__) . "/functions.php");
 include_once(dirname(__FILE__) . "/cache.class.php");
 include_once(dirname(__FILE__) . "/session.class.php");
 include_once(dirname(__FILE__) . "/blcontroller.class.php");
