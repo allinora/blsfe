@@ -2,13 +2,14 @@
 $packagesConfig=array();
 
 $packagesConfig["twitter-bootstrap"]=array(
-	'css' => array("/fwassets/twitter/bootstrap/3.x/css/bootstrap.min.css"),
+	'css' => array("/fwassets/twitter/bootstrap/3.x/css/bootstrap.min.css", "/fwassets/twitter/bootstrap/3.x/css/bootstrap-responsive.min.css"),
 	'js' => array("/fwassets/twitter/bootstrap/3.x/js/bootstrap.min.js"),
 	'head' => array()
 );
 
 $packagesConfig["twitter-bootstrap-2.3.2"]=array(
-	'css' => array("/fwassets/twitter/bootstrap/2.3.2/bootstrap/css/bootstrap.min.css"),
+	'css' => array("/fwassets/twitter/bootstrap/2.3.2/bootstrap/css/bootstrap.min.css", "/fwassets/twitter/bootstrap/2.3.2/bootstrap/css/bootstrap-responsive.min.css"),
+	
 	'js' => array("/fwassets/twitter/bootstrap/2.3.2/bootstrap/js/bootstrap.min.js"),
 	'head' => array()
 );
