@@ -341,7 +341,7 @@ function gzipOutput() {
 
 /** Get Required Files **/
 
-gzipOutput() || ob_start("ob_gzhandler");
+// gzipOutput() || ob_start("ob_gzhandler");
 
 
 include_once(dirname(__FILE__) . "/cache.class.php");
