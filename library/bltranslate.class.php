@@ -4,18 +4,43 @@ include_once(dirname(__FILE__) . "/bltransport.class.php");
 class BLTranslate extends BLTransport{
 	var $project;
 	var $lang;
+	var $seen;
 	
 	public function __construct($lang="00", $project=""){
+		global $cache;
 		$this->lang=$lang;
 		$this->project=$project;
+		$this->cache = $cache;
+		
 	}
 	
 	public function translate($string){
+		global $cache;
+		$this->cache = $cache;
+		
+		$str = trim($string[1]);
+		
+		if ($this->seen[$str]){
+			return $this->seen[$str];
+		}
+		$cache_key = "translate.$str";
+		if ($this->cache){
+			if ($result = $this->cache->read($cache_key)){
+				return $result;
+			}
+		}
+		
 	    $translation=$this->callBusinessLogicService("/sys/po/string/getTranslation", array("string"=>trim($string[1]), "language"=>$this->lang, "project"=>$this->project), "GET");
 	    if (is_array($translation) && isset($translation["msgstr"])) {
-			return $translation["msgstr"];
-	    }
-	    return $string[1];
+			$this->seen[$str] = $translation["msgstr"];
+			if ($this->cache){
+				$this->cache->write($cache_key, $translation["msgstr"]);
+				
+			}
+	    } else {
+			$this->seen[$str] = $string[1];
+		}
+		return $this->seen[$str];
 	}
 	public function debugTranslate($string){
 		$translation = $this->translate($string);
