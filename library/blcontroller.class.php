@@ -115,9 +115,10 @@ class BLController {
 		if (is_array($params) && count($params)){
 			$url.="/?" . http_build_query($params);
 		}
-		if (headers_sent()){
+		if (headers_sent() || $params["js"] == true){
 			print "Redirecting to $url<br>";
 			print "Headers already sent. Must redirect via javascript<br>";
+			print "<script>self.location='$url';</script>";
 		} else {
 			header("Location: $url");exit;
 		}
