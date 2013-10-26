@@ -5,7 +5,8 @@ class Cache {
 	// Combine factory + Singleton
 	public static function factory(){
 		if (!defined("CACHE_BACKEND")){
-			die("Cache backend is not defined");
+			// No cache
+			return;
 		}
 		
         if (isset(self::$instance)) {
