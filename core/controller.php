@@ -6,19 +6,19 @@ class Core_Controller extends BLController {
 		global $default, $cache;
 
 		// Set the reference to cache
-		$this->cache=$cache;
+		$this->cache = $cache;
 		
-		$_wrapper_directory=BLSFE_ROOT . "/core/admin/views";
+		$_wrapper_directory = BLSFE_ROOT . "/core/admin/views";
 		$this->setWrapperDir($_wrapper_directory);
 		$this->set("blsfe_template_dir", $_wrapper_directory);
 		$this->set("blsfe_root", BLSFE_ROOT);
 		
-		$language_model=new BLModel("sys/language", "id");
-		$_languages=$language_model->getall(1);
-		$this->backend_languages=array();
+		$language_model = new BLModel("sys/language", "id");
+		$_languages = $language_model->getall(1);
+		$this->backend_languages = array();
 		if (is_array($_languages)){
 			foreach($_languages as $l){
-				$this->backend_languages[$l["lang"]]=$l;	
+				$this->backend_languages[$l["lang"]] = $l;	
 			}
 			$this->set("languages", $this->backend_languages);
 		}
@@ -30,17 +30,12 @@ class Core_Controller extends BLController {
 			$this->set("appmodules", $default["modules"]["app"]);
 		}
 		
+
+       $this->render=0;
 		
-		$this->addPackage("core");
 		$this->addPackage("jquery");
-		$this->addPackage("jquery-cookie");
-		$this->addPackage("jquery-validate");
-		$this->addPackage("jquery-ui");
-		$this->addPackage("jquery-ui-timepicker");
-		$this->addPackage("fancybox");
-		$this->addPackage("table-sorter");
-		$this->addPackage("admin");
-		$this->addPackage("imagemanager");
+        $this->addPackage("twitter-bootstrap");
+       $this->render=1;
 		
 	}
 	
@@ -51,7 +46,8 @@ class Core_Controller extends BLController {
 	}
 	function addAction($redirect) {
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){
-			$x=$this->model->add($_POST);
+			$x = $this->model->add($_POST);
+			
 			$this->redirect($redirect);
 		}
 		
@@ -110,8 +106,8 @@ class Core_Controller extends BLController {
 	}
 	
 	function setTabName($c){
-		$x=split('_', $c);
-		$tab=strtolower($x[1]);
+		$x = split('_', $c);
+		$tab = strtolower($x[1]);
 		$this->set("tab", $tab);
 		return $tab;
 	}
