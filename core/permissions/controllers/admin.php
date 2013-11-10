@@ -14,11 +14,11 @@ class Core_Permissions_AdminController extends Admin_Controller {
 	}
 	
 
-	function addAction() {
+	function addAction($redirect=null) {
 		parent::addAction("core/permissions/admin");
 	}
 	
-	function editAction($id) {
+	function editAction($id, $redirect=null, $formatters=array()) {
 		parent::editAction($id, "core/permissions/admin");
 	}
 }

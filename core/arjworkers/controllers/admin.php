@@ -23,11 +23,11 @@ class Core_Arjworkers_AdminController extends Admin_Controller {
 		return $formatters;
 	}
 
-	function addAction() {
+	function addAction($redirect=null) {
 		parent::addAction("core/". $this->tab. "/admin");
 	}
 	
-	function editAction($id) {
+	function editAction($id, $redirect=null, $formatters=array()) {
 		parent::editAction($id, "core/". $this->tab. "/admin");
 	}
 }

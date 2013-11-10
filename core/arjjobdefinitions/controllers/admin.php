@@ -13,21 +13,29 @@ class Core_Arjjobdefinitions_AdminController extends Admin_Controller {
 		$this->set("aData", $res);
 	}
 	
+	
 
 	function formatters(){
 		$formatters=array();
-		$formatters["preferred_worker_id"]["function"]=function(){ 
+		
+		$formatters["preferred_worker_id"]["function"] = function(){ 
 			include_once(BLSFE_ROOT . "/helpers/modelList.php");
 			return blsfe_helper_modelList("arj/worker", null , "id", 'worker_group_id', 'preferred_worker_id', $id);
 		};
+		
+		$formatters["worker_group_id"]["function"] = function(){ 
+			include_once(BLSFE_ROOT . "/helpers/modelList.php");
+			return blsfe_helper_modelList("arj/worker/group", null , "id", null, 'worker_group_id', $id);
+		};
+		
 		return $formatters;
 	}
 
-	function addAction() {
+	function addAction($redirect=null) {
 		parent::addAction("core/". $this->tab. "/admin");
 	}
 	
-	function editAction($id) {
+	function editAction($id, $redirect=null, $formatters = array()) {
 		parent::editAction($id, "core/". $this->tab. "/admin");
 	}
 }

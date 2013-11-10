@@ -24,60 +24,71 @@ jQuery(document).ready(function() {
 
 </style>
 
-<div id="tabs" style="width: 800px">
-<ul>
-<{foreach from=$aData["translations"] item=l}>
-<li><a href="#tabs-<{$l.lang}>"><{$l.lang}></a></li>
-<{/foreach}>
-</ul>	
 
+<div class="tabbable">
 
-<{foreach from=$aData["translations"] item=l}>
-<div id="tabs-<{$l.lang}>">
-	<form method="POST" action="/core/systememails/admin/save">
-	<input type="hidden" name="id" value="<{$l.id}>">
-	<input type="hidden" name="template_id" value="<{$l.template_id}>">
-	<input type="hidden" name="lang" value="<{$l.lang}>">
-	<table>
-		<tr class="even">
-			<td style="width:130px">Name</td>
-			<td><{$aData.name}></td>
-		</tr>
-		<tr class="odd">
-			<td style="width:130px">Translation ID</td>
-			<td><{$l.id}></td>
-		</tr>
-		<tr class="even">
-			<td style="width:130px">Last updated</td>
-			<td><{$l.ts}></td>
-		</tr>
-		<tr class="odd">
-			<td style="width:130px">Sender Name</td>
-			<td><input type="text" name="sender_name" class="template-sender_name" size=80 value="<{$l.sender_name}>"></td>
-		</tr> 
-		<tr class="odd">
-			<td style="width:130px">Sender Email</td>
-			<td><input type="text" name="sender" class="template-sender" size=80 value="<{$l.sender}>"></td>
-		</tr> 
-		<tr class="odd">
-			<td style="width:130px">Subject</td>
-			<td><input type="text" name="subject" class="template-subject" size=80 value="<{$l.subject}>"></td>
-		</tr> 
-		<tr class="odd">
-			<td colspan=2>Data
-				<br>
-			<textarea name="body" id="body-<{$l.lang}>" class="ckeditor" cols=50 rows=30><{$l.body}></textarea></td>
-		</tr>
-		<tr>
-			<td colspan="2" align="right"><button id="save" class="color" name="save" type="submit">Save <{$l.lang}></button></td>
-		</tr>
-    </table>
-	</form>
-</div>
-<{/foreach}>
+        <ul class="nav nav-tabs" data-tabs="tabs">
+			<{foreach from=$aData["translations"] item=l name=foo}>
+			<li <{if $smarty.foreach.foo.first}> class="active" <{/if}>><a data-toggle="tab"  href="#tabs-<{$l.lang}>"><{$l.lang}></a></li>
+			<{/foreach}>
+        </ul>
 
 
 
 
-</div>
+
+
+        <div class="tab-content">
+			<{foreach from=$aData["translations"] item=l name=foo}>
+			<div class="tab-pane <{if $smarty.foreach.foo.first}> active <{/if}>" id="tabs-<{$l.lang}>">
+				<form method="POST" action="/core/systememails/admin/save">
+				<input type="hidden" name="id" value="<{$l.id}>">
+				<input type="hidden" name="template_id" value="<{$l.template_id}>">
+				<input type="hidden" name="lang" value="<{$l.lang}>">
+				<table class="table table-striped table-bordered table-condensed">
+					<tr class="even">
+						<td style="width:130px">Name</td>
+						<td><{$aData.name}></td>
+					</tr>
+					<tr class="odd">
+						<td style="width:130px">Translation ID</td>
+						<td><{$l.id}></td>
+					</tr>
+					<tr class="even">
+						<td style="width:130px">Last updated</td>
+						<td><{$l.ts}></td>
+					</tr>
+					<tr class="odd">
+						<td style="width:130px">Sender Name</td>
+						<td><input type="text" name="sender_name" class="template-sender_name" size=80 value="<{$l.sender_name}>"></td>
+					</tr> 
+					<tr class="odd">
+						<td style="width:130px">Sender Email</td>
+						<td><input type="text" name="sender" class="template-sender" size=80 value="<{$l.sender}>"></td>
+					</tr> 
+					<tr class="odd">
+						<td style="width:130px">Subject</td>
+						<td><input type="text" name="subject" class="template-subject" size=80 value="<{$l.subject}>"></td>
+					</tr> 
+					<tr class="odd">
+						<td colspan=2>Data
+							<br>
+						<textarea name="body" id="body-<{$l.lang}>" class="ckeditor" cols=50 rows=30><{$l.body}></textarea></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="right"><button id="save" class="color" name="save" type="submit">Save <{$l.lang}></button></td>
+					</tr>
+			    </table>
+				</form>
+			</div>
+			<{/foreach}>
+
 	
+	
+</div>
+
+
+
+
+
+

@@ -12,14 +12,14 @@ class Core_Systememails_AdminController extends Admin_Controller {
 		$this->set("aData", $pages);
 	}
 
-	function addAction() {
+	function addAction($redirect=null) {
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			$this->model->add($_REQUEST);
 			$this->redirect("core", "systememails/admin/");
 		}
 	}
 	
-	function editAction($id) {
+	function editAction($id, $redirect=null, $formatters = array()) {
 		$templateData=$this->model->getTemplateWithTranslations(array("id"=>$id));
 		//print "<pre>" . print_r($templateData, true) . "</pre>";
 		$template=array();
