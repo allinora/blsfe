@@ -1,54 +1,61 @@
 <?php
 // A Simple php client for th arj-server
-// Customized for Worldsoft.
 // Requires php with support for pcntl and sockets
-$listen_port=($argv[1])? $argv[1] : 8888;
-$jobs_directory=($argv[2])? $argv[2] : '/var/arj/jobs';
+if (!function_exists("pcntl_fork") || !function_exists("socket_create")){
+	die("Need functions pcntl_fork and socket_create\n");
+}
+
+
+
+$listen_port 	= (isset($argv[1])) ? $argv[1] : 8888;
+$jobs_directory = (isset($argv[2])) ? $argv[2] : '/var/arj/jobs';
 
 # Do not allow limits to these processes
-ini_set("max_execution_time", 0);
-ini_set("memory_limit", -1);
+ini_set("max_execution_time",	0);
+ini_set("memory_limit", 		-1);
 
 
-$hostname=php_uname("n");
+$hostname = php_uname("n");
 error_reporting (E_ERROR);
 print "Jobs will be fetched from $jobs_directory\n";
+
+
 $app = function($request) {
 	global $GET_VARS;
-	$GET_VARS=array(); //intialization is needed for non-forking server
+	$GET_VARS = array(); //intialization is needed for non-forking server
 	$body = "";
 
 	// We are getting the RAW HTTP request. Clean it up so we can use
 	// what we need.
-	
-	$request=preg_replace("@^(GET|POST|HEAD) /@", "", $request);
-	$request=preg_replace("@HTTP.[\W\w]*@", "", $request);
-	$req=parse_url(trim($request));
+	print $request . "\n";
+	$request = preg_replace('@^(GET|POST|HEAD) /@', '', $request);
+	$request = preg_replace("@HTTP.[\W\w]*@", "", $request);
+	$req = parse_url(trim($request));
 		
 	$body.="<pre>" . print_r($req, true) . "</pre>";
 	
 	if ($req["query"]) {
-        $pairs=array();
-        $pairs=explode('&', $req["query"]);
+        $pairs = array();
+        $pairs = explode('&', $req["query"]);
         foreach ($pairs as $pair) {
-            list($var, $val)=explode("=", $pair);
+            list($var, $val) = explode('=', $pair);
             if (preg_match("/\[\]$/", $var)) {
-                $var=preg_replace("/\[\]$/", "", $var);
-                $GET_VARS[$var][]= $val;
+                $var = preg_replace("/\[\]$/", '', $var);
+                $GET_VARS[$var][] = $val;
             } else {
-                $GET_VARS[$var]=$val;
+                $GET_VARS[$var] = $val;
             }
         }
     }
 
-    $function=trim($req["path"]);
-	$function=str_replace('/', '', $function);
+    $function = trim($req["path"]);
+	$function = str_replace('/', '', $function);
 	
 
 	if (!function_exists($function)) {
 		return array(
 			'404 NOT FOUND',
-			array('Content-Type' => 'text/plain;charset=utf-8'),
+			array('Content-Type' => 'text/plain; charset=utf-8'),
 			'No such function : ' . $function
 		);
 	}
@@ -56,8 +63,8 @@ $app = function($request) {
 
 	if (function_exists($function)) {
 
-		if ($ret=$function()){
-			$body=serialize($ret);
+		if ($ret = $function()){
+			$body = serialize($ret);
 		}
 
 
