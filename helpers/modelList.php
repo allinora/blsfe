@@ -10,12 +10,14 @@ function blsfe_helper_modelList($model, $action=null, $idField, $searchField, $f
 	    $rows=$model->$action();
 	}
 	$text="<select name='$field_name' id='$field_name'>";
-	foreach($rows as $row){
-		$text.="<option value='" . $row["id"] . "'";
-		if ($id==$row["id"]){
-			$text.=" selected ";
+	if (is_array($rows)) {
+		foreach($rows as $row){
+			$text.="<option value='" . $row["id"] . "'";
+			if ($id==$row["id"]){
+				$text.=" selected ";
+			}
+			$text.=">" . $row["name"] . "</option>";
 		}
-		$text.=">" . $row["name"] . "</option>";
 	}
 	$text.="</select>";
 	return $text;
