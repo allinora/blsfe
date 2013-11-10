@@ -17,6 +17,10 @@ define('OBJ_DTYPE_TIMESTAMP', 12);
 define('OBJ_DTYPE_DATETIME', 13);
 define('OBJ_DTYPE_SHA1', 14);
 define('OBJ_DTYPE_CURRDATE',15);
+define('OBJ_DTYPE_BOOL',16);
+define('OBJ_DTYPE_TIME',17);
+define('OBJ_DTYPE_PHP_SERIALIZED_STRING', 18); // Serialized PHP string
+define('OBJ_DTYPE_JSON_SERIALIZED_STRING', 19); // Serialized JSON string
 
 
 class BLForm extends BLModel {
@@ -125,6 +129,8 @@ class BLForm extends BLModel {
 			
 		}
 		
+		// print "<pre><xmp>" . print_r($field, true) . "</xmp></pre>";
+		
 		switch($field["data_type"]){
 			case OBJ_DTYPE_STRING:	
 			
@@ -139,7 +145,7 @@ class BLForm extends BLModel {
 				return $this->textbox($id, $field);
 			break;
 			case OBJ_DTYPE_DATE:
-				$this->setClass($id, "dateISO");
+				$this->setClass($id, "form-control dateISO");
 				$field=$this->vars[$id];
 				return $this->textbox($id, $field);
 			break;
@@ -298,13 +304,17 @@ class BLForm extends BLModel {
 			$text.=" style='" . $f["css"] . "'";
 		}
 
+		if ($f["class"]){
+			$text.=" class='" . $f["class"] . "'";
+		} else {
+			$text .= " class='form-control'";
+		}
+
 		if ($f["required"]){
 			$f["class"]="required" . " " . $f["class"];
 		}
 
-		if ($f["class"]){
-			$text.=" class='" . $f["class"] . "'";
-		}
+		
 		$text.=" >";
 		return $text;
 	}
@@ -315,6 +325,8 @@ class BLForm extends BLModel {
 		}
 		if ($f["class"]){
 			$text.=" class='" . $f["class"] . "'";
+		} else {
+			$text .= " class='form-control'";
 		}
 		$text.=">";
 		if ($f["value"]){
@@ -336,8 +348,9 @@ class BLForm extends BLModel {
 		
 		
 		
-		$data='<script>$(document).ready(function(){$(".blsfeform").validate();});</script>' . "<form method='POST' class='blsfeform'><table class='blsfeformtable' border=1>";
-		foreach($formData as $id=>$f){
+		$data='<script>$(document).ready(function(){$(".blsfeform").validate();});</script>' . "<form method='POST' class='blsfeform'>
+		<table class='table table-striped table-bordered table-condensed blsfeformtable' border=1>";
+		foreach($formData as $id => $f){
 			
 			$data.= "\n<tr";
 			if ($f["class"]){
@@ -357,7 +370,8 @@ class BLForm extends BLModel {
 			$data.= "</tr>";
 		}
 		$data.="<tr><td colspan=2 align=right>";
-		$data.="<input type='submit'>";
+		$data.='<button type="submit" class="btn btn-default">Submit</button>';
+		
 		$data.="</td></tr>";
 
 		$data.="</table></form>";
