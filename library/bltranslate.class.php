@@ -115,7 +115,9 @@ class BLTranslate extends BLTransport{
 		$data.="\n<br><br><form>";
 		$data.="\n<input type='hidden' name='op' value='update'>";
 		$data.="\n<input type='hidden' name='id' value='" . $id. "'>";
-		$data.="\n<table class='potable' style='width:800px'>";
+		$data.="\n<table class='potable table table-striped table-bordered table-condensed' style='width:800px'>";
+		
+		
 		$data.="\n<tr><th>Source</th><td>"  . htmlentities($r["msgid"]) . "</td></tr>";
 		foreach($this->getLanguages() as $l){
 			$data.="\n<tr><th>$l</th><td><textarea class='po_textarea' name='po[$l]'>"  . $r["translations"][$l]["msgstr"] . "</textarea></td></tr>";
@@ -147,7 +149,7 @@ class BLTranslate extends BLTransport{
 			$data.="\n<form>";
 			$data.="\n<input type='hidden' name='op' value='edit'>";
 			$data.="\n<input type='hidden' name='id' value='" . $r["id"]. "'>";
-			$data.="\n<table class='potable' id='translation-" . $r["id"] . "'>";
+			$data.="\n<table class='potable table table-striped table-bordered table-condensed' id='translation-" . $r["id"] . "'>";
 			$data.="\n<tr class='odd' ><th>Project</th><td><i>"  . $r["project"] . "</i></td></tr>";
 			$data.="\n<tr class='even' ><th>Source</th><td><b>"  . htmlentities($r["msgid"]) . "</b></td></tr>";
 			$class="odd";
@@ -190,16 +192,17 @@ class BLTranslate extends BLTransport{
 	
 	public function searchForm($project=null,$language=null,$string=null){
 		$projects=$this->getProjects();
-		$data="\n<form>";
-		$data.="\n<input type=hidden name='op' value='search'>";
-		$data.="\nProject";
-		$data.=$this->projectList( $projects, $project);
-		$data.="\nLanguage";
-		$data.=$this->languageList( $this->getLanguages(), $language);
-		$data.="\nText";
-		$data.=$this->searchBox($string);
-		$data.="\n<input type='submit'>";
-		$data.="\n</form>\n\n";
+		$data = "\n<form>";
+		$data .= "\n<table style='width: auto' class='table table-striped table-bordered table-condensed'>";
+		$data .= "\n<input type=hidden name='op' value='search'>";
+		$data .= "\n<th>Project</th>";
+		$data .= "<td>" . $this->projectList( $projects, $project) . "</td>";
+		$data .= "\n<th>Language</th>";
+		$data .= "<td>" . $this->languageList( $this->getLanguages(), $language) . "</td>";
+		$data .= "\n<th>Text</th>";
+		$data .= "<td>" . $this->searchBox($string) . "</td>";
+		$data .= "\n<th><input type='submit'></th>";
+		$data .= "\n</table></form>\n\n";
 		return $data;
 	}
 	private function searchBox($string){
