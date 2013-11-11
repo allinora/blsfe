@@ -123,7 +123,7 @@ class BLTranslate extends BLTransport{
 			$data.="\n<tr><th>$l</th><td><textarea class='po_textarea form-control' name='po[$l]'>"  . $r["translations"][$l]["msgstr"] . "</textarea></td></tr>";
 		}
 		$data.="\n</table>";
-		$data.="\n<input type='submit' value='update' onclick='this.form.submit()'>";
+		$data.="\n<input type='submit' class='btn pull-right' value='update' onclick='this.form.submit()'>";
 		$data.="\n</form>";
 		
 		return $data;
@@ -201,7 +201,7 @@ class BLTranslate extends BLTransport{
 		$data .= "<td>" . $this->languageList( $this->getLanguages(), $language) . "</td>";
 		$data .= "\n<th>Text</th>";
 		$data .= "<td>" . $this->searchBox($string) . "</td>";
-		$data .= "\n<th><input type='submit'></th>";
+		$data .= "\n<th><input type='submit' value='search'></th>";
 		$data .= "\n</table></form>\n\n";
 		return $data;
 	}
