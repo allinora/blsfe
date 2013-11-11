@@ -115,12 +115,12 @@ class BLTranslate extends BLTransport{
 		$data.="\n<br><br><form>";
 		$data.="\n<input type='hidden' name='op' value='update'>";
 		$data.="\n<input type='hidden' name='id' value='" . $id. "'>";
-		$data.="\n<table class='potable table table-striped table-bordered table-condensed' style='width:800px'>";
+		$data.="\n<table class='potable table table-striped table-bordered table-condensed'>";
 		
 		
 		$data.="\n<tr><th>Source</th><td>"  . htmlentities($r["msgid"]) . "</td></tr>";
 		foreach($this->getLanguages() as $l){
-			$data.="\n<tr><th>$l</th><td><textarea class='po_textarea' name='po[$l]'>"  . $r["translations"][$l]["msgstr"] . "</textarea></td></tr>";
+			$data.="\n<tr><th>$l</th><td><textarea class='po_textarea form-control' name='po[$l]'>"  . $r["translations"][$l]["msgstr"] . "</textarea></td></tr>";
 		}
 		$data.="\n</table>";
 		$data.="\n<input type='submit' value='update' onclick='this.form.submit()'>";
