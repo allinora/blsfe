@@ -9,6 +9,7 @@ class Core_Login_Controller extends Core_Controller {
 	}
 	function indexAction() {
 		$this->set("noMenu", 1);
+		$this->doNotRenderHeader=0;
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			$x=$this->model->login(array("login"=>$_REQUEST["login"], "passwd"=>$_REQUEST["passwd"]));
 			if ($x["id"]>0 && $x["active"]>0){

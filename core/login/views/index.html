@@ -1,27 +1,57 @@
-<div id="loginForm"  style="display:block" title="<{$smarty.const.APP_NAME}>">
+<style type="text/css">
+  /* Override some defaults */
+  html, body {
+    background-color: #eee;
+  }
+  body {
+    padding-top: 40px; 
+  }
+  .container {
+    width: 300px;
+  }
 
-<form method="POST">
-	<table border=0>
-		<tr>
-			<td>Login</td>
-			<td><input type="text" name="login" size=30></td>
-		</tr>
-		<tr>
-			<td>Password</td>
-			<td><input type="password" name="passwd" size=30></td>
-		</tr>
-		<tr>
-			<td colspan="2" align=right><input type="submit"></td>
-		</tr>
-	</table>
-</form>
-</div>
+  /* The white background content wrapper */
+  .container > .content {
+    background-color: #fff;
+    padding: 20px;
+    margin: 0 -20px; 
+    -webkit-border-radius: 10px 10px 10px 10px;
+       -moz-border-radius: 10px 10px 10px 10px;
+            border-radius: 10px 10px 10px 10px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+            box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  }
 
-<script>
-$(function() {
-	$('#loginForm').dialog({
-		 width: 300, height: 130, modal: true, draggable: false, resizable: false
-	});
-});
+  .login-form {
+	margin-left: 65px;
+  }
 
-</script>
+  legend {
+	margin-right: -50px;
+	font-weight: bold;
+  	color: #404040;
+  }
+
+</style>
+
+	<div class="content">
+	  <div class="row">
+	    <div class="login-form">
+	      <h2>Login</h2>
+		<form method="POST">
+	        <fieldset>
+	          <div class="clearfix">
+	            <input type="text" placeholder="<po>Username</po>" name="login">
+	          </div>
+	          <div class="clearfix">
+	            <input type="password" placeholder="<po>Password</po>" name="passwd">
+	          </div>
+			<br>
+		          <button class="btn primary" type="submit"><po>Sign in</po></button>
+	        </fieldset>
+	      </form>
+	    </div>
+	  </div>
+	</div>
+
