@@ -1,12 +1,6 @@
 <style>
-table.potable {
-	background-color: lightyellow;
-	border-collapse: none;
-	width: 100%;
-}
 .po_textarea {
-	width: 600px;
-	height: 100px;
+	min-height: 100px;
 	
 }
 table.potable th,td {
@@ -19,18 +13,11 @@ table.potable th {
 	font-weight: bold;
 }
 
-table.potable .odd {
-	background-color: #dddddd;
-}
-table.potable .even {
-	background-color: white;
-}
-
 table.potable .filled {
-	background-color: #00FF99;
+	background-color: #00FF99 !important;
 }
 table.potable .empty {
-	background-color: #FFCCCC	;
+	background-color: #FFCCCC !important;
 }
 </style>
 <{if $smarty.request.scrollto}>
