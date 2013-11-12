@@ -23,32 +23,42 @@ class BLQuery extends BLTransport{
         return $this->callBusinessLogicService($this->_model . "/$action" , $params[0], $params[1] , $params[2]);
 	}
 
-    public function get($id){
+    public function get($id, $cache = true){
 		// Always uses GET method. Is Cacheable
-		$key=$this->_model . DS . __CLASS__ . DS . __FUNCTION__ . DS .  "$id";
-		if ($this->cache()){
-			// Caching reading allowed for this model
-			$result=$this->cache->read($key);
-			if (!empty($result)){
-				return $result;
+ 		if ($cache) {
+			$key = $this->_model . DS . __CLASS__ . DS . __FUNCTION__ . DS .  "$id";
+			if ($this->cache()){
+				// Caching reading allowed for this model
+				$result = $this->cache->read($key);
+				if (!empty($result)){
+					return $result;
+				}
 			}
-		}
-        $result=$this->callBusinessLogicService($this->_model . "/get" , array($this->_idField => $id) );
+		}	
+
+        $result = $this->callBusinessLogicService($this->_model . "/get" , array($this->_idField => $id) );
+
 		$this->cache->write($key, $result);
 		return $result;
     }
 
-    public function getall($id){
+    public function getall($id, $cache = true){
 		// Always uses GET method. Is Cacheable
-		$key=$this->_model . DS . __CLASS__ . DS . __FUNCTION__ . DS .  "$id";
-		if ($this->cache()){
-			// Caching reading allowed for this model
-			$result=$this->cache->read($key);
-			if (!empty($result)){
-				return $result['rows'];
+		
+		
+		if ($cache) {
+			$key = $this->_model . DS . __CLASS__ . DS . __FUNCTION__ . DS .  "$id";
+			if ($this->cache()){
+				// Caching reading allowed for this model
+				$result = $this->cache->read($key);
+				if (!empty($result)){
+					return $result['rows'];
+				}
 			}
 		}
-        $result=$this->callBusinessLogicService($this->_model . "/getall" , array($this->_searchField => $id) );
+        $result = $this->callBusinessLogicService($this->_model . "/getall" , array($this->_searchField => $id) );
+
+		// Write always
 		$this->cache->write($key, $result);
 		return $result['rows'];
     }
