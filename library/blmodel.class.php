@@ -8,6 +8,9 @@ class BLModel extends BLQuery {
 	protected $_searchField;
 	protected $_cached=true;
 
+	public $debug = FALSE;
+
+
 	function __construct($model, $_idF="id", $_searchF=null) {
 		parent::__construct();
 		$this->_model = $model;
