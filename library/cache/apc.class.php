@@ -16,6 +16,10 @@ class Cache_Apc extends Cache {
 			// Do not read cache in certain backend environments such as extranet / admin tools
 			return false;
 		}
+		
+		if (!function_exists('apc_exists')) {
+			return false;
+		}
 		if (apc_exists($key)) {
 			$this->logger->log("Cache:read:$key");
 			return apc_fetch($key);
@@ -27,6 +31,9 @@ class Cache_Apc extends Cache {
 		if (defined("CACHE_DISABLED") && CACHE_DISABLED){
 			// Do not read cache in certain backend environments such as extranet / admin tools
 			return;
+		}
+		if (!function_exists('apc_store')) {
+			return false;
 		}
 		apc_store($key, $value);
 		$this->logger->log("Cache:write:$key");
