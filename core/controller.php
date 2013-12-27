@@ -113,5 +113,14 @@ class Core_Controller extends BLController {
 		$this->set("tab", $tab);
 		return $tab;
 	}
+
+
+	function setSubTabName($c){
+		$c = preg_replace("@Controller$@", "", $c);
+		$x = split('_', $c);
+		$subtab = strtolower($x[2]);
+		$this->set("subtab", $subtab);
+		return $subtab;
+	}
 	
 }
