@@ -109,7 +109,6 @@ class Core_Controller extends BLController {
 	
 	function setTabName($c){
 		$x = split('_', $c);
-		print "<pre>" . print_r($x, true) . "</pre>";
 		$tab = strtolower($x[1]);
 		$this->set("tab", $tab);
 		return $tab;

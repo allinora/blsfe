@@ -4,7 +4,7 @@ class Core_Permissions_AdminController extends Admin_Controller {
 
 	function beforeAction(){
 		parent::beforeAction();
-		$this->set("tab", "users");
+		$this->tab=$this->setTabName(__CLASS__);
 		$this->model=new BLModel("sys/permission", "id");
 	}
 
