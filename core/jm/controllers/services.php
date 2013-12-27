@@ -5,6 +5,7 @@ class Core_Jm_ServicesController extends Admin_Controller {
 	function beforeAction(){
 		parent::beforeAction();
 		$this->tab = $this->setTabName(__CLASS__);
+		$this->setSubTabName(__CLASS__);
 		$this->model=new BLModel("sys/jm/service", "id", "");
 	}
 
@@ -16,6 +17,11 @@ class Core_Jm_ServicesController extends Admin_Controller {
 	function showAction($id) {
 		$res = $this->model->get($id);
 		$this->set("aData", $res);
+		
+		$model=new BLModel("sys/jm/service", "id");
+		$allocations = $model->getAllocations(['id' => $id]);
+		$this->set("allocations", $allocations);
+		
 	}
 	
 	function formatters(){

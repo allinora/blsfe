@@ -5,11 +5,13 @@ class Core_Jm_AllocationsController extends Admin_Controller {
 	function beforeAction(){
 		parent::beforeAction();
 		$this->tab = $this->setTabName(__CLASS__);
+		$this->setSubTabName(__CLASS__);
 		$this->model=new BLModel("sys/jm/service/allocation", "id", "service_id");
 	}
 
 	function indexAction($service_id) {
 		$res = $this->model->getall($service_id);
+		print "<pre>" . print_r($res, true) . "</pre>";
 		$this->set("aData", $res);
 	}
 
@@ -23,7 +25,15 @@ class Core_Jm_AllocationsController extends Admin_Controller {
 		$formatters=array();
 		include_once(BLSFE_ROOT . "/helpers/modelList.php");
 
-		$this->res = $this->model->get($_REQUEST['id']);
+
+		$this->res = array();
+		$this->res['worker_id'] = 0;
+		$this->res['service_id'] = 0;
+		$this->res['auto_start'] = 0;
+
+		if (isset($_REQUEST['id'])){
+			$this->res = $this->model->get($_REQUEST['id']);
+		}
 
 		$formatters["worker_id"]["function"] = function(){ 
 			return blsfe_helper_modelList("sys/jm/worker", null , "id", null, 'worker_id', $this->res['worker_id']);

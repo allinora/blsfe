@@ -2,11 +2,11 @@
     <div class="navbar navbar-default navbar-top" role="navigation" >
       <div class="container" style="background-color: silver">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/core/jm/index">Dashboard</a></li>
-            <li><a href="/core/jm/roles">Roles</a></li>
-            <li><a href="/core/jm/workers">Workers</a></li>
-            <li><a href="/core/jm/jobs">Jobs</a></li>
-            <li><a href="/core/jm/services">Services</a></li>
+            <li <{if $subtab=="index"}> class="active" <{/if}> ><a href="/core/jm/index">Dashboard</a></li>
+            <li <{if $subtab=="roles"}> class="active" <{/if}> ><a href="/core/jm/roles">Roles</a></li>
+            <li <{if $subtab=="workers"}> class="active" <{/if}> ><a href="/core/jm/workers">Workers</a></li>
+            <li <{if $subtab=="jobs"}> class="active" <{/if}> ><a href="/core/jm/jobs">Jobs</a></li>
+            <li <{if $subtab=="services"}> class="active" <{/if}> ><a href="/core/jm/services">Services</a></li>
           </ul>
       </div>
     </div>
