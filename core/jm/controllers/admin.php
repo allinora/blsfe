@@ -1,6 +1,6 @@
 <?php
 
-class Core_Jm_IndexController extends Admin_Controller {
+class Core_Jm_AdminController extends Admin_Controller {
 
 	function beforeAction(){
 		parent::beforeAction();
