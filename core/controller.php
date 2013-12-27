@@ -76,6 +76,8 @@ class Core_Controller extends BLController {
 			if (!$id){
 				die("Go away");
 			}
+			$_REQUEST['id'] = $id;
+			
 			if ($this->model->methodReplacements["get"]){
 				$getter=$this->model->methodReplacements["get"];
 				$res=$this->model->$getter(array($this->model->idField() => $id));
