@@ -10,7 +10,7 @@ class Core_Jm_RolesController extends Admin_Controller {
 	}
 	function indexAction() {
 		$res = $this->model->getall(1);
-		print "<pre>" . print_r($res, true) . "</pre>";
+		//print "<pre>" . print_r($res, true) . "</pre>";
 		$this->set("aData", $res);
 	}
 	

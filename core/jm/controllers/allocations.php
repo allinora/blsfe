@@ -11,7 +11,7 @@ class Core_Jm_AllocationsController extends Admin_Controller {
 
 	function indexAction($service_id) {
 		$res = $this->model->getall($service_id);
-		print "<pre>" . print_r($res, true) . "</pre>";
+		//print "<pre>" . print_r($res, true) . "</pre>";
 		$this->set("aData", $res);
 	}
 
