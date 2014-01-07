@@ -12,7 +12,10 @@
 <tr>
 	<td><{$page.id}></td>
 	<td><{$page.name}></td>
-	<td><a href="/<{$lang}>/core/systememails/admin/edit/<{$page.id}>">Edit</a></td>
+	<td>
+		<a href="/<{$lang}>/core/systememails/admin/edit/<{$page.id}>">Edit</a>
+		<a href="/<{$lang}>/core/systememails/admin/delete/<{$page.id}>">Delete</a>
+		</td>
 </tr>
 
 <{/foreach}>
