@@ -112,7 +112,20 @@ class BLTransport{
 	
 
 	function http_request($url, $method, $params, $http_params=array()) {
-
+		
+		if (defined('ALWAYS_REQUIRE_COMPANY_ID')){
+			if (!isset($params['request_data']['company_id'])){
+				if (isset($_SESSION['company_id'])){
+					$params['request_data']['company_id'] = $_SESSION['company_id'];
+				} else {
+					$params['request_data']['company_id'] = 0;
+					// throw new Exception("Cannot call backend without the company_id in $url<pre>" . print_r($params, true) . "</pre>");
+				}
+			} else {
+				$_SESSION['company_id'] = $params['request_data']['company_id'] ;
+			}
+			//print "<pre>$url" . print_r($params, true) . "</pre>";
+		}
 		// Http stream options
 		// See http://www.php.net/manual/en/context.http.php
 		$headers = array();

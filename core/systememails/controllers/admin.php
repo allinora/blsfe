@@ -18,6 +18,12 @@ class Core_Systememails_AdminController extends Admin_Controller {
 			$this->redirect("core", "systememails/admin/");
 		}
 	}
+
+	function deleteAction($id) {
+			$this->render=0;
+			$xx= $this->model->delete($id);
+			$this->redirect("core", "systememails/admin/");
+	}
 	
 	function editAction($id, $redirect=null, $formatters = array()) {
 		$templateData=$this->model->getTemplateWithTranslations(array("id"=>$id));
