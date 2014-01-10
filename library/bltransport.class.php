@@ -8,13 +8,20 @@ class BLTransport{
 
 	protected function callBusinessLogicService($service, $request_params = array(), $method = "GET", $params = array()){
 		if (defined("BLSEBE_TRANSPORT")){
+			$res = null;
 			if (BLSEBE_TRANSPORT == "local"){
-				return $this->callBusinessLogicServiceLocal($service, $request_params, $method, $params);
+				$res = $this->callBusinessLogicServiceLocal($service, $request_params, $method, $params);
 			} else {
-				return $this->callBusinessLogicServiceHttp($service, $request_params, $method, $params);
+				$res = $this->callBusinessLogicServiceHttp($service, $request_params, $method, $params);
 			}
+			if (!is_array($res)){
+				if (substr($res, 0, 9) == "Exception"){
+					// print "<pre>" . print_r($res, true) . "</pre>"; exit;
+				}
+			}
+			return $res;
 		} else {
-			return $this->callBusinessLogicServiceHttp($service, $request_params, $method, $params);
+			throw new Exception ("BLSEBE_TRANSPORT is not defined.");
 		}
 	}
 	
