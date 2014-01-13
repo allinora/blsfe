@@ -14,7 +14,9 @@ class BLTransport{
 			} else {
 				$res = $this->callBusinessLogicServiceHttp($service, $request_params, $method, $params);
 			}
-			if (!is_array($res)){
+			if (!is_array($res) && is_string($res)){
+				//print "<pre>";  var_dump($res) ; print  "</pre>";
+				//print "<pre>" . print_r($res, true) . "</pre>";
 				if (substr($res, 0, 9) == "Exception"){
 					// print "<pre>" . print_r($res, true) . "</pre>"; exit;
 				}
