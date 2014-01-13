@@ -34,6 +34,7 @@ class Core_Systememails_AdminController extends Admin_Controller {
 		$template=array();
 		$template["id"]=$templateData["id"];
 		$template["name"]=$templateData["name"];
+		$template["description"]=$templateData["description"];
 		foreach($this->backend_languages as $key=>$l){
 			if ($templateData["translations"][$key]){
 				$template["translations"][$key]=$templateData["translations"][$key];
