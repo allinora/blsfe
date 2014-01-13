@@ -14,7 +14,10 @@ class Core_Systememails_AdminController extends Admin_Controller {
 
 	function addAction($redirect=null) {
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){
-			$this->model->add($_REQUEST);
+			// print "<pre>" . print_r($_REQUEST, true)  . "</pre>";
+			$_REQUEST['customizable']=1;
+			$xx = $this->model->add($_REQUEST);
+			// print "<pre>" . print_r($xx, true)  . "</pre>";
 			$this->redirect("core", "systememails/admin/");
 		}
 	}
