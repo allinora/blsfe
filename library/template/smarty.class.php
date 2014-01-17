@@ -77,10 +77,13 @@ class Template_Smarty extends Template {
 			define('SMARTY_TEMPLATE_DIR', ROOT.DS."application".DS."views");
 		}
 		if (!defined("SMARTY_COMPILE_DIR")) {
-			define('SMARTY_COMPILE_DIR', ROOT.DS."tmp".DS."smarty_compile");
+			//define('SMARTY_COMPILE_DIR', ROOT.DS."tmp".DS."smarty_compile");
+			define('SMARTY_COMPILE_DIR', sys_get_temp_dir());
+			
 		}
 		if (!defined("SMARTY_CACHE_DIR")) {
-			define('SMARTY_CACHE_DIR', ROOT.DS."tmp".DS."smarty_cache");
+			//define('SMARTY_CACHE_DIR', ROOT.DS."tmp".DS."smarty_cache");
+			define('SMARTY_COMPILE_DIR', sys_get_temp_dir());
 		}
 		if(!defined("SMARTY_LEFT_DELIMETER")){
 			define('SMARTY_LEFT_DELIMETER', "<{");
@@ -133,7 +136,6 @@ class Template_Smarty extends Template {
 		} else {
 			$this->smarty->caching = 0;
 			$this->smarty->compile_check = false;
-
 		}		
 	}
 	
