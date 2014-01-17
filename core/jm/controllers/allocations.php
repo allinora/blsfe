@@ -6,13 +6,16 @@ class Core_Jm_AllocationsController extends Admin_Controller {
 		parent::beforeAction();
 		$this->tab = $this->setTabName(__CLASS__);
 		$this->setSubTabName(__CLASS__);
-		$this->model=new BLModel("sys/jm/service/allocation", "id", "service_id");
+		$this->model = new BLModel("sys/jm/service/allocation", "id", "service_id");
 	}
 
 	function indexAction($service_id) {
-		$res = $this->model->getall($service_id);
-		//print "<pre>" . print_r($res, true) . "</pre>";
-		$this->set("aData", $res);
+		$this->redirect("core/jm/services/show/" . $service_id);
+		$model = new BLModel("sys/jm/service", "id");
+		$allocations = $model->getAllocations(['id' => $service_id]);
+		
+		print "<pre>" . print_r($allocations, true) . "</pre>";
+		$this->set("aData", $allocations);
 	}
 
 	function showAction($id) {
@@ -50,7 +53,8 @@ class Core_Jm_AllocationsController extends Admin_Controller {
 	}
 
 	function addAction($redirect=null) {
-		parent::addAction("core/". $this->tab. "/allocations");
+		print "<pre>" . print_r($_REQUEST, true) . "</pre>";
+		parent::addAction("core/". $this->tab. "/services/show/" . $_REQUEST['service_id']);
 	}
 	
 	function editAction($id, $redirect=null, $formatters=array()) {
