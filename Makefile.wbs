@@ -1,0 +1,13 @@
+default:
+	echo Read the Makefile
+
+pilot_hosts := jobserver admin
+
+deploy:
+	for i in $(pilot_hosts) ; do \
+    	rsync -av --exclude=.git . root@$$i.int.worldsoft-wbs.com:/opt/allinora/blsfe/ ; \
+	done
+	# Development
+	rsync -av --exclude=.git  -e ssh . root@wsdev01.worldsoft.ch:/opt/allinora/blsfe/
+	@echo Deploying to codeserver and distributing to relmgr
+	ssh dev@codeserver.worldsoft.ch /home/dev/projects/releasemanager/bin/sync-repo.pl allinora_blsfe

@@ -29,13 +29,10 @@ css:
 	lessc assets/js/jquery/cowrousel/cowrousel.less.css assets/js/jquery/cowrousel/cowrousel.css
 
 deployws:
-	rsync -av --exclude=.git  -e ssh . root@wsdev01.worldsoft.ch:/opt/allinora/blsfe
+	make -f Makefile.wbs deploy
 
 deploywsgenesis:
 	rsync -av -e ssh . root@admin.genesis.worldsoft.ch:/opt/allinora/blsfe
-
-deploywspilot:
-	rsync -av --exclude=.git  -e ssh . root@10.0.238.12:/mounts/wbs-nas/allinora/blsfe/
 
 dist:
 	rsync -av -e ssh . aghaffar@192.168.1.10:www/blsfe/
