@@ -12,6 +12,21 @@ jQuery(document).ready(function() {
 			
         });
 });
+
+// From http://stackoverflow.com/a/10524697
+// Sticky tabs
+$(function() { 
+  //for bootstrap 3 use 'shown.bs.tab' instead of 'shown' in the next line
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    localStorage.setItem('lastTab', $(e.target).attr('id'));
+  });
+
+  //go to the latest tab, if it exists:
+  var lastTab = localStorage.getItem('lastTab');
+  if (lastTab) {
+      $('#'+lastTab).tab('show');
+  }
+});
 </script>
 <style>
 .page-title {
@@ -29,7 +44,7 @@ jQuery(document).ready(function() {
 
         <ul class="nav nav-tabs" data-tabs="tabs">
 			<{foreach from=$aData["translations"] item=l name=foo}>
-			<li <{if $smarty.foreach.foo.first}> class="active" <{/if}>><a data-toggle="tab"  href="#tabs-<{$l.lang}>"><{$l.lang}></a></li>
+			<li <{if $smarty.foreach.foo.first}> class="active" <{/if}>><a data-toggle="tab"  id="tab-<{$l.lang}>" href="#tabs-<{$l.lang}>"><{$l.lang}></a></li>
 			<{/foreach}>
         </ul>
 
