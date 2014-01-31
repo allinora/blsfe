@@ -1,7 +1,7 @@
 <?php
 
 
-function blsfe_helper_bouncetypeList($status){
+function blsfe_helper_bouncetypelist($status){
 	$options=array("SOFT", "HARD", "NONE");
 	$text="";
 	foreach($options as $op){

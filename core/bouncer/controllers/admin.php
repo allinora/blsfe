@@ -17,7 +17,7 @@ class Core_Bouncer_AdminController extends Admin_Controller {
 
 	function formatters(){
 		$formatters=array();
-		$formatters["type"]["helper"]="blsfe_helper_bouncetypeList";
+		$formatters["type"]["helper"]="blsfe_helper_bouncetypelist";
 		return $formatters;
 	}
 
