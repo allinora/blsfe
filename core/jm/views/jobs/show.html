@@ -1,7 +1,29 @@
+
 <{ include file = "<{$blsfe_root}>/core/jm/views/menu.html" }>
 
 <div class="container">
     <h1><{$aData.name}></h1>
-    <h2><{$aData.cmd}></h2>
-        <p><{$aData.description}></p>
+		<table class="table table-striped table-bordered table-condensed">
+			<tr>
+				<th>What it runs</th><td><{$aData.cmd}></td>
+			</tr>
+			<tr>
+				<th>What it does</th><td><{$aData.description}></td>
+			</tr>
+		</table>
+	    <h3>Roles <span class="label"><a href="/core/jm/rolelink/add/?job_id=<{$aData.id}>">Add</a></span></h3>
+ 			<table class="table table-striped table-bordered table-condensed">
+				<tr>
+					<thead>
+						<th>Role</th>
+						<th>Description</th>
+					</thead>
+				</tr>
+				<{foreach from=$aRoles item=row}>
+				<tr> 
+					<td> <{$row.name}> </td> 
+					<td> <{$row.description}> </td> 
+				</tr>
+				<{/foreach}>
+			</table>
 </div>
