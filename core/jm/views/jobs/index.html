@@ -5,6 +5,7 @@
 <tr>
 	<th>ID</th>
 	<th>Name</th>
+	<th>Description</th>
 	<th><a href='/<{$lang}>/core/<{$tab}>/jobs/add'>Add</a></th>
 	
 </tr>
@@ -16,6 +17,7 @@
 <tr>
 	<td><{$row.id}></td>
 	<td><a href="/<{$lang}>/core/<{$tab}>/jobs/show/<{$row.id}>"><{$row.name}></a></td>
+	<td><{$row.description}></td>
 	<td><a href="/<{$lang}>/core/<{$tab}>/jobs/edit/<{$row.id}>">Edit</a></td>
 </tr>
 <{/if}>
