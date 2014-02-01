@@ -85,6 +85,7 @@ class Core_Controller extends BLController {
 				// Standard method
 				$res=$this->model->get($id);
 			}
+			$this->res = $res;
 			$form=new BLForm($this->model->model(), $res);
 			$this->preFormatters($form, $res, $formatters);
 			$form->setupTray();
