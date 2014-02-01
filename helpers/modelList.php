@@ -10,6 +10,7 @@ function blsfe_helper_modelList($model, $action=null, $idField, $searchField, $f
 	    $rows=$model->$action();
 	}
 	$text="<select name='$field_name' id='$field_name'>";
+	$text.="<option value=''>Please select</option>";
 	if (is_array($rows)) {
 		foreach($rows as $row){
 			$text.="<option value='" . $row["id"] . "'";
