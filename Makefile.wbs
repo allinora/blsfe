@@ -1,7 +1,8 @@
 default:
 	echo Read the Makefile
 
-pilot_hosts := jobserver admin
+# Just copy to one host. the rest gets it over nfs
+pilot_hosts := bls
 
 deploy:
 	for i in $(pilot_hosts) ; do \
