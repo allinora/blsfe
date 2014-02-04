@@ -203,10 +203,13 @@ class BLForm extends BLModel {
 	function countryList($id, $field){
 		$m=new BLModel("sys/country");
 		$list=$m->getall(1);
-		$ret=array();
+		$ret = array();
 		foreach($list as $c){
-			$ret[$c["isocode"]]["id"]=$c["isocode"];
-			$ret[$c["isocode"]]["value"]=$c["name"];
+			$ret[$c["code"]] = $c["name"];
+		}
+		asort($ret);
+		foreach($ret as $key => $value ){
+			$ret[$key] = array('id' => $key, 'value' => $value);
 		}
 		return $this->selectbox($id, $field, $ret);
 	}
