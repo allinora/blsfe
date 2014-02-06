@@ -1,5 +1,5 @@
 <?php
-include_once("/opt/allinora/blsbe/library/3rdparty/S3.php");
+include_once(__DIR__ . "/../3rdparty/S3.php");
 class BLS3 extends S3 {
 	
 	public function __construct($accessKey = null, $secretKey = null, $useSSL = false, $endpoint = 's3.amazonaws.com'){

@@ -47,7 +47,9 @@ class Core_Controller extends BLController {
 	function addAction($redirect) {
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			$x = $this->model->add($_POST);
-			
+			if (substr($x, 0, 10) == "Exception:") {
+				$this->sendError("danger", "Backend", $x);
+			}
 			$this->redirect($redirect);
 		}
 		
@@ -67,7 +69,11 @@ class Core_Controller extends BLController {
 				$res=$this->model->$setter($_POST);
 			} else {
 				// Standard method
-				$x=$this->model->set($_POST);
+				$x = $this->model->set($_POST);
+				if (substr($x, 0, 10) == "Exception:") {
+					$this->sendError("danger", "Backend", $x);
+				}
+				
 			}
 			$this->redirect($redirect);
 		}
@@ -123,5 +129,15 @@ class Core_Controller extends BLController {
 		$this->set("subtab", $subtab);
 		return $subtab;
 	}
+	
+	function sendError($type, $title, $text){
+             print '<html><head><link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/></head>';
+             print '<body>';
+             print '<div class="jumbotron alert alert-' . $type . '">';
+             print "<h3>$title</h3>";
+             print $text;
+             print "</div></body></html>";
+             exit;
+     }
 	
 }
