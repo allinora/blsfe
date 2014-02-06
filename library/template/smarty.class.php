@@ -83,7 +83,7 @@ class Template_Smarty extends Template {
 		}
 		if (!defined("SMARTY_CACHE_DIR")) {
 			//define('SMARTY_CACHE_DIR', ROOT.DS."tmp".DS."smarty_cache");
-			define('SMARTY_COMPILE_DIR', sys_get_temp_dir());
+			define('SMARTY_CACHE_DIR', sys_get_temp_dir());
 		}
 		if(!defined("SMARTY_LEFT_DELIMETER")){
 			define('SMARTY_LEFT_DELIMETER', "<{");
@@ -122,13 +122,13 @@ class Template_Smarty extends Template {
 
 
 
-		$this->smarty->template_dir = SMARTY_TEMPLATE_DIR;
-		$this->smarty->compile_dir = SMARTY_COMPILE_DIR;
-		$this->smarty->cache_dir = SMARTY_CACHE_DIR;
-		$this->smarty->plugins_dir[] = SMARTY_BLSFE_PLUGINS_DIR;
-		$this->smarty->plugins_dir[] = SMARTY_LOCAL_PLUGINS_DIR;
-		$this->smarty->left_delimiter = SMARTY_LEFT_DELIMETER;
-		$this->smarty->right_delimiter = SMARTY_RIGHT_DELIMETER;
+		$this->smarty->template_dir 	= SMARTY_TEMPLATE_DIR;
+		$this->smarty->compile_dir 		= SMARTY_COMPILE_DIR;
+		$this->smarty->cache_dir 		= SMARTY_CACHE_DIR;
+		$this->smarty->plugins_dir[] 	= SMARTY_BLSFE_PLUGINS_DIR;
+		$this->smarty->plugins_dir[] 	= SMARTY_LOCAL_PLUGINS_DIR;
+		$this->smarty->left_delimiter 	= SMARTY_LEFT_DELIMETER;
+		$this->smarty->right_delimiter 	= SMARTY_RIGHT_DELIMETER;
 
 		if (DEVELOPMENT_ENVIRONMENT){
 			$this->smarty->caching = 0;
