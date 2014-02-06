@@ -7,8 +7,8 @@ class App_Controller extends BLController {
 		// Set the reference to cache
 		$this->cache=$cache;
 		// Allow getting just the output without the wrapper
-		if ($_REQUEST["nowrapper"]==1){
-			$this->doNotRenderHeader=1;
+		if (isset($_REQUEST["nowrapper"]) && $_REQUEST["nowrapper"] == 1){
+			$this->doNotRenderHeader = 1;
 		}
 	}
 	
