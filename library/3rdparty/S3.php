@@ -2014,8 +2014,9 @@ final class S3Request
 		//else
 		//	$this->resource = $this->uri;
 
-		if ($this->bucket !== '')
-		{
+		if ($this->bucket !== '') {
+			
+			/*
 			if ($this->__dnsBucketName($this->bucket))
 			{
 				$this->headers['Host'] = $this->bucket.'.'.$this->endpoint;
@@ -2029,6 +2030,22 @@ final class S3Request
 				$this->bucket = '';
 				$this->resource = $this->uri;
 			}
+			*/
+			
+			# AG (2014-02-07)
+			# Force using the hostname/bucket format
+			
+			$this->headers['Host'] = $this->endpoint;
+			$this->uri = $this->uri;
+			if ($this->bucket !== '') {
+				$this->uri = '/'.$this->bucket.$this->uri;
+			}
+			$this->bucket = '';
+			$this->resource = $this->uri;
+			
+			
+			
+			
 		}
 		else
 		{
