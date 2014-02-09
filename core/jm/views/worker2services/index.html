@@ -5,7 +5,7 @@
 <tr>
 	<th>ID</th>
 	<th>Name</th>
-	<th><a href='/<{$lang}>/core/<{$tab}>/allocations/add'>Add</a></th>
+	<th><a href='/<{$lang}>/core/<{$tab}>/worker2services/add'>Add</a></th>
 	
 </tr>
 </thead>
@@ -15,8 +15,8 @@
 <{if $row.id}>
 <tr>
 	<td><{$row.id}></td>
-	<td><a href="/<{$lang}>/core/<{$tab}>/allocations/show/<{$row.id}>"><{$row.name}></a></td>
-	<td><a href="/<{$lang}>/core/<{$tab}>/allocations/edit/<{$row.id}>">Edit</a></td>
+	<td><a href="/<{$lang}>/core/<{$tab}>/worker2services/show/<{$row.id}>"><{$row.name}></a></td>
+	<td><a href="/<{$lang}>/core/<{$tab}>/worker2services/edit/<{$row.id}>">Edit</a></td>
 </tr>
 <{/if}>
 <{/foreach}>

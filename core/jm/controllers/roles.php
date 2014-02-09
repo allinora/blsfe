@@ -14,6 +14,15 @@ class Core_Jm_RolesController extends Admin_Controller {
 		$this->set("aData", $res);
 	}
 	
+	function showAction($id) {
+		$res = $this->model->get($id);
+		$this->set("aData", $res);
+		
+		$model=new BLModel("sys/jm/role", "id");
+		$aWorkers = $model->getWorkers(['id' => $id]);
+		$this->set("aWorkers", $aWorkers);
+		
+	}
 
 	function formatters(){
 		$formatters=array();

@@ -1,6 +1,6 @@
 <?php
 
-class Core_Jm_RolelinkController extends Admin_Controller {
+class Core_Jm_Job2RolesController extends Admin_Controller {
 
 	function beforeAction(){
 		parent::beforeAction();
@@ -32,18 +32,26 @@ class Core_Jm_RolelinkController extends Admin_Controller {
 		$formatters["role_id"]["function"] = function(){ 
 			return blsfe_helper_modelList("sys/jm/role", null , "id", null, 'role_id', $this->res['role_id']);
 		};
-		$formatters["job_id"]["function"] = function(){ 
-			return blsfe_helper_modelList("sys/jm/job", null , "id", null, 'job_id', $this->res['job_id']);
-		};
+		$formatters["job_id"]['value'] = $this->res['job_id'];
+		$formatters["job_id"]['hidden'] = 1;
 		
 		return $formatters;
 	}
 
 	function addAction($redirect=null) {
+		$this->setBasicData($_REQUEST['job_id']);
 		parent::addAction("core/". $this->tab. "/jobs/show/" . $_REQUEST['job_id']);
 	}
 	
 	function editAction($id, $redirect=null, $formatters=array()) {
+		$this->setBasicData($_REQUEST['job_id']);
 		parent::editAction($id, "core/". $this->tab. "/jobs");
+	}
+	private function setBasicData($id) {
+		if ($id>0){
+			$_thisModel = new BLModel("sys/jm/job", "id");
+			$res = $_thisModel->get($id);
+			$this->set("aData", $res);
+		}
 	}
 }

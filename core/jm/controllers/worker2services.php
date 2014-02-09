@@ -1,6 +1,6 @@
 <?php
 
-class Core_Jm_AllocationsController extends Admin_Controller {
+class Core_Jm_Worker2ServicesController extends Admin_Controller {
 
 	function beforeAction(){
 		parent::beforeAction();
@@ -13,11 +13,6 @@ class Core_Jm_AllocationsController extends Admin_Controller {
 		$this->redirect("core/jm/services/show/" . $service_id);
 	}
 
-	function showAction($id) {
-		$res = $this->model->get($id);
-		$this->set("aData", $res);
-	}
-	
 	function formatters(){
 		// blsfe_helper_modelList($model, $action=null, $idField, $searchField, $field_name, $id){
 		$formatters=array();
@@ -29,13 +24,26 @@ class Core_Jm_AllocationsController extends Admin_Controller {
 		$this->res['service_id'] = 0;
 		$this->res['auto_start'] = 0;
 
+		if  (isset($_REQUEST['worker_id'])) {
+			$this->res['worker_id'] = $_REQUEST['worker_id'];
+		}
+		if  (isset($_REQUEST['service_id'])) {
+			$this->res['service_id'] = $_REQUEST['service_id'];
+		}
+
+
+		$formatters["service_id"]["value"] = $this->res['service_id'];
+		$formatters["service_id"]["hidden"] = true;
 
 		$formatters["worker_id"]["function"] = function(){ 
 			return blsfe_helper_modelList("sys/jm/worker", null , "id", null, 'worker_id', $this->res['worker_id']);
 		};
+
+		/*
 		$formatters["service_id"]["function"] = function(){ 
 			return blsfe_helper_modelList("sys/jm/service", null , "id", null, 'service_id', $this->res['service_id']);
 		};
+		*/
 		
 		$formatters["auto_start"]["function"] = function(){ 
 			include_once(BLSFE_ROOT . "/helpers/yesno.php");
@@ -45,11 +53,20 @@ class Core_Jm_AllocationsController extends Admin_Controller {
 	}
 
 	function addAction($redirect=null) {
-		print "<pre>" . print_r($_REQUEST, true) . "</pre>";
+		$this->setBasicData($_REQUEST['service_id']);
 		parent::addAction("core/". $this->tab. "/services/show/" . $_REQUEST['service_id']);
 	}
 	
 	function editAction($id, $redirect=null, $formatters=array()) {
-		parent::editAction($id, "core/". $this->tab. "/allocations");
+		$this->setBasicData($_REQUEST['service_id']);
+		parent::editAction($id, "core/". $this->tab. "/worker2services");
+	}
+	
+	private function setBasicData($id) {
+		if ($id>0){
+			$_thisModel = new BLModel("sys/jm/service", "id");
+			$res = $_thisModel->get($id);
+			$this->set("aData", $res);
+		}
 	}
 }
