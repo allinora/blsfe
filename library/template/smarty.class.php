@@ -78,12 +78,27 @@ class Template_Smarty extends Template {
 		}
 		if (!defined("SMARTY_COMPILE_DIR")) {
 			//define('SMARTY_COMPILE_DIR', ROOT.DS."tmp".DS."smarty_compile");
-			define('SMARTY_COMPILE_DIR', sys_get_temp_dir()  . "/smarty");
+			define('SMARTY_COMPILE_DIR', sys_get_temp_dir()  . "/smartycompile/" . basename(ROOT));
+			if (!is_dir(SMARTY_COMPILE_DIR)){
+				try {
+					mkdir(SMARTY_COMPILE_DIR, 0777, true);
+				} catch (\Exception $e) {
+					throw new Exception($e->getMessage());
+				}
+			}
 			
 		}
 		if (!defined("SMARTY_CACHE_DIR")) {
 			//define('SMARTY_CACHE_DIR', ROOT.DS."tmp".DS."smarty_cache");
-			define('SMARTY_CACHE_DIR', sys_get_temp_dir() . "/smarty");
+			define('SMARTY_CACHE_DIR', sys_get_temp_dir() . "/smartycache/" . basename(ROOT));
+			if (!is_dir(SMARTY_CACHE_DIR)){
+				try {
+					mkdir(SMARTY_CACHE_DIR, 0777, true);
+				} catch (\Exception $e) {
+					throw new Exception($e->getMessage());
+				}
+				
+			}
 		}
 		if(!defined("SMARTY_LEFT_DELIMETER")){
 			define('SMARTY_LEFT_DELIMETER', "<{");
