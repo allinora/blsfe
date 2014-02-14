@@ -202,7 +202,7 @@ class BLTransport{
 	}
 
 	function sendError($type, $title, $text){
-		syslog(LOG_ERR, "$type: $title: $text" );
+		syslog(LOG_ERR, "blsfe: error: $type: $title: $text" );
 		print '<html><head><link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/></head>';
 		print '<body>';
 		print '<div class="jumbotron alert alert-' . $type . '">';
