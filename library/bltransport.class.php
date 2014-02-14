@@ -193,8 +193,22 @@ class BLTransport{
 		}
 		
 		$result = trim($response);
+		
+		if (substr($result, 0, 30) == "SCGIServer Uncaught Exception:") {
+			$this->sendError("danger", "Backend", $response);
+		}
+		
 		return $result;
 	}
 
-
+	function sendError($type, $title, $text){
+		syslog(LOG_ERR, "$type: $title: $text" );
+		print '<html><head><link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/></head>';
+		print '<body>';
+		print '<div class="jumbotron alert alert-' . $type . '">';
+		print "<h3>$title</h3>";
+		print $text;
+		print "</div></body></html>";
+		exit;
+     }
 }
