@@ -16,6 +16,7 @@ class BaseController extends App_Controller {
 	}
 	function beforeAction () {
 		parent::beforeAction();
+		$this->addPackage("core");
 		$this->checkSession();
 	}
 
@@ -23,5 +24,6 @@ class BaseController extends App_Controller {
 	}
 
 	function afterAction() {
+		parent::afterAction();
 	}
 }
