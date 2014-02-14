@@ -78,12 +78,12 @@ class Template_Smarty extends Template {
 		}
 		if (!defined("SMARTY_COMPILE_DIR")) {
 			//define('SMARTY_COMPILE_DIR', ROOT.DS."tmp".DS."smarty_compile");
-			define('SMARTY_COMPILE_DIR', sys_get_temp_dir());
+			define('SMARTY_COMPILE_DIR', sys_get_temp_dir()  . "/smarty");
 			
 		}
 		if (!defined("SMARTY_CACHE_DIR")) {
 			//define('SMARTY_CACHE_DIR', ROOT.DS."tmp".DS."smarty_cache");
-			define('SMARTY_CACHE_DIR', sys_get_temp_dir());
+			define('SMARTY_CACHE_DIR', sys_get_temp_dir() . "/smarty");
 		}
 		if(!defined("SMARTY_LEFT_DELIMETER")){
 			define('SMARTY_LEFT_DELIMETER', "<{");
