@@ -56,8 +56,18 @@ class BLTransport{
 		$context["_GET"] = $request_params;
 		$app = new BLS_Router();
 		$res = $app($context);
+		
+		//print "<pre>" . print_r($res, true) . "</pre>";
 		if ($res[0] == 200){
-			return unserialize($res[2]);
+			if (substr($res[2], 0, 30) == "SCGIServer Uncaught Exception:") {
+				$this->sendError("danger", "Backend", $res[2]);
+			}
+			$retData = unserialize($res[2]);
+			if (!empty($retData)  && is_string($retData) && substr($retData, 0, 10) == "Exception:") {
+				$this->sendError("danger", "Backend", $retData);
+			}
+			
+			return $retData;
 		}
 	}
 
