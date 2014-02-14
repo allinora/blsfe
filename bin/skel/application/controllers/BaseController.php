@@ -16,7 +16,9 @@ class BaseController extends App_Controller {
 	}
 	function beforeAction () {
 		parent::beforeAction();
-		$this->addPackage("core");
+		// this is how to activate packages
+		// $this->addPackage("core");
+		// $this->addPackage("jquery");
 		$this->checkSession();
 	}
 

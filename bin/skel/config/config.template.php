@@ -10,9 +10,9 @@ define ('DEVELOPMENT_ENVIRONMENT',true);
 define('BASE_URL','/%%appname%%');
 
 # use this for development. Makes a direct connections to the BLS backend
-define('BLSEBE_TRANSPORT','local'); 
-define('BLSBE_PROJECT_HOME','/some/path/to/your/appbls'); 
-define('BLSBE_BOOTSTRAP_FILE','/usr/local/allinora/blsbe/library/bootstrap.php'); 
+# define('BLSEBE_TRANSPORT','local'); 
+# define('BLSBE_PROJECT_HOME','/some/path/to/your/appbls'); 
+# define('BLSBE_BOOTSTRAP_FILE','/opt/allinora/blsbe/library/bootstrap.php'); 
 
 # use this for production. The backend server shoud be on a different host / load balancer
 # define('BLSEBE_TRANSPORT','http'); 
@@ -20,24 +20,14 @@ define('BLSBE_BOOTSTRAP_FILE','/usr/local/allinora/blsbe/library/bootstrap.php')
 # define('BLSERVER_SHARED_KEY','s0m3p433');
 
 
-define('CACHE_BACKEND', 'FILE');
-define('CACHE_PATH', ROOT . DS . "tmp" . DS . "cache");
+# define('CACHE_BACKEND', 'FILE');
+# define('CACHE_PATH', ROOT . DS . "tmp" . DS . "cache");
 
-define('SESSION_BACKEND', 'FILE');
-define('SESSION_PATH', ROOT . DS . "tmp" . DS . "sessions");
+# define('SESSION_BACKEND', 'FILE');
+# define('SESSION_PATH', ROOT . DS . "tmp" . DS . "sessions");
 
 //language related
 define('LANGUAGES', 'en|de|fr');
-define('DATE_FORMAT_EN', "n-j-Y, H:i:s");
-define('DATE_FORMAT_FR', "j/n/Y, H:i:s");
-define('DATE_FORMAT_DE', "j/n/Y, H:i:s");
-
-// Images directory
-define('CMS_IMAGES_DIRECTORY', $_SERVER["DOCUMENT_ROOT"] . "/uploads/cms/images");
-
-// Directory to store User-Profile-Picture
-define('USER_AVATARS_DIRECTORY', $_SERVER["DOCUMENT_ROOT"] . "/uploads/users/avatars");
-
 
 
 define('TEMPLATE_BACKEND', "Smarty");
@@ -62,11 +52,6 @@ define('TEMPLATE_BACKEND', "Smarty");
 // define('SMARTY_LEFT_DELIMETER', "<{");
 // define('SMARTY_RIGHT_DELIMETER', "}>");
 
-
-//stuff related to tipiness v4->v5
-define('MEDIA_JS_PREFIX', "/staticmedia");
-define('MEDIA_CSS_PREFIX', "/staticmedia");
-define('ROBOTS', false);
 
 // Google Maps key
 // define('GOOGLE_MAPS_KEY', '');

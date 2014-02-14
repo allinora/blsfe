@@ -22,7 +22,7 @@ function _app_contentHook($_content){
 		if (!DEVELOPMENT_ENVIRONMENT){
 			// Rewrite all /fwassets url to the static server	
 		 	$static_server = (defined('CMS_STATIC_URL')) ? CMS_STATIC_URL : '//static.worldsoft-wbs.com';
-			$data = preg_replace("@\"/fwassets/@", '"' . $static_server . '/assets/', $data);
+			$data = preg_replace("@\"/fwassets/@", '"' . $static_server . '/fwassets/', $data);
 		}
         print $data;
 }
