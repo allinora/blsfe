@@ -13,6 +13,12 @@ push:
 	git push assembla master
 	git push github master
 
+compose:
+	rm -rf vendor composer.lock
+	php ~/bin/composer.phar install
+	find vendor -type f -name ".git*" -exec rm -rvf {} \;
+	git add vendor
+
 deploy: deployshowcase
 	@echo all done
 
