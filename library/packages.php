@@ -48,6 +48,30 @@ $packagesConfig["jquery-1.7.1"]=array(
 	'head' => array()
 );
 
+$packagesConfig["jquery-1.8.3"]=array(
+	'css' => array(),
+	'js' => array("/fwassets/js/jquery/1.8.3/jquery-1.8.3.min.js"),
+	'head' => array()
+);
+
+$packagesConfig["jquery-1.9.1"]=array(
+	'css' => array(),
+	'js' => array("/fwassets/js/jquery/1.9.1/jquery-1.9.1.min.js"),
+	'head' => array()
+);
+
+$packagesConfig["jquery-1.10.1"]=array(
+	'css' => array(),
+	'js' => array("/fwassets/js/jquery/1.10.1/jquery-1.10.1.min.js"),
+	'head' => array()
+);
+
+$packagesConfig["jquery-1.11.0"]=array(
+	'css' => array(),
+	'js' => array("/fwassets/js/jquery/1.11.0/jquery-1.11.0.min.js"),
+	'head' => array()
+);
+
 $packagesConfig["tag-canvas"]=array(
 	'css' => array(),
 	'js' => array("/fwassets/js/tagcanvas/jquery.tagcanvas.min.js"),
@@ -56,7 +80,7 @@ $packagesConfig["tag-canvas"]=array(
 
 
 // alias to the latest jquery
-$packagesConfig["jquery"]=$packagesConfig["jquery-1.7.1"];
+$packagesConfig["jquery"]=$packagesConfig["jquery-1.11.0"];
 
 $packagesConfig["jquery-cookie"]=array(
 	'js' => array("/fwassets/js/jquery/cookie.js")
