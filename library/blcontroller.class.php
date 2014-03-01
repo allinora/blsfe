@@ -337,6 +337,28 @@ class BLController {
 		}
 		return $default;
 	}
+	function sendError($type, $title, $text){
+		$_content = "";
+		$_content .= '<html><head><link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/></head>';
+		$_content .= '<body>';
+		$_content .= '<div class="jumbotron alert alert-' . $type . '">';
+		$_content .= "<h3>$title</h3>";
+		$_content .= $text;
+		$_content .= "</div></body></html>";
+		
+		
+		if (defined('APP_NAME') && defined('LANG')){
+			$po_name = strtolower(APP_NAME);
+			$po_name = strtr($po_name, '-', '_');
+			blsfe_load_class("BLTranslate");
+	        $translator = new BLTranslate(LANG, $po_name);
+	        $data = preg_replace_callback("@<po>([^<]*)?</po>@", array($translator, "translate"), $_content);
+	        print $data;
+			exit;
+		}
+		print $_content;exit;
+		
+	}
 	
 		
 }
