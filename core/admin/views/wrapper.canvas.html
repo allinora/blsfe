@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+
+    <title>Blank Page - Canvas Admin</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="">
+	<meta name="author" content="" />
+
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,800italic,400,600,800" type="text/css">
+	<link rel="stylesheet" href="/fwassets/canvas-admin-v1/Theme/css/font-awesome.min.css" type="text/css" />		
+	<link rel="stylesheet" href="/fwassets/canvas-admin-v1/Theme/css/bootstrap.min.css" type="text/css" />	
+	<link rel="stylesheet" href="/fwassets/canvas-admin-v1/Theme/js/libs/css/ui-lightness/jquery-ui-1.9.2.custom.css" type="text/css" />		
+
+	<link rel="stylesheet" href="/fwassets/canvas-admin-v1/Theme/css/App.css" type="text/css" />
+
+	<link rel="stylesheet" href="/fwassets/canvas-admin-v1/Theme/css/custom.css" type="text/css" />
+	
+</head>
+
+<body>
+
+<div id="wrapper">
+	<{if $showHeader}>
+	
+	<header id="header">
+
+		<h1 id="site-logo">
+			<img src="/fwassets/canvas-admin-v1/Theme/img/logos/logo.png" alt="Site Logo" />
+		</h1>	
+
+		<a href="javascript:;" data-toggle="collapse" data-target=".top-bar-collapse" id="top-bar-toggle" class="navbar-toggle collapsed">
+			<i class="fa fa-cog"></i>
+		</a>
+
+		<a href="javascript:;" data-toggle="collapse" data-target=".sidebar-collapse" id="sidebar-toggle" class="navbar-toggle collapsed">
+			<i class="fa fa-reorder"></i>
+		</a>
+
+	</header> <!-- header -->
+
+
+	<nav id="top-bar" class="collapse top-bar-collapse">
+
+		<ul class="nav navbar-nav pull-left">
+			<li class="" >
+				<a href="#">
+					<i class="fa fa-home"></i> 
+					<{$smarty.const.APP_NAME}>
+				</a>
+			</li>
+
+			<li class="dropdown" style="display:none">
+		    	<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+		        	Dropdown <span class="caret"></span>
+		    	</a>
+
+		    	<ul class="dropdown-menu" role="menu">
+			        <li><a href="javascript:;"><i class="fa fa-user"></i>&nbsp;&nbsp;Example #1</a></li>
+			        <li><a href="javascript:;"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Example #2</a></li>
+			        <li class="divider"></li>
+			        <li><a href="javascript:;"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Example #3</a></li>
+		    	</ul>
+		    </li>
+		    
+		</ul>
+
+		<ul class="nav navbar-nav pull-right">
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+					<i class="fa fa-user"></i>
+		        	Admin 
+		        	<span class="caret"></span>
+		    	</a>
+
+		    	<ul class="dropdown-menu" role="menu">
+			        <li>
+			        	<a href="/?op=logout">
+			        		<i class="fa fa-sign-out"></i> 
+			        		&nbsp;&nbsp;Logout
+			        	</a>
+			        </li>
+		    	</ul>
+		    </li>
+		</ul>
+
+	</nav> <!-- /#top-bar -->
+	<{/if}>
+
+	<{if $showSidebar }>
+	<div id="sidebar-wrapper" class="collapse sidebar-collapse">
+	
+		<div id="search" style="display:block">
+			<form>
+				<input class="form-control input-sm" type="text" name="search" placeholder="Search..." />
+				<button type="submit" id="search-btn" class="btn"><i class="fa fa-search"></i></button>
+			</form>		
+		</div> <!-- #search -->
+	
+		<nav id="sidebar">		
+			
+			<ul id="main-nav" class="open-active">			
+				<li class="">				
+					<a href="/">
+						<i class="fa fa-dashboard"></i>
+						Dashboard
+					</a>				
+				</li>
+
+				<{if ! $noMenu}>
+				<{ include file="$blsfe_template_dir/menu.canvas.html" }>
+				<{/if}>	
+
+			</ul>
+					
+		</nav> <!-- #sidebar -->
+
+	</div> <!-- /#sidebar-wrapper -->
+	<{/if}>
+
+	
+	<div id="content">		
+		
+		<div id="content-header">
+			<h1><{$tab|ucfirst}> <{if $subtab}> -  <{$subtab|ucfirst}> <{/if}></h1>
+		</div> <!-- #content-header -->	
+
+
+		<div id="content-container">
+			<{$content}>
+		</div> <!-- /#content-container -->			
+		
+	</div> <!-- #content -->
+	
+	
+</div> <!-- #wrapper -->
+<{if $showFooter}>
+<footer id="footer">
+	<ul class="nav pull-right">
+		<li>
+			xxx
+		</li>
+	</ul>
+</footer>
+<{/if}>
+
+<script src="/fwassets/canvas-admin-v1/Theme/js/libs/jquery-1.9.1.min.js"></script>
+<script src="/fwassets/canvas-admin-v1/Theme/js/libs/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/fwassets/canvas-admin-v1/Theme/js/libs/bootstrap.min.js"></script>
+
+<script src="/fwassets/canvas-admin-v1/Theme/js/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/fwassets/canvas-admin-v1/Theme/js/plugins/datatables/DT_bootstrap.js"></script>
+<script src="/fwassets/canvas-admin-v1/Theme/js/App.js"></script>
+
+</body>
+</html>

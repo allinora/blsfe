@@ -1,0 +1,6 @@
+		<{foreach from=$coremodules key=module item=moduleData}>
+		<li <{if $tab==$module}> class="active"<{/if}> ><a href="/core/<{$module}>/admin"><{$moduleData.label}></a></li>
+		<{/foreach}>
+		<{foreach from=$appmodules key=module item=moduleData}>
+		<li <{if $tab==$module}> class="active"<{/if}>><a href="/modules/<{$module}>/admin"><{$moduleData.label}></a></li>
+		<{/foreach}>

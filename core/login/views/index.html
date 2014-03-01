@@ -1,57 +1,42 @@
-<style type="text/css">
-  /* Override some defaults */
-  html, body {
-    background-color: #eee;
-  }
-  body {
-    padding-top: 40px; 
-  }
-  .container {
-    width: 300px;
-  }
+<div id="login-container">
 
-  /* The white background content wrapper */
-  .container > .content {
-    background-color: #fff;
-    padding: 20px;
-    margin: 0 -20px; 
-    -webkit-border-radius: 10px 10px 10px 10px;
-       -moz-border-radius: 10px 10px 10px 10px;
-            border-radius: 10px 10px 10px 10px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-            box-shadow: 0 1px 2px rgba(0,0,0,.15);
-  }
-
-  .login-form {
-	margin-left: 65px;
-  }
-
-  legend {
-	margin-right: -50px;
-	font-weight: bold;
-  	color: #404040;
-  }
-
-</style>
-
-	<div class="content">
-	  <div class="row">
-	    <div class="login-form">
-	      <h2>Login</h2>
-		<form method="POST">
-	        <fieldset>
-	          <div class="clearfix">
-	            <input type="text" placeholder="<po>Username</po>" name="login">
-	          </div>
-	          <div class="clearfix">
-	            <input type="password" placeholder="<po>Password</po>" name="passwd">
-	          </div>
-			<br>
-		          <button class="btn primary" type="submit"><po>Sign in</po></button>
-	        </fieldset>
-	      </form>
-	    </div>
-	  </div>
+	<div id="logo">
 	</div>
 
+	<div id="login">
+
+		<h3>Welcome to <{$smarty.const.APP_NAME}>.</h3>
+
+		<h5>Please sign in to get access.</h5>
+
+		<form id="login-form" method="POST" class="form">
+
+			<div class="form-group">
+				<label for="login-username">Username</label>
+				<input type="text" class="form-control" id="login-username" placeholder="Username" name="login">
+			</div>
+
+			<div class="form-group">
+				<label for="login-password">Password</label>
+				<input type="password" class="form-control" id="login-password" placeholder="Password" name="passwd">
+			</div>
+
+			<div class="form-group">
+
+				<button type="submit" id="login-btn" class="btn btn-primary btn-block">Signin &nbsp; <i class="fa fa-play-circle"></i></button>
+
+			</div>
+		</form>
+
+
+		<!--	<a href="javascript:;" class="btn btn-default">Forgot Password?</a> -->
+
+	</div> <!-- /#login -->
+
+<!--	<a href="javascript:;" id="signup-btn" class="btn btn-lg btn-block">
+		Create an Account
+	</a>
+-->
+
+
+</div> <!-- /#login-container -->
