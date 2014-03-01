@@ -1,0 +1,26 @@
+            <li>
+				<a href="/core/jm/admin">
+					<{if $subtab=="admin"}> <i class="fa fa-caret-right"></i>  <{/if}> 
+					Dashboard</a>
+			</li>
+
+            <li>
+            	<a href="/core/jm/roles">
+					<{if $subtab=="roles" || $subtab=="worker2roles"}> <i class="fa fa-caret-right"></i>  <{/if}> 
+				Roles</a>
+			</li>
+            <li>
+				<a href="/core/jm/workers">
+					<{if $subtab=="workers"}> <i class="fa fa-caret-right"></i>  <{/if}> 
+					Workers</a>
+			</li>
+            <li>
+				<a href="/core/jm/jobs">
+					<{if $subtab=="jobs" || $subtab=="job2roles"}> <i class="fa fa-caret-right"></i>  <{/if}> 
+					Jobs</a>
+			</li>
+            <li>
+				<a href="/core/jm/services">
+					<{if $subtab=="services" || $subtab=="worker2services"}> <i class="fa fa-caret-right"></i>  <{/if}> 
+					Services</a>
+			</li>
