@@ -13,6 +13,13 @@ class Core_Controller extends BLController {
 		$this->set("blsfe_template_dir", $_wrapper_directory);
 		$this->set("blsfe_root", BLSFE_ROOT);
 		
+		if (defined('WRAPPER')){
+			$this->setWrapper(WRAPPER);
+		} else {
+			$this->setWrapper("wrapper");
+		}
+		
+		
 		$language_model = new BLModel("sys/language", "id");
 		$_languages = $language_model->getall(1);
 		$this->backend_languages = array();
@@ -31,11 +38,11 @@ class Core_Controller extends BLController {
 		}
 		
 
-       $this->render=0;
+       	$this->render=0;
 		
 		$this->addPackage("jquery");
         $this->addPackage("twitter-bootstrap");
-       $this->render=1;
+       	$this->render=1;
 		
 	}
 	
