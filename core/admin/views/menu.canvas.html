@@ -3,6 +3,7 @@
 
 <li class="dropdown <{if $tab==$module}> active<{/if}>">
 			<a href="javascript:;">
+				<i class="fa <{if $moduleData.icon}><{$moduleData.icon}><{/if}>"></i>
 				<{$moduleData.label}>
 				<span class="caret"></span>
 			</a>				
@@ -16,10 +17,12 @@
 
 <{else}>
 	<li <{if $tab==$module}> class="active"<{/if}> >
-		<a href="/core/<{$module}>/admin"><{$moduleData.label}></a>
+		<a href="/core/<{$module}>/admin"><i class="fa <{if $moduleData.icon}><{$moduleData.icon}><{/if}>"></i><{$moduleData.label}></a>
 	</li>
 <{/if}>
 <{/foreach}>
 <{foreach from=$appmodules key=module item=moduleData}>
-<li <{if $tab==$module}> class="active"<{/if}>><a href="/modules/<{$module}>/admin"><{$moduleData.label}></a></li>
+<li <{if $tab==$module}> class="active"<{/if}>>
+	<a href="/modules/<{$module}>/admin"><i class="fa <{if $moduleData.icon}><{$moduleData.icon}><{/if}>"></i><{$moduleData.label}></a></li>
+	
 <{/foreach}>
