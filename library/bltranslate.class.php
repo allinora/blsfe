@@ -96,9 +96,12 @@ class BLTranslate extends BLTransport{
 		//print "Updating $id";
 		$_params["id"]=$id;
 		$_params["po"]=$po;
-		//print "<pre>" . print_r($_params, true) . "</pre>";
-	    $result=$this->callBusinessLogicService("/sys/po/string/updateTranslations", $_params);
-	
+		if (isset($_REQUEST['linked_project'])){
+			$_params["linked_project"] = $_REQUEST['linked_project'];
+		    $result = $this->callBusinessLogicService("/sys/po/string/set", $_params);
+		} else {
+		    $result = $this->callBusinessLogicService("/sys/po/string/updateTranslations", $_params);
+		}
 		if (isset($_SESSION["translation_last_search"])){
 			$_url = "/core/translations/admin/?op=search&project=" . $_SESSION["translation_last_search"]["project"] . "&language=" . $_SESSION["translation_last_search"]["language"] . "&q=" . $_SESSION["translation_last_search"]["string"] . "&scrollto=$id";
 			header("Location: $_url");
@@ -106,8 +109,26 @@ class BLTranslate extends BLTransport{
 	}
 	
 	private function editForm($id){
-		$r=$this->getStringWithTranslations($id);
+		$r = $this->getStringWithTranslations($id);
 		//print "<pre>xx" . print_r($r, true) . "</pre>";
+		
+		$_params['fields']['msgid'] = '{EQ}' . $r['msgid'];
+		$_params['fields']['project'] = '{NEQ}' . $r['project'];
+		$_params['reducer'] = "AND";
+	    $matches = $this->callBusinessLogicService("/sys/po/string/getAllPaginated", $_params);
+		$existsInOtherProjects = array();
+		if (is_array($matches['rows'])){
+			foreach ($matches['rows'] as $machedRow){
+				$existsInOtherProjects[$machedRow['project']] = 1;
+			}
+		}
+		//print "<pre>xx" . print_r($existsInOtherProjects, true) . "</pre>";
+	
+		if (count($existsInOtherProjects)){
+			$data .= "This string exists in following other  projects: ";
+			$data .= join(", ", array_keys($existsInOtherProjects));
+			$data .= "<br>";
+		}
 		
 		$_SESSION["translation_last_edit"] = $id;
 		// print "<pre>" . print_r($_SESSION, true) . "</pre>";
@@ -119,8 +140,26 @@ class BLTranslate extends BLTransport{
 		
 		
 		$data.="\n<tr><th>Source</th><td>"  . htmlentities($r["msgid"]) . "</td></tr>";
-		foreach($this->getLanguages() as $l){
-			$data.="\n<tr><th>$l</th><td><textarea class='po_textarea form-control' name='po[$l]'>"  . $r["translations"][$l]["msgstr"] . "</textarea></td></tr>";
+
+		if (count($existsInOtherProjects)){
+			$data .= "\n<tr><th>Map to</th><td>";
+			$data .= "<select name='linked_project'>";
+			$data .= "<option value=''>Please choose</option>";
+			foreach($existsInOtherProjects as $key => $x) {
+				$data .= "<option value='$key'";
+				if ($r['linked_project'] == $key) {
+					$data .= " selected ";
+				}
+				$data .=">$key</option>";
+			}
+			$data .= "</select>";
+			$data .= "</td></tr>";
+		}
+		
+		if(!$r['linked_project']){
+			foreach($this->getLanguages() as $l){
+				$data.="\n<tr><th>$l</th><td><textarea class='po_textarea form-control' name='po[$l]'>"  . $r["translations"][$l]["msgstr"] . "</textarea></td></tr>";
+			}
 		}
 		$data.="\n</table>";
 		$data.="\n<input type='submit' class='btn pull-right' value='update' onclick='this.form.submit()'>";
@@ -153,13 +192,17 @@ class BLTranslate extends BLTransport{
 			$data.="\n<tr class='odd' ><th>Project</th><td><i>"  . $r["project"] . "</i></td></tr>";
 			$data.="\n<tr class='even' ><th>Source</th><td><b>"  . htmlentities($r["msgid"]) . "</b></td></tr>";
 			$class="odd";
-			foreach($languages as $l){
-				$trclass=($r["translations"][$l]["msgstr"])?'filled':'empty';
-				$data.="\n<tr class='$class'><th>Translation :: $l</th><td class='$trclass'>"  . htmlentities($r["translations"][$l]["msgstr"]) . "</td></tr>";
-				if ($class=="odd"){
-					$class="even";
-				} else {
-					$class="odd";
+			if ($r['linked_project']){
+				$data.="\n<tr class='$class'><th>Linked to </th><td class='filled'>"  . $r['linked_project'] . "</td></tr>";
+			} else {
+				foreach($languages as $l){
+					$trclass=($r["translations"][$l]["msgstr"])?'filled':'empty';
+					$data.="\n<tr class='$class'><th>Translation :: $l</th><td class='$trclass'>"  . htmlentities($r["translations"][$l]["msgstr"]) . "</td></tr>";
+					if ($class=="odd"){
+						$class="even";
+					} else {
+						$class="odd";
+					}
 				}
 			}
 			$data.="\n<tr><td colspan=2 align=right><div align=right><input type='submit' class='potable-edit'  value='edit this string' onclick='this.form.submit()'></div></td></tr>";
