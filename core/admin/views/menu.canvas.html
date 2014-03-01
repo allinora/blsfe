@@ -1,6 +1,25 @@
-		<{foreach from=$coremodules key=module item=moduleData}>
-		<li <{if $tab==$module}> class="active"<{/if}> ><a href="/core/<{$module}>/admin"><{$moduleData.label}></a></li>
-		<{/foreach}>
-		<{foreach from=$appmodules key=module item=moduleData}>
-		<li <{if $tab==$module}> class="active"<{/if}>><a href="/modules/<{$module}>/admin"><{$moduleData.label}></a></li>
-		<{/foreach}>
+<{foreach from=$coremodules key=module item=moduleData}>
+<{if $moduleData.submenu}>
+
+<li class="dropdown <{if $tab==$module}> active<{/if}>">
+			<a href="javascript:;">
+				<{$moduleData.label}>
+				<span class="caret"></span>
+			</a>				
+			
+			<ul class="sub-nav">
+				<{include file="$blsfe_root/core/$module/views/menu.canvas.html"  }>
+			</ul>
+		</li>	
+
+
+
+<{else}>
+	<li <{if $tab==$module}> class="active"<{/if}> >
+		<a href="/core/<{$module}>/admin"><{$moduleData.label}></a>
+	</li>
+<{/if}>
+<{/foreach}>
+<{foreach from=$appmodules key=module item=moduleData}>
+<li <{if $tab==$module}> class="active"<{/if}>><a href="/modules/<{$module}>/admin"><{$moduleData.label}></a></li>
+<{/foreach}>

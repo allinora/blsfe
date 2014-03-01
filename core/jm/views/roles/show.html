@@ -1,29 +1,22 @@
-<{ include file = "<{$blsfe_root}>/core/jm/views/menu.html" }>
-
-<div class="container">
-    <h1>Role: <{$aData.name}></h1>
-
-	<p><i><{$aData.description}></i></p>
-
-
-	<h3>Members <span class="label label-warning"><a href="/core/jm/worker2roles/add/?role_id=<{$aData.id}>">Add</a></span></h3>
-	<table class="table table-striped table-bordered table-condensed">
-		<tr>
-			<thead>
-				<th>Hostname</th>
-				<th>Address</th>
-				<th>Status</th>
-				
-			</thead>
-		</tr>
-		<{foreach from=$aWorkers item=row}>
-		<tr> 
-			<td> <{$row.name}> </td> 
-			<td> <{$row.ip}>:<{$row.port}> </td> 
-			<td> <{$row.status}> </td> 
-		</tr>
-		<{/foreach}>
-	</table>
-</div>
+<p><i><{$aData.description}></i></p>
+<h3>Members <span class="label"><a href="/core/jm/worker2roles/add/?role_id=<{$aData.id}>"><button type="button" class="btn btn-tertiary">Add</button></a></h3>
+   
+<table class="table table-striped table-bordered table-condensed">
+	<tr>
+		<thead>
+			<th>Hostname</th>
+			<th>Address</th>
+			<th>Status</th>
+			
+		</thead>
+	</tr>
+	<{foreach from=$aWorkers item=row}>
+	<tr> 
+		<td> <{$row.name}> </td> 
+		<td> <{$row.ip}>:<{$row.port}> </td> 
+		<td> <{$row.status}> </td> 
+	</tr>
+	<{/foreach}>
+</table>
 
 

@@ -1,8 +1,3 @@
-
-<{ include file = "<{$blsfe_root}>/core/jm/views/menu.html" }>
-
-<div class="container">
-    <h1><{$aData.name}></h1>
 		<table class="table table-striped table-bordered table-condensed">
 			<tr>
 				<th>What it runs</th><td><{$aData.cmd}></td>
@@ -11,7 +6,7 @@
 				<th>What it does</th><td><{$aData.description}></td>
 			</tr>
 		</table>
-		<h3>Roles <span class="label label-warning"><a href="/core/jm/job2roles/add/?job_id=<{$aData.id}>">Add</a></span></h3>
+		<h3>Roles <span class="label"><a href="/core/jm/job2roles/add/?job_id=<{$aData.id}>"><button type="button" class="btn btn-tertiary">Add</button></a></h3>
 		
  			<table class="table table-striped table-bordered table-condensed">
 				<tr>
@@ -27,4 +22,3 @@
 				</tr>
 				<{/foreach}>
 			</table>
-</div>

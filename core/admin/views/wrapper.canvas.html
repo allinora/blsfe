@@ -25,8 +25,6 @@
 <body>
 
 <div id="wrapper">
-	<{if $showHeader}>
-	
 	<header id="header">
 
 		<h1 id="site-logo">
@@ -89,9 +87,7 @@
 		</ul>
 
 	</nav> <!-- /#top-bar -->
-	<{/if}>
 
-	<{if $showSidebar }>
 	<div id="sidebar-wrapper" class="collapse sidebar-collapse">
 	
 		<div id="search" style="display:block">
@@ -120,13 +116,12 @@
 		</nav> <!-- #sidebar -->
 
 	</div> <!-- /#sidebar-wrapper -->
-	<{/if}>
 
 	
 	<div id="content">		
 		
 		<div id="content-header">
-			<h1><{$tab|ucfirst}> <{if $subtab}> -  <{$subtab|ucfirst}> <{/if}></h1>
+			<h1><{$tab|ucfirst}> <{if $subtab}> -  <{$subtab|ucfirst}> <{/if}> <{if $title}>- <{$title}><{/if}></h1>
 		</div> <!-- #content-header -->	
 
 
@@ -138,15 +133,13 @@
 	
 	
 </div> <!-- #wrapper -->
-<{if $showFooter}>
 <footer id="footer">
 	<ul class="nav pull-right">
 		<li>
-			xxx
+			footer..
 		</li>
 	</ul>
 </footer>
-<{/if}>
 
 <script src="/fwassets/canvas-admin-v1/Theme/js/libs/jquery-1.9.1.min.js"></script>
 <script src="/fwassets/canvas-admin-v1/Theme/js/libs/jquery-ui-1.9.2.custom.min.js"></script>

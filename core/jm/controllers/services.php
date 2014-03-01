@@ -17,6 +17,7 @@ class Core_Jm_ServicesController extends Admin_Controller {
 	function showAction($id) {
 		$res = $this->model->get($id);
 		$this->set("aData", $res);
+		$this->set("title", $res['name']);
 		
 		$model=new BLModel("sys/jm/service", "id");
 		$allocations = $model->getAllocations(['id' => $id]);

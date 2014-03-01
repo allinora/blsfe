@@ -17,7 +17,7 @@ class Core_Jm_JobsController extends Admin_Controller {
 	function showAction($id) {
 		$res = $this->model->get($id);
 		$this->set("aData", $res);
-		
+		$this->set("title", $res['name']);
 		$linkModel = new BLModel("sys/jm/job/role/link", "id");
 		$aRoles = $linkModel->getRoles(['id' => $id]);
 		$this->set("aRoles", $aRoles);

@@ -14,9 +14,12 @@
 </style>
 
 
-<{ include file = "<{$blsfe_root}>/core/jm/views/menu.html" }>
-
-<table class="table table-striped table-bordered table-condensed">
+<table class="table table-striped table-bordered table-condensed" data-provide="datatable"
+		data-paginate="true"
+		data-search="false"
+		data-info="false"
+		data-length-change="false"
+		data-display-rows="20">
 <thead>
 <tr>
 	<th>ID</th>
