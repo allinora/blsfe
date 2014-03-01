@@ -88,10 +88,23 @@ class BLTranslate extends BLTransport{
 		if ($_REQUEST["op"]=="update"){
 			$this->updatePO($_REQUEST["id"], $_REQUEST["po"]);
 		}
+		if ($_REQUEST["op"]=="delete"){
+			$this->deletePO($_REQUEST["id"]);
+		}
 		
 		return $data;
 	}
 	
+	
+	private function deletePO($id){
+		$_params['id'] = $id;
+	    $result = $this->callBusinessLogicService("/sys/po/string/deleteString", $_params);
+		
+		if (isset($_SESSION["translation_last_search"])){
+			$_url = "/core/translations/admin/?op=search&project=" . $_SESSION["translation_last_search"]["project"] . "&language=" . $_SESSION["translation_last_search"]["language"] . "&q=" . $_SESSION["translation_last_search"]["string"] . "&scrollto=$id";
+			header("Location: $_url");
+		}
+	}
 	private function updatePO($id, $po){
 		//print "Updating $id";
 		$_params["id"]=$id;
@@ -205,7 +218,8 @@ class BLTranslate extends BLTransport{
 					}
 				}
 			}
-			$data.="\n<tr><td colspan=2 align=right><div align=right><input type='submit' class='potable-edit'  value='edit this string' onclick='this.form.submit()'></div></td></tr>";
+			$data.="\n<tr><td><button onclick='this.form.op.value = \"delete\"; this.form.submit()'>Delete</button></td>
+			<td colspan=1 align=right><div align=right><input type='submit' class='potable-edit'  value='edit this string' onclick='this.form.submit()'></div></td></tr>";
 			$data.="\n</table>";
 			$data.="\n</form>";
 			$data.="<hr class='potable-spacer'/>";
