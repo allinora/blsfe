@@ -1,6 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__) . "/bllog.class.php");
+include_once(dirname(__FILE__) . "/model.class.php");
 include_once(dirname(__FILE__) . "/apimodel.class.php");
 include_once(dirname(__FILE__) . "/blmodel.class.php");
 include_once(dirname(__FILE__) . "/blform.class.php");
@@ -31,6 +32,14 @@ class BLController {
 		$this->_template =  Template::factory();
 		$this->_template->init($controller,$action);
 		
+
+		if (defined('APP_NAME') && defined('LANG')){
+			$po_name = strtolower(APP_NAME);
+			$po_name = strtr($po_name, '-', '_');
+			include_once(dirname(__FILE__) . "/bltranslate.class.php");
+	        $this->translator = new BLTranslate(LANG, $po_name);
+		}
+		
 		$this->set("controller", $controller);
 		$this->set("action", $action);
 		$this->set("BLSFE_ROOT", BLSFE_ROOT);
@@ -41,6 +50,13 @@ class BLController {
 
 	}
 
+	public function translate($string){
+		if (!isset($this->translator)){
+			throw new Exception("Could not translate as translator object was not initilized correctly");
+		}
+		return $this->translator->translate($string);
+	}
+	
 	public function useWrapper($b) {
 		$this->doNotRenderHeader = ($b) ? false : true;
 	}
@@ -349,17 +365,10 @@ class BLController {
 		
 		
 		if (defined('APP_NAME') && defined('LANG')){
-			$po_name = strtolower(APP_NAME);
-			$po_name = strtr($po_name, '-', '_');
-			blsfe_load_class("BLTranslate");
-	        $translator = new BLTranslate(LANG, $po_name);
-	        $data = preg_replace_callback("@<po>([^<]*)?</po>@", array($translator, "translate"), $_content);
+	        $data = preg_replace_callback("@<po>([^<]*)?</po>@", array($this, "translate"), $_content);
 	        print $data;
 			exit;
 		}
 		print $_content;exit;
-		
 	}
-	
-		
 }
