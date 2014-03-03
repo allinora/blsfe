@@ -109,7 +109,7 @@ class BLTranslate extends BLTransport{
 		//print "Updating $id";
 		$_params["id"]=$id;
 		$_params["po"]=$po;
-		if (isset($_REQUEST['linked_project'])){
+		if (isset($_REQUEST['linked_project']) && !empty($_REQUEST['linked_project'])){
 			$_params["linked_project"] = $_REQUEST['linked_project'];
 		    $result = $this->callBusinessLogicService("/sys/po/string/set", $_params);
 		} else {
