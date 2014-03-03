@@ -86,7 +86,7 @@ class BLTransport extends HttpTransport{
 			$params["headers"]["X-SHARED-KEY"] = BLSERVER_SHARED_KEY;
 		}
 
-		if ($_SESSION["user"]){
+		if (isset($_SESSION["user"])){
 			if (isset($_SESSION["user"]["email"])){
 				$params["headers"]["X-CALLER-UNAME"] = "U:" . $_SESSION["user"]["email"];
 			}
@@ -94,7 +94,7 @@ class BLTransport extends HttpTransport{
 				$params["headers"]["X-CALLER-UID"] = "U:" . $_SESSION["user"]["user_id"];
 			}
 		} else {
-			if ($_SESSION["companyData"]){ // Extranet
+			if (isset($_SESSION["companyData"])){ // Extranet
 				$params["headers"]["X-CALLER-UNAME"] = "C:" . $_SESSION["companyData"]["email"];
 				$params["headers"]["X-CALLER-UID"]   = "C:" . $_SESSION["companyData"]["id"];
 			}
