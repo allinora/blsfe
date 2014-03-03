@@ -19,7 +19,6 @@ class Model {
 			throw new Exception("File not found: " . $modelsMapFile);
 		}
 		
-		ini_set("display_errors", "On");
 		$aModels = require($modelsMapFile);
 		$this->aModels = $aModels;
 		

@@ -108,6 +108,8 @@ class App_Controller extends BLController {
 
 	function afterAction(){
 		parent::afterAction();
-		$this->set("jslibs", $this->jsLibs);
+		if (isset($this->jsLibs)){
+			$this->set("jslibs", $this->jsLibs);
+		}
 	}
 }
