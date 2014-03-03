@@ -20,7 +20,7 @@ class BLTranslate extends BLTransport{
 		
 		$str = trim($string[1]);
 		
-		if ($this->seen[$str]){
+		if (isset($this->seen[$str]) && $this->seen[$str]){
 			return $this->seen[$str];
 		}
 		$cache_key = "translate.$str";
