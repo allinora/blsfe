@@ -356,7 +356,9 @@ class BLController {
 	}
 	function sendError($type, $title, $text){
 		$_content = "";
-		$_content .= '<html><head><link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/></head>';
+		$_content .= '<html><head>';
+		$_content .= '<meta http-equiv="content-type" content="text/html; charset=utf-8" />';
+		$_content .= '<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/></head>';
 		$_content .= '<body>';
 		$_content .= '<div class="jumbotron alert alert-' . $type . '">';
 		$_content .= "<h3>$title</h3>";
