@@ -312,6 +312,7 @@ function __autoload($className) {
 		}
 	}
 	if (!$file_loaded){
+		return BLController::staticError("danger", "Error 404", 'Class not found');
 		echo("<p><font color=red>Could not autoload class file for \"$className\" </font></p>\n");
 		throw new AutoloadClassException($className);
 	}

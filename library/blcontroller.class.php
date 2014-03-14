@@ -23,6 +23,10 @@ class BLController {
 		
 		$this->_controller = ucfirst($controller);
 		$this->_action = $action;
+		$actionName = $action . "Action";
+		if (!method_exists($this, $actionName)){
+			return $this->sendError("danger", "Error: 404", "Method $actiondoes not exists");
+		}
 		
 		$this->doNotRenderHeader = 0;
 		$this->render = 1;
@@ -119,7 +123,11 @@ class BLController {
 		//print "Trying to load $controllerName<br>"; 
 		$dispatch = new $controllerName($controller,$action);
 		$dispatch->render = $render;
-		$dispatch->$actionName($queryString);
+		if (method_exists($dispatch, $actionName)){
+			$dispatch->$actionName($queryString);
+		} else {
+			throw new Exception("action does not exists");
+		}
 
 		if ($dispatch->render >0) {
 				$dispatch->display();
@@ -353,6 +361,20 @@ class BLController {
 			return $_REQUEST[$x];
 		}
 		return $default;
+	}
+	
+	static function staticError($type, $title, $text){
+		$_content = "";
+		$_content .= '<html><head>';
+		$_content .= '<meta http-equiv="content-type" content="text/html; charset=utf-8" />';
+		$_content .= '<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/></head>';
+		$_content .= '<body>';
+		$_content .= '<div class="jumbotron alert alert-' . $type . '">';
+		$_content .= "<h3>$title</h3>";
+		$_content .= $text;
+		$_content .= "</div></body></html>";
+		
+		print $_content;exit;
 	}
 	function sendError($type, $title, $text){
 		$_content = "";
