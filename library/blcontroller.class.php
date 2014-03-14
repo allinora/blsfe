@@ -25,7 +25,7 @@ class BLController {
 		$this->_action = $action;
 		$actionName = $action . "Action";
 		if (!method_exists($this, $actionName)){
-			return $this->sendError("danger", "Error: 404", "Method $actiondoes not exists");
+			return $this->sendError("danger", "Error: 404", "Method does not exists");
 		}
 		
 		$this->doNotRenderHeader = 0;
