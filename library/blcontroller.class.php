@@ -123,11 +123,7 @@ class BLController {
 		//print "Trying to load $controllerName<br>"; 
 		$dispatch = new $controllerName($controller,$action);
 		$dispatch->render = $render;
-		if (method_exists($dispatch, $actionName)){
-			$dispatch->$actionName($queryString);
-		} else {
-			throw new Exception("action does not exists");
-		}
+		$dispatch->$actionName($queryString);
 
 		if ($dispatch->render >0) {
 				$dispatch->display();
