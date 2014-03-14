@@ -278,6 +278,17 @@ function _runControllerAction($controller, $action, $queryString){
 	call_user_func_array(array($dispatch, "beforeAction"), $queryString);
 
 	// Dont care if the action does not exist. Let the __call handle it
+	$reflectedMethod = new ReflectionMethod($dispatch, $actionName);
+	if (count($queryString)  < $reflectedMethod->getNumberOfRequiredParameters()){
+		$message = "Some parameters are missing. Please provide the following<br><ol>";
+		$aMethoParameters = $reflectedMethod->getParameters();
+		foreach ($aMethoParameters as $oMethodParam){
+			$message .= "<li>"   . $oMethodParam->name . "</li>";
+		}
+		$message .= "</ol>";
+		BLController::staticError("danger", "Error: Incomplete data", $message);
+	}
+	
 	call_user_func_array(array($dispatch, $actionName), $queryString);
 
 	// Call the cleanup stuff
