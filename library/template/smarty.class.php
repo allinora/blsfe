@@ -118,7 +118,9 @@ class Template_Smarty extends Template {
 		$this->smarty = new Smarty();
 		
 		//useful vars for plugins like media
-		$this->smarty->assign("DEVELOPMENT_ENVIRONMENT", DEVELOPMENT_ENVIRONMENT);
+		$this->smarty->assign("DEVELOPMENT_ENVIRONMENT", $_ENV['DEVELOPMENT_ENVIRONMENT']);
+		
+		
 
 		// Define the language
 		if (defined("LANG")){
@@ -145,7 +147,7 @@ class Template_Smarty extends Template {
 		$this->smarty->left_delimiter 	= SMARTY_LEFT_DELIMETER;
 		$this->smarty->right_delimiter 	= SMARTY_RIGHT_DELIMETER;
 
-		if (DEVELOPMENT_ENVIRONMENT){
+		if (isset($_ENV['DEVELOPMENT_ENVIRONMENT']) && $_ENV['DEVELOPMENT_ENVIRONMENT'] === true) {
 			$this->smarty->caching = 0;
 			$this->smarty->compile_check = true;
 		} else {

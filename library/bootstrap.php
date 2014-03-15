@@ -47,7 +47,7 @@ if (file_exists($modulesConfigFile)){
 
 
 function blsfe_local_exception_handler($exception) {
-	if (defined("DEVELOPMENT_ENVIRONMENT") && DEVELOPMENT_ENVIRONMENT === true) {
+	if (isset($_ENV['DEVELOPMENT_ENVIRONMENT']) && $_ENV['DEVELOPMENT_ENVIRONMENT'] === true) {
   		echo "<pre>" . $exception . "</pre>";
 	} else {
 	  echo "<h1>Error: 500</h1><pre>";

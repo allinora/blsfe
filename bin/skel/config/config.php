@@ -1,4 +1,5 @@
 <?php
+define ('APP_NAME', basename(dirname(__DIR__)));
 
 // The rest does not need to be chnaged
 ini_set("date.timezone", 'Europe/Berlin');
@@ -13,10 +14,9 @@ foreach($_env_config_locations as $env_config_file){
 		break;
 	}
 }
+// Almost everything should be defined in env.conf.php
+// No need to defined constants
 
-define ('APP_NAME', basename(dirname(__DIR__)));
-/** Configuration Variables **/
-define ('APP_NAME', "WBS-FileManager");
 if (isset($_ENV['DEVELOPMENT_ENVIRONMENT'])) {
 	define ('DEVELOPMENT_ENVIRONMENT', $_ENV['DEVELOPMENT_ENVIRONMENT']);
 	if ($_ENV['DEVELOPMENT_ENVIRONMENT']) {

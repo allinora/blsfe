@@ -10,7 +10,7 @@ class Cache_File extends Cache {
 		if (!defined("CACHE_PATH")){
 			return;
 		}
-		if (defined("DEVELOPMENT_ENVIRONMENT") && DEVELOPMENT_ENVIRONMENT &&!$force){
+		if (isset($_ENV['DEVELOPMENT_ENVIRONMENT']) && $_ENV['DEVELOPMENT_ENVIRONMENT'] === true && !$force) {
 			// Do not read cache in dev
 			return;
 		}

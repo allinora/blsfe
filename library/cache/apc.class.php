@@ -7,7 +7,7 @@ class Cache_Apc extends Cache {
 	}
 	
 	function read($key, $force = 0) {
-		if (defined("DEVELOPMENT_ENVIRONMENT") && DEVELOPMENT_ENVIRONMENT &&!$force){
+		if (isset($_ENV['DEVELOPMENT_ENVIRONMENT']) && $_ENV['DEVELOPMENT_ENVIRONMENT'] === true && !$force) {
 			// Do not read cache in dev
 			return false;
 		}
