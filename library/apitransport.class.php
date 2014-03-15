@@ -14,14 +14,14 @@ class ApiTransport extends HttpTransport{
 			$request_params["lang"] = $_SESSION["lang"]; // Multilanguage stuff if available
 		}
 
-		if (defined('API_SHARED_KEY')){
-			$request_params["sharedKey"] = API_SHARED_KEY;
+		if (isset($_ENV['API_SHARED_KEY'])){
+			$request_params["sharedKey"] = $_ENV['API_SHARED_KEY'];
 		}
-		if (!defined('APISERVER_URL')){
-			$this->sendError("danger", "Local", 'APISERVER_URL is not defined');
+		if (!isset($_ENV['urls']['api'])){
+			$this->sendError("danger", "Local", 'api url is not defined');
 			
 		}
-		$action_url = APISERVER_URL . "/" . $service;
+		$action_url = $_ENV['urls']['api'] . "/" . $service;
 		$params["request_data"] = $request_params;
 
 		if ($method == 'POST') {
