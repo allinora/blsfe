@@ -8,24 +8,23 @@ class BLTransport extends HttpTransport{
 	}
 
 	protected function callBusinessLogicService($service, $request_params = array(), $method = "GET", $params = array()){
-		if (defined("BLSEBE_TRANSPORT")){
-			$res = null;
-			if (BLSEBE_TRANSPORT == "local"){
-				$res = $this->callBusinessLogicServiceLocal($service, $request_params, $method, $params);
-			} else {
-				$res = $this->callBusinessLogicServiceHttp($service, $request_params, $method, $params);
-			}
-			if (!is_array($res) && is_string($res)){
-				//print "<pre>";  var_dump($res) ; print  "</pre>";
-				//print "<pre>" . print_r($res, true) . "</pre>";
-				if (substr($res, 0, 9) == "Exception"){
-					// print "<pre>" . print_r($res, true) . "</pre>"; exit;
-				}
-			}
-			return $res;
-		} else {
-			throw new Exception ("BLSEBE_TRANSPORT is not defined.");
+		if (!defined("BLSEBE_TRANSPORT")){
+			define('BLSEBE_TRANSPORT', 'http');
 		}
+		$res = null;
+		if (BLSEBE_TRANSPORT == "local"){
+			$res = $this->callBusinessLogicServiceLocal($service, $request_params, $method, $params);
+		} else {
+			$res = $this->callBusinessLogicServiceHttp($service, $request_params, $method, $params);
+		}
+		if (!is_array($res) && is_string($res)){
+			//print "<pre>";  var_dump($res) ; print  "</pre>";
+			//print "<pre>" . print_r($res, true) . "</pre>";
+			if (substr($res, 0, 9) == "Exception"){
+				// print "<pre>" . print_r($res, true) . "</pre>"; exit;
+			}
+		}
+		return $res;
 	}
 	
 	private function callBusinessLogicServiceLocal($service, $request_params=array(), $method="GET", $params=array()){
@@ -79,6 +78,10 @@ class BLTransport extends HttpTransport{
 			$request_params["lang"] = $_SESSION["lang"]; // Multilanguage stuff if available
 		}
 
+		if (isset($_ENV['urls']['backend'])){
+			define('BLSERVER_URL', $_ENV['urls']['backend']);
+		}
+		
 		$action_url = BLSERVER_URL . "/" . $service;
 		$params["request_data"] = $request_params;
 
