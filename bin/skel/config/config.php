@@ -17,22 +17,6 @@ foreach($_env_config_locations as $env_config_file){
 // Almost everything should be defined in env.conf.php
 // No need to defined constants
 
-if (isset($_ENV['DEVELOPMENT_ENVIRONMENT'])) {
-	define ('DEVELOPMENT_ENVIRONMENT', $_ENV['DEVELOPMENT_ENVIRONMENT']);
-	if ($_ENV['DEVELOPMENT_ENVIRONMENT']) {
-		ini_set("display_errors", 'On'); // Off for production and On for development
-	}
-} else {
-	define ('DEVELOPMENT_ENVIRONMENT', FALSE);
-}
-
-define('BASE_URL','/');
-
-
-# use this for production. The backend server shoud be on a different host / load balancer
-# define('BLSEBE_TRANSPORT','http'); 
-# define('BLSERVER_SHARED_KEY','s0m3p433');
-
 //language related
 define('LANGUAGES', 'en|de|fr');
 define('TEMPLATE_BACKEND', "Smarty");
