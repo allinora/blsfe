@@ -1,6 +1,11 @@
 default:
 	echo Read the Makefile
 
+# This is the rule needed on production for pulling
+pull:
+	git checkout -- .
+	git pull
+
 # Just copy to one host. the rest gets it over nfs
 pilot_hosts := bls
 
