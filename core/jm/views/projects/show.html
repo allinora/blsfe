@@ -1,0 +1,16 @@
+<h3><{$aData.name}> should be deployed in the following roles <span class="label"><a href="/core/jm/project2roles/add/?project_id=<{$aData.id}>"><button type="button" class="btn btn-tertiary">Add</button></a></h3>
+
+	<table class="table table-striped table-bordered table-condensed">
+	<tr>
+		<thead>
+			<th>Role</th>
+			<th>Description</th>
+		</thead>
+	</tr>
+	<{foreach from=$aRoles item=row}>
+	<tr> 
+		<td> <{$row.name}> </td> 
+		<td> <{$row.description}> </td> 
+	</tr>
+	<{/foreach}>
+</table>
