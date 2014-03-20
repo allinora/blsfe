@@ -15,6 +15,7 @@ function setReporting() {
 
 /** Takes care of setting the LANG cst **/
 function setLanguage () {
+	//print "LANG is " . LANG  . "<br>";
 	global $url,$lang;
 	if (!defined("LANGUAGES")){
 		return;
@@ -29,10 +30,14 @@ function setLanguage () {
 			define("DATE_FORMAT", constant($date_constant));
 			}
 		} else {
-			$lang="en";
+			$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+			if(empty($lang)){
+				$lang = "en";
+			}
 			define("LANG", $lang);
 		}
 	}
+	//print "LANG is " . LANG  . "<br>";
 }
 
 /** Check for Magic Quotes and kill them **/
