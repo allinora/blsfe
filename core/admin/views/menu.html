@@ -2,7 +2,18 @@
   <div class="container">
     <ul class="nav navbar-nav">
 		<{foreach from=$coremodules key=module item=moduleData}>
-		<li <{if $tab==$module}> class="active"<{/if}> ><a href="/core/<{$module}>/admin"><{$moduleData.label}></a></li>
+		
+		<{assign var="submenu" value="$blsfe_root/core/$module/views/menu.html"}>
+		<{if file_exists($submenu)}> 
+			<li <{if $tab==$module}> class="active"<{/if}> >
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><{$moduleData.label}><b class="caret"></b></a>
+                <ul class="dropdown-menu">
+					<{include file=$submenu}>
+                </ul>            
+			</li>
+		<{else}>
+			<li <{if $tab==$module}> class="active"<{/if}> ><a href="/core/<{$module}>/admin"><{$moduleData.label}></a></li>
+		<{/if}>
 		<{/foreach}>
 		<{foreach from=$appmodules key=module item=moduleData}>
 		<li <{if $tab==$module}> class="active"<{/if}>><a href="/modules/<{$module}>/admin"><{$moduleData.label}></a></li>
@@ -13,4 +24,3 @@
     </ul>
   </div>
 </div>
-
