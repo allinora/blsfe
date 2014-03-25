@@ -30,7 +30,9 @@ function setLanguage () {
 			define("DATE_FORMAT", constant($date_constant));
 			}
 		} else {
-			$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+			if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])){
+				$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+			}
 			if(empty($lang)){
 				$lang = "en";
 			}
