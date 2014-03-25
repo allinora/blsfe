@@ -192,7 +192,11 @@ class BLController {
 	}
 
 	function afterAction(){
-		$this->set("packages", $this->packages);
+		if (isset($this->packages)){
+			$this->set("packages", $this->packages);
+		} else {
+			$this->set("packages", null);
+		}
 	}
 	
 	function formatters(){
