@@ -21,7 +21,10 @@ class ApiTransport extends HttpTransport{
 			$this->sendError("danger", "Local", 'api url is not defined');
 			
 		}
+		
+		$_ENV['urls']['api'] = preg_replace("@/$@", "", $_ENV['urls']['api']);
 		$action_url = $_ENV['urls']['api'] . "/" . $service;
+		
 		$params["request_data"] = $request_params;
 
 		if ($method == 'POST') {
