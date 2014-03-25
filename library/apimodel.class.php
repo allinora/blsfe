@@ -14,8 +14,8 @@ class ApiModel extends ApiQuery {
 	function __construct($model, $_idF="id", $_searchF=null) {
 		parent::__construct();
 		$this->_model = $model;
-		$this->_idField=$_idF;
-		$this->_searchField=$_searchF;
+		$this->_idField = $_idF;
+		$this->_searchField = $_searchF;
 	}
 
 	function cache($x=null){
@@ -32,6 +32,9 @@ class ApiModel extends ApiQuery {
 
 	function idField(){
 		return $this->_idField;
+	}
+	function searchField(){
+		return $this->_searchField;
 	}
 	
 	function __destruct() {

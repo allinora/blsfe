@@ -8,7 +8,7 @@ class Model {
 
 	public $debug = FALSE;
 
-	function __construct($model) {
+	function __construct($model, $_idF="id", $_searchF=null) {
 		if (!defined('MODEL_TYPE')){
 			throw new Exception("MODEL_TYPE is not defined");
 		}
@@ -27,7 +27,7 @@ class Model {
 		}
 		// print "<pre>" . print_r($aModels, true) . "</pre>";
 		if (MODEL_TYPE == 'API'){
-			$this->model = new ApiModel($aModels[$model]['api']);
+			$this->model = new ApiModel($aModels[$model]['api'], $_idF, $_searchF);
 		}
 		if (MODEL_TYPE == 'BACKEND'){
 			if (!isset($aModels[$model]['backend'][1])){

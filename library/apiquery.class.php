@@ -28,4 +28,37 @@ class ApiQuery extends ApiTransport{
         return $this->callApiService($this->_model . "/$action" , $params[0], $params[1] , $params[2]);
 	}
 
+
+    public function get($id, $cache = true){
+        $result = $this->callApiService($this->_model . "/get" , array($this->_idField => $id) );
+		return $result;
+    }
+
+    public function getall($id, $cache = true){
+        $result = $this->callApiService($this->_model . "/getall" , array($this->_searchField => $id) );
+		return $result['rows'];
+    }
+
+	public function set($params, $method="POST", $extraParams=array()){
+        $result=$this->callApiService($this->_model . "/set" , $params, "POST", $extraParams);
+		return $result;
+	}
+
+	public function add($params, $method="POST", $extraParams=array()){
+        $result=$this->callApiService($this->_model . "/add" , $params, "POST", $extraParams);
+		return $result;
+	}
+
+	public function delete($id){
+        $result=$this->callApiService($this->_model . "/delete" , array($this->_idField => $id));
+		return $result;
+	}
+
+
+
+
+
+
+
+
 }

@@ -25,6 +25,12 @@ class ApiTransport extends HttpTransport{
 		$_ENV['urls']['api'] = preg_replace("@/$@", "", $_ENV['urls']['api']);
 		$action_url = $_ENV['urls']['api'] . "/" . $service;
 		
+		if ($_SESSION['token']){
+			$request_params['token'] = $_SESSION['token'];
+		}
+		
+		$request_params['noDataTable'] = true;
+		
 		$params["request_data"] = $request_params;
 
 		if ($method == 'POST') {
@@ -35,13 +41,14 @@ class ApiTransport extends HttpTransport{
 
 
 		$response = trim($response);
-		$oRet = json_decode($response);
+		$oRet = json_decode($response, true);
 
 		if ($oRet->error) {
 			$this->sendError("danger", "API", $oRet->error_msg[0]);
 		}
 
-		return $oRet->data;
+		return $oRet['data'];
 	}
+	
 
 }
