@@ -47,15 +47,11 @@ class ApiTransport extends HttpTransport{
 			$this->sendError("danger", "API", $oRet->error_msg[0]);
 		}
 
-		//print "<pre>" . print_r($oRet, true) . "</pre>";
-
 		// Handle integer values
 		if (isset($oRet['data']['int'])){
 			return $oRet['data']['int'];
 		}
-		if (is_array($oRet['data']) && count($oRet['data'])==1){
-			return $oRet['data'][0];
-		}
+
 		return $oRet['data'];
 	}
 	
