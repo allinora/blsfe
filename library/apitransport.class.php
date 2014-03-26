@@ -41,7 +41,7 @@ class ApiTransport extends HttpTransport{
 
 
 		$response = trim($response);
-		$oRet = json_decode($response, true, 512, JSON_BIGINT_AS_STRING);
+		$oRet = json_decode($response, true);
 
 		if ($oRet->error) {
 			$this->sendError("danger", "API", $oRet->error_msg[0]);
@@ -52,6 +52,9 @@ class ApiTransport extends HttpTransport{
 		// Handle integer values
 		if (isset($oRet['data']['int'])){
 			return $oRet['data']['int'];
+		}
+		if (is_array($oRet['data']) && count($oRet['data'])==1){
+			return $oRet['data'][0];
 		}
 		return $oRet['data'];
 	}
