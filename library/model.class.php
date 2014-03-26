@@ -77,10 +77,10 @@ class Model {
 			throw new Exception("Dont know how to do $action");
 		}
 		if (MODEL_TYPE == 'API'){
-			$_action = $this->aModels[$this->_model]['methods'][$action]['api'];
+			$_action = (isset($this->aModels[$this->_model]['methods'][$action]['api'])) ? $this->aModels[$this->_model]['methods'][$action]['api'] : $action;
 		}
 		if (MODEL_TYPE == 'BACKEND'){
-			$_action = $this->aModels[$this->_model]['methods'][$action]['backend'];
+			$_action = (isset($this->aModels[$this->_model]['methods'][$action]['backend'])) ? $this->aModels[$this->_model]['methods'][$action]['backend'] : $action;
 		}
         return $this->model->$_action($params[0], $params[1] , $params[2]);
 	}
