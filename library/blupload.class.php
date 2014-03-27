@@ -120,8 +120,18 @@ class BLUpload {
 				return $this->returnResponse('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream at ' . __LINE__ .'"}, "id" : "id"}');
 		}
 
-		// Return JSON-RPC response
-		return $this->reply("success", 200, "File uploaded successfully", $outfile);
+
+		// print "<pre>REQUEST: " . print_r($_REQUEST, true) . "</pre>";
+		// print "<pre>FILES: " . print_r($_FILES, true) . "</pre>";
+		
+		if ($chunk+1 == $chunks){
+			// Return JSON-RPC response
+			return $this->reply("success", 200, "File uploaded successfully", $outfile);
+		} else {
+			// Return JSON-RPC response
+			return $this->reply("success", 101, "File partially uploaded: chunk $chunk of $chunks", $outfile);
+		}
+
 	}
 	
 	function returnResponse($str){
