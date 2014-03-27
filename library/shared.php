@@ -202,6 +202,7 @@ function callHook() {
 	
 	// This provides the setup and some helper functions
 	include_once(BLSFE_ROOT . "/core/app.php");  // The app controller. 
+	include_once(BLSFE_ROOT . "/core/model.php");  // The model controller. 
 	
 	global $url;
 	global $default;
