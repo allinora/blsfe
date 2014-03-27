@@ -14,12 +14,30 @@ class Model {
 		}
 		$this->_model = $model;
 
+		/*
 		$modelsMapFile = ROOT . "/config/models.php";
 		if (!file_exists($modelsMapFile)){
 			throw new Exception("File not found: " . $modelsMapFile);
 		}
+		*/
 		
-		$aModels = require($modelsMapFile);
+		if (!isset($_ENV['urls']['api'])){
+			throw new Exception("URL to the API is not defined");
+		}
+		
+		
+		if (!$aModels = $this->cacheGet("models.php")){
+			
+			$_url = $_ENV['urls']['api'];
+			$_url = preg_replace("@/$@", "", $_url);
+			$_url .= "/api/models";
+			
+			$aResult = file_get_contents($_url);
+			$aModels = json_decode($aResult, true);
+			$this->cacheSet("models.php", $aModels);
+		}
+		// print "<pre>Models" . print_r($aModels, true) . "</pre>";exit;
+		
 		$this->aModels = $aModels;
 		
 		if (!isset($aModels[$model])){
@@ -77,11 +95,26 @@ class Model {
 			throw new Exception("Dont know how to do $action");
 		}
 		if (MODEL_TYPE == 'API'){
-			$_action = $this->aModels[$this->_model]['methods'][$action]['api'];
+			$_action = (isset($this->aModels[$this->_model]['methods'][$action]['api'])) ? $this->aModels[$this->_model]['methods'][$action]['api'] : $action;
 		}
 		if (MODEL_TYPE == 'BACKEND'){
-			$_action = $this->aModels[$this->_model]['methods'][$action]['backend'];
+			$_action = (isset($this->aModels[$this->_model]['methods'][$action]['backend'])) ? $this->aModels[$this->_model]['methods'][$action]['backend'] : $action;
 		}
         return $this->model->$_action($params[0], $params[1] , $params[2]);
+	}
+	
+	
+	function cacheGet($key){
+		$cache_file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $key;
+		if (file_exists($cache_file)){
+			return unserialize(file_get_contents($cache_file));
+		}
+		return FALSE;
+	}
+	
+	function cacheSet($key, $data){
+		$cache_file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $key;
+		file_put_contents($cache_file, serialize($data));
+		
 	}
 }

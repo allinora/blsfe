@@ -41,18 +41,17 @@ class ApiTransport extends HttpTransport{
 
 
 		$response = trim($response);
-		$oRet = json_decode($response, true, 512, JSON_BIGINT_AS_STRING);
+		$oRet = json_decode($response, true);
 
 		if ($oRet->error) {
 			$this->sendError("danger", "API", $oRet->error_msg[0]);
 		}
 
-		//print "<pre>" . print_r($oRet, true) . "</pre>";
-
 		// Handle integer values
 		if (isset($oRet['data']['int'])){
 			return $oRet['data']['int'];
 		}
+
 		return $oRet['data'];
 	}
 	
