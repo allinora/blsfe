@@ -21,9 +21,15 @@ class ApiTransport extends HttpTransport{
 			$this->sendError("danger", "Local", 'api url is not defined');
 			
 		}
+		$service = "/////$service";
+		$_ENV['urls']['api'] = $_ENV['urls']['api'] . "//////";
 		
-		$_ENV['urls']['api'] = preg_replace("@/$@", "", $_ENV['urls']['api']);
+		$_ENV['urls']['api'] = preg_replace("@/{1,}$@", "", $_ENV['urls']['api']);
+		$service = preg_replace("@^/{1,}@", "", $service);
+
 		$action_url = $_ENV['urls']['api'] . "/" . $service;
+		
+		//print "Service is $service<br>";
 		
 		if ($_SESSION['token']){
 			$request_params['token'] = $_SESSION['token'];
