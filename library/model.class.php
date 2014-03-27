@@ -31,17 +31,17 @@ class Model {
 			$_url = $_ENV['urls']['api'];
 			$_url = preg_replace("@/$@", "", $_url);
 			$_url .= "/api/models";
-			
+			// print "Getting models from $_url<br>";
 			$aResult = file_get_contents($_url);
 			$aModels = json_decode($aResult, true);
 			$this->cacheSet("models.php", $aModels);
 		}
-		// print "<pre>Models" . print_r($aModels, true) . "</pre>";exit;
+		//print "<pre>Models" . print_r($aModels, true) . "</pre>";exit;
 		
 		$this->aModels = $aModels;
 		
 		if (!isset($aModels[$model])){
-			throw new Exception("Could not find this model");
+			throw new Exception("Could not find this model: <b>$model</b>");
 		}
 		// print "<pre>" . print_r($aModels, true) . "</pre>";
 		if (MODEL_TYPE == 'API'){
@@ -54,7 +54,9 @@ class Model {
 			if (!isset($aModels[$model]['backend'][2])){
 				$aModels[$model]['backend'][2] = null;
 			}
-			$this->model = new BLModel($aModels[$model]['backend'][0], $aModels[$model]['backend'][1], $aModels[$model]['backend'][2]);
+			// print "<pre>" . print_r($aModels[$model], true)  . "</pre>";
+			// $this->model = new BLModel($aModels[$model]['backend'][0], $aModels[$model]['backend'][1], $aModels[$model]['backend'][2]);
+			$this->model = new BLModel($aModels[$model]['backend']);
 		}
 	}
 
@@ -79,6 +81,12 @@ class Model {
 
 
 	public function __call($action, $params){
+		$_action = $this->model() . '/' . $action;
+		
+		if (MODEL_TYPE == 'API'){
+			$action = $this->model() . '/' . $action;
+		}
+		// print "Model is " . $this->model() . "<br>";
 		// print "Action<pre>" . print_r($action, true) . "</pre>";
 		// print "Params<pre>" . print_r($params, true) . "</pre>";
 		if (!isset($params[0])){
@@ -91,20 +99,12 @@ class Model {
 			$params[2] = null;
 		}
 		
-		if (!isset($this->aModels[$this->_model]['methods'][$action])){
-			throw new Exception("Dont know how to do $action");
-		}
-		if (MODEL_TYPE == 'API'){
-			$_action = (isset($this->aModels[$this->_model]['methods'][$action]['api'])) ? $this->aModels[$this->_model]['methods'][$action]['api'] : $action;
-		}
-		if (MODEL_TYPE == 'BACKEND'){
-			$_action = (isset($this->aModels[$this->_model]['methods'][$action]['backend'])) ? $this->aModels[$this->_model]['methods'][$action]['backend'] : $action;
-		}
-        return $this->model->$_action($params[0], $params[1] , $params[2]);
+        return $this->model->$action($params[0], $params[1] , $params[2]);
 	}
 	
 	
 	function cacheGet($key){
+		return FALSE;
 		$cache_file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $key;
 		if (file_exists($cache_file)){
 			return unserialize(file_get_contents($cache_file));
@@ -113,6 +113,7 @@ class Model {
 	}
 	
 	function cacheSet($key, $data){
+		return FALSE;
 		$cache_file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $key;
 		file_put_contents($cache_file, serialize($data));
 		
