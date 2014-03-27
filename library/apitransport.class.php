@@ -21,16 +21,13 @@ class ApiTransport extends HttpTransport{
 			$this->sendError("danger", "Local", 'api url is not defined');
 			
 		}
-		$service = "/////$service";
-		$_ENV['urls']['api'] = $_ENV['urls']['api'] . "//////";
 		
 		$_ENV['urls']['api'] = preg_replace("@/{1,}$@", "", $_ENV['urls']['api']);
 		$service = preg_replace("@^/{1,}@", "", $service);
 
 		$action_url = $_ENV['urls']['api'] . "/" . $service;
 		
-		//print "Service is $service<br>";
-		
+		// print "Service is $service<br>";
 		if ($_SESSION['token']){
 			$request_params['token'] = $_SESSION['token'];
 		}
@@ -39,6 +36,7 @@ class ApiTransport extends HttpTransport{
 		
 		$params["request_data"] = $request_params;
 
+		// print "<pre>" . print_r($params, true) . "</pre>";
 		if ($method == 'POST') {
 			$response = $this->http_post_request($action_url, $params);
 		} else {
@@ -47,18 +45,19 @@ class ApiTransport extends HttpTransport{
 
 
 		$response = trim($response);
-		$oRet = json_decode($response, true);
+		$aRet = json_decode($response, true);
+		//print "<pre>" . print_r($aRet, true) . "<pre>";	
 
-		if ($oRet->error) {
-			$this->sendError("danger", "API", $oRet->error_msg[0]);
+		if ($aRet['error'] > 0 ) {
+			$this->sendError("danger", "API", join("<br>", $aRet['error_msg']));
 		}
 
 		// Handle integer values
-		if (isset($oRet['data']['int'])){
-			return $oRet['data']['int'];
+		if (isset($aRet['data']['int'])){
+			return $aRet['data']['int'];
 		}
 
-		return $oRet['data'];
+		return $aRet['data'];
 	}
 	
 
