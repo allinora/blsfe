@@ -19,6 +19,16 @@ class ApiQuery extends ApiTransport{
 		if (!isset($params[0])){
 			$params[0] = null;
 		}
+
+		if (is_numeric($params[0])){
+			if (substr($action, -3) == "get") { // handle special case for get
+				$params[0] = array($this->_idField => $params[0]);
+			}
+			if (substr($action, -6) == "getall") { // handle special case for getall
+				$params[0] = array($this->_searchField => $params[0]);
+			}
+		}
+		
 		if (!isset($params[1])){
 			$params[1] = null;
 		}
@@ -29,7 +39,7 @@ class ApiQuery extends ApiTransport{
 	}
 
 
-    public function get($id, $cache = true){
+    public function xxget($id, $cache = true){
         $result = $this->callApiService($this->_model . "/get" , array($this->_idField => $id) );
 		return $result;
     }
