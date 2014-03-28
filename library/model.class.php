@@ -86,7 +86,7 @@ class Model {
 		if (MODEL_TYPE == 'API'){
 			$action = $this->model() . '/' . $action;
 		}
-		// print "Model is " . $this->model() . "<br>";
+ 		// print "Model is " . $this->model() . "<br>";
 		// print "Action<pre>" . print_r($action, true) . "</pre>";
 		// print "Params<pre>" . print_r($params, true) . "</pre>";
 		if (!isset($params[0])){
@@ -99,6 +99,11 @@ class Model {
 			$params[2] = null;
 		}
 		
+		
+		// Pass some valuable data
+		$this->autoSetValues($params);
+		
+		// print "Params<pre>" . print_r($params, true) . "</pre>";
         return $this->model->$action($params[0], $params[1] , $params[2]);
 	}
 	
@@ -116,6 +121,36 @@ class Model {
 		return FALSE;
 		$cache_file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $key;
 		file_put_contents($cache_file, serialize($data));
+		
+	}
+	
+	function autoSetValue($params){
+		
+		if (isset($params["hmm_you_seem_to_have_been_here_before"] )){
+			throw new Excetion("Euuuu. You seem to have been here before");
+		}
+		$params["hmm_you_seem_to_have_been_here_before"] = 1;
+		
+		if (isset($_SESSION["data"]["userData"]["user_id"])) {
+			if (!isset($params[0]["client_id"])){
+				$params[0]["client_id"] = $_SESSION["data"]["userData"]["user_id"];
+				$params[0]["sender_id"] = $_SESSION["data"]["userData"]["user_id"];
+			}
+		}
+
+		if (isset($_SESSION["data"]["profileData"])) {
+			$params[0]["sender_name"] = $_SESSION["data"]["profileData"]["firstname"] . ' ' . $_SESSION["data"]["profileData"]["lastname"];
+		}
+		
+		if ($_SESSION["token"]) {
+			$params[0]["token"] = $_SESSION["token"];
+		}
+		
+		if (defined('LANG')){
+			$params[0]["lang"] = LANG;
+		}
+		
+	return $params;
 		
 	}
 }
