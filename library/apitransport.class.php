@@ -24,13 +24,7 @@ class ApiTransport extends HttpTransport{
 		
 		$_ENV['urls']['api'] = preg_replace("@/{1,}$@", "", $_ENV['urls']['api']);
 		$service = preg_replace("@^/{1,}@", "", $service);
-
 		$action_url = $_ENV['urls']['api'] . "/" . $service;
-		
-		// print "Service is $service<br>";
-		if ($_SESSION['token']){
-			$request_params['token'] = $_SESSION['token'];
-		}
 		
 		$request_params['noDataTable'] = true;
 		
