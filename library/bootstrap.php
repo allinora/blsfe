@@ -11,9 +11,9 @@ if (!defined("BLSFE_ROOT")) {
 
 ini_set("allow_call_time_pass_reference", true);
 if (!defined("APPCONFIGFILE")) {
-$appConfigFile= ROOT . DS . 'config' . DS . 'config.php';
+	$appConfigFile= ROOT . DS . 'config' . DS . 'config.php';
 } else {
-$appConfigFile= APPCONFIGFILE;
+	$appConfigFile= APPCONFIGFILE;
 }
 
 if (!file_exists($appConfigFile)){
@@ -22,7 +22,7 @@ if (!file_exists($appConfigFile)){
 	require_once($appConfigFile);
 }
 
-$appRoutingFile=ROOT . DS . 'config' . DS . 'routing.php';
+$appRoutingFile = ROOT . DS . 'config' . DS . 'routing.php';
 if (!file_exists($appRoutingFile)){
 	// Use the defaults
 	$default['controller'] = 'index';
@@ -33,15 +33,15 @@ if (!file_exists($appRoutingFile)){
 
 
 if (!defined("MODULESCONFIGFILE")) {
-$modulesConfigFile= ROOT . DS . 'config' . DS . 'modules.php';
+	$modulesConfigFile = ROOT . DS . 'config' . DS . 'modules.php';
 } else {
-$modulesConfigFile= MODULESCONFIGFILE;
+	$modulesConfigFile = MODULESCONFIGFILE;
 }
 
 if (file_exists($modulesConfigFile)){
 	require_once($modulesConfigFile);
 	if (is_array($modulesConfig)){
-		$default["modules"]=$modulesConfig;
+		$default["modules"] = $modulesConfig;
 	}
 }
 
@@ -90,7 +90,24 @@ if (!function_exists("base16_decode")) {
 	}
 }
 
+if (!function_exists("getConstantValue")) {
+	function getConstantValue($name, $required=true){
+		if (!defined($name)){
+			throw new Exception("Cannot find a defined constant named: $name");
+		}
+		return constant($name);
+	}
+}
+
+if (!function_exists("getSessionValue")) {
+	function getSessionValue($name, $defaultValue=true){
+		if (isset($_SESSION[$name])){
+			return $_SESSION[$name];
+		} else {
+			return $defaultValue;
+		}
+	}
+}
+
 // Require the rest of the bootstrap logic
 require_once (dirname(__FILE__)  . DS .  'shared.php');
-
-
