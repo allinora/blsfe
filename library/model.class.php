@@ -1,5 +1,4 @@
 <?php
-
 class Model {
 	protected $_model;
 	protected $_idField;
@@ -14,13 +13,6 @@ class Model {
 		}
 		$this->_model = $model;
 
-		/*
-		$modelsMapFile = ROOT . "/config/models.php";
-		if (!file_exists($modelsMapFile)){
-			throw new Exception("File not found: " . $modelsMapFile);
-		}
-		*/
-		
 		if (!isset($_ENV['urls']['api'])){
 			throw new Exception("URL to the API is not defined");
 		}
@@ -31,21 +23,19 @@ class Model {
 			$_url = $_ENV['urls']['api'];
 			$_url = preg_replace("@/$@", "", $_url);
 			$_url .= "/api/models";
-			// print "Getting models from $_url<br>";
+
 			$aResult = file_get_contents($_url);
 			$aModels = json_decode($aResult, true);
 			$this->cacheSet("models.php", $aModels);
 		}
-		//print "<pre>Models" . print_r($aModels, true) . "</pre>";exit;
 		
 		$this->aModels = $aModels;
 		
 		if (!isset($aModels[$model])){
 			throw new Exception("Could not find this model: <b>$model</b>");
 		}
-		// print "<pre>" . print_r($aModels, true) . "</pre>";
 		if (MODEL_TYPE == 'API'){
-			$this->model = new ApiModel($aModels[$model]['api'], $_idF, $_searchF);
+			$this->model = new ApiModel($model, $_idF, $_searchF);
 		}
 		if (MODEL_TYPE == 'BACKEND'){
 			if (!isset($aModels[$model]['backend'][1])){
@@ -54,8 +44,6 @@ class Model {
 			if (!isset($aModels[$model]['backend'][2])){
 				$aModels[$model]['backend'][2] = null;
 			}
-			// print "<pre>" . print_r($aModels[$model], true)  . "</pre>";
-			// $this->model = new BLModel($aModels[$model]['backend'][0], $aModels[$model]['backend'][1], $aModels[$model]['backend'][2]);
 			$this->model = new BLModel($aModels[$model]['backend']);
 		}
 	}
@@ -82,13 +70,7 @@ class Model {
 
 	public function __call($action, $params){
 		$_action = $this->model() . '/' . $action;
-		
-		if (MODEL_TYPE == 'API'){
-			$action = $this->model() . '/' . $action;
-		}
- 		// print "Model is " . $this->model() . "<br>";
-		// print "Action<pre>" . print_r($action, true) . "</pre>";
-		// print "Params<pre>" . print_r($params, true) . "</pre>";
+
 		if (!isset($params[0])){
 			$params[0] = null;
 		}
@@ -124,13 +106,7 @@ class Model {
 		
 	}
 	
-	function autoSetValue($params){
-		
-		if (isset($params["hmm_you_seem_to_have_been_here_before"] )){
-			throw new Excetion("Euuuu. You seem to have been here before");
-		}
-		$params["hmm_you_seem_to_have_been_here_before"] = 1;
-		
+	function autoSetValues(&$params){
 		if (isset($_SESSION["data"]["userData"]["user_id"])) {
 			if (!isset($params[0]["client_id"])){
 				$params[0]["client_id"] = $_SESSION["data"]["userData"]["user_id"];
@@ -142,15 +118,12 @@ class Model {
 			$params[0]["sender_name"] = $_SESSION["data"]["profileData"]["firstname"] . ' ' . $_SESSION["data"]["profileData"]["lastname"];
 		}
 		
-		if ($_SESSION["token"]) {
+		if (isset($_SESSION["token"])) {
 			$params[0]["token"] = $_SESSION["token"];
 		}
 		
 		if (defined('LANG')){
 			$params[0]["lang"] = LANG;
 		}
-		
-	return $params;
-		
 	}
 }
