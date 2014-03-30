@@ -16,7 +16,6 @@ class ApiQuery extends ApiTransport{
 	}
 
 	public function __call($action, $params){
-		print "Action in call is $action<br>\n";
 		if (!isset($params[0])){
 			$params[0] = null;
 		}
