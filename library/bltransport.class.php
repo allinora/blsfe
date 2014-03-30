@@ -78,7 +78,7 @@ class BLTransport extends HttpTransport{
 			$request_params["lang"] = $_SESSION["lang"]; // Multilanguage stuff if available
 		}
 
-		if (isset($_ENV['urls']['backend'])){
+		if (isset($_ENV['urls']['backend']) && !defined('BLSERVER_URL')){
 			define('BLSERVER_URL', $_ENV['urls']['backend']);
 		}
 		
