@@ -70,7 +70,9 @@ class Model {
 
 	public function __call($action, $params){
 		$_action = $this->model() . '/' . $action;
-
+		if ($action == "get" && isset($params[0]) && is_numeric($params[0])){
+			$params[0] = ['id'=> $params[0]];
+		}
 		if (!isset($params[0])){
 			$params[0] = null;
 		}
@@ -107,6 +109,10 @@ class Model {
 	}
 	
 	function autoSetValues(&$params){
+		// print "<pre>" . print_r($params, true) . "</pre>";
+		if (!is_array($params[0])){
+			throw new Exception("params[0] is not array. This should never happen.");
+		}
 		if (isset($_SESSION["data"]["userData"]["user_id"])) {
 			if (!isset($params[0]["client_id"])){
 				$params[0]["client_id"] = $_SESSION["data"]["userData"]["user_id"];
