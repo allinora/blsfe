@@ -26,9 +26,11 @@ class Model_Controller extends App_Controller {
 		if ($authData["token"]) {
 			$this->authenticateToken($authData["token"]);
 		} else {
+			return false;
 			$this->sendError("danger", "Error", "Login Failed");
 		}
 		$this->set("login", "success");
+		return true;
 	}
 
 	function authenticateAction(){
