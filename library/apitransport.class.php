@@ -42,9 +42,13 @@ class ApiTransport extends HttpTransport{
 		$aRet = json_decode($response, true);
 		//print "<pre>" . print_r($aRet, true) . "<pre>";	
 
-		if ($aRet['error'] > 0 ) {
-			$this->sendError("danger", "API", join("<br>", $aRet['error_msg']));
-		}
+			if ($aRet['error'] > 0 ) {
+				if ($service != "login/login"){
+					$this->sendError("danger", "API", join("<br>", $aRet['error_msg']));
+				} else {
+					return 0;
+				}
+			}
 
 		// Handle integer values
 		if (isset($aRet['data']['int'])){
