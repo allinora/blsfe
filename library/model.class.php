@@ -70,7 +70,7 @@ class Model {
 
 	public function __call($action, $params){
 		$_action = $this->model() . '/' . $action;
-		if ($action == "get" && isset($params[0]) && is_numeric($params[0])){
+		if (in_array($action, array("get", "getall", "delete")) && isset($params[0]) && is_numeric($params[0])){
 			$params[0] = ['id'=> $params[0]];
 		}
 		if (!isset($params[0])){
