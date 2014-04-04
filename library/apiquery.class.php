@@ -24,6 +24,9 @@ class ApiQuery extends ApiTransport{
 			if (substr($action, -3) == "get") { // handle special case for get
 				$params[0] = array($this->_idField => $params[0]);
 			}
+			if (substr($action, -6) == "delete") { // handle special case for get
+				$params[0] = array($this->_idField => $params[0]);
+			}
 			if (substr($action, -6) == "getall") { // handle special case for getall
 				$params[0] = array($this->_searchField => $params[0]);
 			}
