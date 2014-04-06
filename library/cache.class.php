@@ -13,6 +13,12 @@ class Cache {
         }
 		
 		$backend = CACHE_BACKEND;
+
+		if (defined("CACHE_DISABLED") && CACHE_DISABLED){
+			$backend = 'null';
+		}
+
+		
 		$backend_driver_file = dirname(__FILE__) . DS . strtolower(__CLASS__) . DS . strtolower($backend) . '.class.php';
 		if (file_exists($backend_driver_file)){
 			include_once($backend_driver_file);

@@ -118,7 +118,11 @@ class Template_Smarty extends Template {
 		$this->smarty = new Smarty();
 		
 		//useful vars for plugins like media
-		$this->smarty->assign("DEVELOPMENT_ENVIRONMENT", $_ENV['DEVELOPMENT_ENVIRONMENT']);
+		if (isset($_ENV['DEVELOPMENT_ENVIRONMENT'])){
+			$this->smarty->assign("DEVELOPMENT_ENVIRONMENT", $_ENV['DEVELOPMENT_ENVIRONMENT']);
+		} else {
+			$this->smarty->assign("DEVELOPMENT_ENVIRONMENT", FALSE);
+		}
 		
 		
 
