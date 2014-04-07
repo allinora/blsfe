@@ -17,20 +17,9 @@ class Model_Controller extends App_Controller {
 	}
 	
 	protected function doLogin($login, $password) {
-		$authModel = new Model("login");
-		if (MODEL_TYPE == "API"){
-			$authData = $authModel->login(array('username' => $login, 'password' => $password));
-		} else {
-			$authData = $authModel->login(array('login' => $login, 'passwd' => $password));
-		}
-		if ($authData["token"]) {
-			$this->authenticateToken($authData["token"]);
-		} else {
-			return false;
-			$this->sendError("danger", "Error", "Login Failed");
-		}
-		$this->set("login", "success");
-		return true;
+		$_SESSION = array();
+		$authModel = new Model('login');
+		return $authModel->doLogin($login, $password);
 	}
 
 	function authenticateAction(){
@@ -41,15 +30,11 @@ class Model_Controller extends App_Controller {
 
 	protected function authenticateToken($token){
 		$sessionModel = new Model("login");
-		$data = $sessionModel->getTokenData(array('token' => $token));
-		if (isset($data["userData"])){
-			$this->setSession('token', $token);
-			$this->setSession("data", $data);
-			$this->setSession("company_id", $data['userData']['company_id']);
+		if ($sessionModel->authenticateToken($token)){
+			$this->set("login", "success");
 		} else {
-			$this->sendError("danger", "Error", "Login Failed");
+			$this->set("login", "failed");
 		}
-		$this->set("login", "success");
 	}
 	
 	function getRemoteAddr(){

@@ -108,8 +108,37 @@ class Model {
 		
 	}
 	
+	function doLogin($login, $password) {
+		if (MODEL_TYPE == "API"){
+			$authData = $this->login(array('username' => $login, 'password' => $password));
+		} else {
+			$authData = $this->login(array('login' => $login, 'passwd' => $password));
+		}
+		if ($authData["token"]) {
+			return $this->authenticateToken($authData["token"]);
+		} else {
+			return false;
+		}
+	}
+	
+	function authenticateToken($token){
+		$data = $this->getTokenData(array('token' => $token));
+		if (isset($data["userData"])){
+			$this->setSession('token', $token);
+			$this->setSession("data", $data);
+			$this->setSession("company_id", $data['userData']['company_id']);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private function setSession($key, $value){
+		$_SESSION[$key] = $value;
+	}
+	
 	function autoSetValues(&$params){
-		// print "<pre>" . print_r($params, true) . "</pre>";
+		//  print "<pre>" . print_r($params, true) . "</pre>";
 		if (!is_array($params[0])){
 			throw new Exception("params[0] is not array. This should never happen.");
 		}
