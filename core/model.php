@@ -19,7 +19,11 @@ class Model_Controller extends App_Controller {
 	protected function doLogin($login, $password) {
 		$_SESSION = array();
 		$authModel = new Model('login');
-		return $authModel->doLogin($login, $password);
+		if ($authModel->doLogin($login, $password)){
+			$this->set("login", "success");
+		} else {
+			$this->set("login", "failed");
+		}
 	}
 
 	function authenticateAction(){
