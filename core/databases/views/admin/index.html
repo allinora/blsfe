@@ -1,0 +1,33 @@
+<table class="table table-striped table-bordered table-condensed" data-provide="datatable"
+		data-paginate="true"
+		data-search="false"
+		data-info="false"
+		data-length-change="false"
+		data-display-rows="30">
+<thead>
+<tr>
+	<th>ID</th>
+	<th>Name</th>
+	<th>Host</th>
+	<th>Type</th>
+	<th>Status</th>
+	<th>Comment</th>
+	<th><a href='/<{$lang}>/core/databases/admin/add'>Add</a></th>
+	
+</tr>
+</thead>
+	
+<{foreach from=$aData item=row}>
+<tr>
+	<td><{$row.id}></td>
+	<td><{$row.name}></td>
+	<td><{$row.dbhost}></td>
+	<td><{$row.type}></td>
+	<td><{$row.status}></td>
+	<td><{$row.comment}></td>
+	<td><a href="/<{$lang}>/core/databases/admin/edit/<{$row.id}>">Edit</a></td>
+</tr>
+
+<{/foreach}>
+
+</table>
