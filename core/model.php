@@ -17,12 +17,13 @@ class Model_Controller extends App_Controller {
 	}
 	
 	protected function doLogin($login, $password) {
-		$_SESSION = array();
 		$authModel = new Model('login');
 		if ($authModel->doLogin($login, $password)){
 			$this->set("login", "success");
+			return true;
 		} else {
 			$this->set("login", "failed");
+			return false;
 		}
 	}
 
