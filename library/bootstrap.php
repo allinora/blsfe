@@ -10,6 +10,8 @@ if (!defined("BLSFE_ROOT")) {
 }
 
 ini_set("allow_call_time_pass_reference", true);
+ini_set("error_log", "syslog");
+
 if (!defined("APPCONFIGFILE")) {
 	$appConfigFile= ROOT . DS . 'config' . DS . 'config.php';
 } else {
