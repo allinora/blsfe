@@ -6,7 +6,7 @@
 		data-display-rows="20">
 <thead>
 <tr>
-	<th>ID</th>
+	<th>#</th>
 	<th>Name</th>
 	<th><a href='/<{$lang}>/core/<{$tab}>/services/add'>Add</a></th>
 	
@@ -17,7 +17,7 @@
 <{foreach from=$aData item=row}>
 <{if $row.id}>
 <tr>
-	<td><{$row.id}></td>
+	<td><{counter}></td>
 	<td><a href="/<{$lang}>/core/<{$tab}>/services/show/<{$row.id}>"><{$row.name}></a></td>
 	<td><a href="/<{$lang}>/core/<{$tab}>/services/edit/<{$row.id}>">Edit</a></td>
 </tr>

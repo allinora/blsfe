@@ -22,7 +22,7 @@
 		data-display-rows="20">
 <thead>
 <tr>
-	<th>ID</th>
+	<th>##</th>
 	<th>Host</th>
 	<th>IP</th>
 	<th>Environment</th>
@@ -37,7 +37,7 @@
 <{foreach from=$aData item=row}>
 <{if $row.id}>
 <tr>
-	<td><{$row.id}></td>
+	<td><{counter}></td>
 	<td><{$row.name}></td>
 	<td><{$row.ip}></td>
 	<td><{$row.environment}></td>

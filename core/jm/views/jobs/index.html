@@ -22,7 +22,7 @@
 		data-display-rows="20">
 <thead>
 <tr>
-	<th>ID</th>
+	<th>#</th>
 	<th>Name</th>
 	<th>Description</th>
 	<th>Status</th>
@@ -35,7 +35,7 @@
 <{foreach from=$aData item=row}>
 <{if $row.id}>
 <tr>
-	<td><{$row.id}></td>
+	<td><{counter}></td>
 	<td><a href="/<{$lang}>/core/<{$tab}>/jobs/show/<{$row.id}>"><{$row.name}></a></td>
 	<td><{$row.description}></td>
 	<td class="<{$row.status}>"><{$row.status}></td>
