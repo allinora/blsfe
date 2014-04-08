@@ -122,7 +122,7 @@ class Core_Controller extends BLController {
 	}
 	
 	function setTabName($c){
-		$x = split('_', $c);
+		$x = explode('_', $c);
 		$tab = strtolower($x[1]);
 		$this->set("tab", $tab);
 		return $tab;
@@ -131,7 +131,7 @@ class Core_Controller extends BLController {
 
 	function setSubTabName($c){
 		$c = preg_replace("@Controller$@", "", $c);
-		$x = split('_', $c);
+		$x = explode('_', $c);
 		$subtab = strtolower($x[2]);
 		$this->set("subtab", $subtab);
 		return $subtab;
