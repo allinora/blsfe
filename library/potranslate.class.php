@@ -5,7 +5,7 @@ class POTranslate {
 	var $lang;
 	var $seen;
 	
-	public function __construct($lang){
+	public function __construct(){
 		$directory = ROOT . '/locale';
 		$domain = 'messages';
 		$path_tokens = explode('/', ROOT);
@@ -14,7 +14,7 @@ class POTranslate {
 		textdomain($domain);
 		bind_textdomain_codeset($domain, 'UTF-8');
 		
-		$locale = $this->getLanguageLocale($lang);
+		$locale = $this->getLanguageLocale(LANG);
 		putenv("LANG=" . $locale);
 		setlocale(LC_MESSAGES, $locale);
 	}
