@@ -5,7 +5,11 @@ class POTranslate {
 	var $lang;
 	var $seen;
 	
-	public function __construct($lang, $directory, $domain="messages"){
+	public function __construct($lang){
+		$directory = ROOT . '/locale';
+		$domain = 'messages';
+		$path_tokens = explode('/', ROOT);
+		$project = array_pop($path_tokens);
 		bindtextdomain($domain, $directory);
 		textdomain($domain);
 		bind_textdomain_codeset($domain, 'UTF-8');
