@@ -21,7 +21,7 @@ class Core_Jm_WorkersController extends Admin_Controller {
 		include_once(BLSFE_ROOT . "/helpers/selectList.php");
 		
 		$formatters["environment"]["function"] = function(){ 
-			return blsfe_helper_selectList("environment", array("dev", "test", "staging", "prod"),  $this->res['environment']);
+			return blsfe_helper_selectList("environment", array("dev", "test", "stage", "prod"),  $this->res['environment']);
 		};
 		$formatters["status"]["function"] = function(){ 
 			return blsfe_helper_selectList("status", array("available", "away", "suspended", "retired"),  $this->res['status']);
