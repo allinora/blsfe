@@ -6,7 +6,9 @@ clean:
 	echo Nothing to do
 
 pull:
-	git pull origin master
+	git checkout -- .
+	git pull
+	rm -rf /var/tmp/smartycompile /var/tmp/smartycache
 
 push:
 	git push origin master
