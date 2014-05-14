@@ -32,6 +32,10 @@ class Core_Jm_JobsController extends Admin_Controller {
 		$formatters["status"]["function"] = function(){ 
 			return blsfe_helper_selectList("status", array("new", "idle", "active", "completed", "disabled", "deleted"),  $this->res['status']);
 		};
+
+		$formatters["recurring_type"]["function"] = function(){ 
+			return blsfe_helper_selectList("status", array("DAY", "MINUTE", "WEEK", "MONTH"),  $this->res['recurring_type']);
+		};
 		
 		$formatters["dispatch_type"]["function"] = function(){ 
 			return blsfe_helper_selectList("dispatch_type", array("any", "single", "all"),  $this->res['dispatch_type']);
