@@ -14,7 +14,6 @@ push:
 	git push origin master
 	git push assembla master
 	git push github master
-	git push worldsoft master
 
 compose:
 	rm -rf vendor composer.lock
