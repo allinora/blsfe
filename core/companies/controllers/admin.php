@@ -12,15 +12,15 @@ class Core_Companies_AdminController extends Admin_Controller {
 	}
 	
 	function formatters(){
-		$formatters=array();
+		$formatters = array();
 		return $formatters;
 	}
 
-	function addAction() {
+	function addAction($redirect) {
 		parent::addAction("core/companies/admin");
 	}
 	
-	function editAction($id) {
+	function editAction($id, $redirect="", $formatters = array()) {
 		parent::editAction($id, "core/companies/admin");
 	}
 }
