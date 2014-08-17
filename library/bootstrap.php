@@ -47,6 +47,8 @@ if (file_exists($modulesConfigFile)){
 	}
 }
 
+session_start();
+
 
 function blsfe_local_exception_handler($exception) {
 	if (isset($_ENV['DEVELOPMENT_ENVIRONMENT']) && $_ENV['DEVELOPMENT_ENVIRONMENT'] === true) {
