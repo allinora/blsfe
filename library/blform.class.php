@@ -92,7 +92,7 @@ class BLForm extends BLModel {
 
 
 	function setupField($id, $field){
-		if ($id=="country"){
+		if ($id == 'country'){
 			return $this->countryList($id, $field);
 		}
 		if ($id=="language"){
@@ -201,8 +201,8 @@ class BLForm extends BLModel {
 	}
 	
 	function countryList($id, $field){
-		$m=new BLModel("sys/country");
-		$list=$m->getall(1);
+		$m = new BLModel("sys/country");
+		$list = $m->getall(1);
 		$ret = array();
 		foreach($list as $c){
 			$ret[$c["code"]] = $c["name"];
