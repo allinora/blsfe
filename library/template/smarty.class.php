@@ -30,7 +30,7 @@ class Template_Smarty extends Template {
 		
 		
 		
-		$_template_file=BLSFE_ROOT . DS . 'core' .DS . $module . DS . "views" . DS . $c . DS .  $this->_action . '.html';
+		$_template_file = BLSFE_ROOT . DS . 'core' .DS . $module . DS . "views" . DS . $c . DS .  $this->_action . '.html';
 		if (file_exists($_template_file)){
 			$this->templateFile = $_template_file;
 		} else {
