@@ -25,7 +25,7 @@ deploy: deployshowcase
 	@echo all done
 
 deployshowcase:
-	rsync -av --exclude=.git  -e ssh . root@showcase.allinora.com:/opt/allinora/blsfe/
+	ssh root@showcase.allinora.com make -C /opt/allinora/blsfe pull
 
 deploydev:
 	ssh root@tipi.lilarox.com make -C /opt/git/blsfe pull
