@@ -42,7 +42,7 @@ class BLQuery extends BLTransport{
 		return $result;
     }
 
-    public function getall($id, $cache = true){
+    public function getall($id=null, $cache = true){
 		// Always uses GET method. Is Cacheable
 		
 		
