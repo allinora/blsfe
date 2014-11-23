@@ -53,7 +53,7 @@ class HttpTransport {
 			$options["http"]["timeout"] = $http_params["timeout"];
 		}
 
-		if (isset($params['request_data'])){
+		if (isset($params['request_data']) && is_array($params['request_data'])){
 			$url .= '?';
 
 			foreach($params['request_data'] as $var => $val){
