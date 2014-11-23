@@ -371,7 +371,7 @@ include_once(dirname(__FILE__) . "/ids.class.php");
 
 $cache   = Cache::factory();
 $session = Session::factory();
-session_start();
+@session_start();
 
 @list($url, $params)=explode('?', $_SERVER["REQUEST_URI"], 2);   // Just get everything before t
 $url = preg_replace("@/+@", "/", $url);
